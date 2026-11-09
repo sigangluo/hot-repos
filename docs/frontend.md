@@ -60,7 +60,7 @@ README 是任何人都能写的外部内容。流程固定为 **marked 转换 �
 
 首屏只加载约 14KB（gzip）脚本、3KB 样式和 `meta.json` + `repos.json`（5000 个项目约 0.7MB gzip）。ECharts（约 175KB gzip）、marked、DOMPurify 在首次打开详情或 README 时才加载。筛选与排序在 5000 行上同步完成；表格只渲染当前页。
 
-构建结果的 Lighthouse（桌面与移动）：可访问性 100、最佳实践 100。
+线上页面（近期热点视图）的 Lighthouse，桌面与移动均为：可访问性 100、最佳实践 100、SEO 100。
 
 ## 测试
 
