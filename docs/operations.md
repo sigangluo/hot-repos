@@ -41,7 +41,7 @@ uv run hot-repos trending
 
 ## 项目分类
 
-分类是可选数据：`data/taxonomy.json`（目录）与 `data/classification.parquet`（结果），字段与口径见 [data-model.md](data-model.md)，目录的设计与扩展办法见 [taxonomy.md](taxonomy.md)。**当前仓库有目录，没有分类结果**，页面上的分类筛选、分类列和详情卡片因此都不出现；放入结果文件并通过 `validate` 后，重新导出即生效。仓库里没有生成分类的命令，分类可以来自任何来源，来源与可信度写在目录的 `note` 里，页面会原样展示。
+分类是可选数据：`data/taxonomy.json`（目录）与 `data/classification.parquet`（结果），字段与口径见 [data-model.md](data-model.md)，目录的设计与扩展办法见 [taxonomy.md](taxonomy.md)。**当前有目录，也有 361 个项目（总榜中创建不足一年的）的分类结果**，由语言模型判断、未经人工验证，其余项目没有分类；更新结果文件并通过 `validate` 后，重新导出即生效。仓库里没有生成分类的命令，分类可以来自任何来源，来源与可信度写在目录的 `note` 里，页面会原样展示。
 
 - **写入**：用 `hot_repos.classification` 的 `write_taxonomy` / `write_rows`（按 schema 校验、行按项目名排序），或直接写出符合 `schema.CLASSIFICATION` 的 Parquet；之后运行 `validate`。节点编号必须稳定，新增分类先改目录。
 - **`fetch` 会维护对齐**：改名的项目换成当前名称，已不在总榜里的项目其分类结果被丢弃，日志里列出改名数和被丢弃的名称；这些结果和总榜一起先写入暂存目录、校验通过后才发布。新进总榜的项目没有分类。

@@ -8,7 +8,7 @@
 
 - **采集**：总榜（按 Star 区间分段，绕开搜索接口 1000 条上限）、仓库元数据、贡献者数、官方周 Star 分布。可中断续跑，自动应对限流和临时错误。
 - **近期热点**：每天抓取 GitHub Trending（全部语言和 10 种主流语言，日、周、月三个时间段）并按日保存，看板里按 Trending 的方式展示，已在总榜的项目可直接看详情；历史快照留作后续的历史功能。
-- **项目分类（可选）**：支持最多三级的分类目录，主分类加关联分类，看板里按分类树（任意一级）和项目形态筛选。能力已具备，当前仓库有分类目录（[docs/taxonomy.md](docs/taxonomy.md)），还没有分类结果，数据格式见 [docs/data-model.md](docs/data-model.md)。
+- **项目分类（可选）**：支持最多三级的分类目录，主分类加关联分类，看板里按分类树（任意一级）和项目形态筛选。目录见 [docs/taxonomy.md](docs/taxonomy.md)；目前只有创建不足一年的 361 个项目有分类，由语言模型判断、尚未经人工验证，数据格式见 [docs/data-model.md](docs/data-model.md)。
 - **数据**：三张 Parquet 表加一个清单文件，字段、口径和一致性约束有文档，采集结果先校验再发布。
 - **看板**：搜索，分类树、项目形态、语言、许可证、话题等 10 组筛选（选项旁显示数量），Star 与贡献者范围，可排序、可选列的表格，近 30 周迷你图，项目详情（基本信息、分类、总榜位置、周 Star 图、语言构成、README），明暗主题。
 
@@ -38,7 +38,7 @@ cd web && npm ci && npm run dev       # 开发服务器
 
 ## 数据
 
-`data/` 包含当前快照的项目元数据、官方周 Star 分布、历次快照的名次，以及 `data/trending/` 下每天一个文件的 Trending 快照。可选的项目分类（`taxonomy.json`、`classification.parquet`）目前只有目录，没有分类结果。用 DuckDB 读取的例子：
+`data/` 包含当前快照的项目元数据、官方周 Star 分布、历次快照的名次，以及 `data/trending/` 下每天一个文件的 Trending 快照。可选的项目分类（`taxonomy.json`、`classification.parquet`）目前只覆盖 361 个项目。用 DuckDB 读取的例子：
 
 ```bash
 uv run --with duckdb python -c "
@@ -53,6 +53,7 @@ duckdb.sql(\"select rank, full_name, stars from 'data/repos.parquet' order by ra
 - 周 Star 分布统计的是采集时仍保留的 Star 按创建时间的分布，已取消的 Star 不在其中，不能据此还原历史净增长。
 - 总榜是一次采集快照，不是事务一致的时点排名；排名和元数据的获取时间不同，各自记录。
 - Trending 数据来自解析网页，历史只能从开始采集那天算起，无法补抓。
+- 项目分类由语言模型判断，未经人工验证，只覆盖总榜中创建不足一年的 361 个项目，这批项目高度集中在智能体生态，不能代表整个总榜。
 
 ## 项目结构
 
