@@ -187,6 +187,9 @@ def _carry_classification(
     taxonomy = classification.read_taxonomy(data_dir)
     if taxonomy is None:
         return
+    classification.write_taxonomy(staging, taxonomy)
+    if not (data_dir / config.CLASSIFICATION_FILE).exists():  # 只有目录、还没有分类结果
+        return
     rows, renamed, dropped = classification.reconcile(
         classification.read_rows(data_dir), [r["full_name"] for r in repos], aliases
     )
@@ -194,7 +197,6 @@ def _carry_classification(
         log.info("项目分类：%d 个项目改名，%d 个项目已不在总榜而被丢弃", renamed, len(dropped))
         if dropped:
             log.info("被丢弃的项目：%s", "、".join(dropped))
-    classification.write_taxonomy(staging, taxonomy)
     classification.write_rows(staging, rows)
 
 

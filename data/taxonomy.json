@@ -1,0 +1,866 @@
+{
+ "note": "分类由语言模型依据项目名称、描述、话题判断，尚未经人工验证；主分类按项目服务的领域确定，形态单独标注。",
+ "forms": {
+  "app": "应用",
+  "cli": "命令行工具",
+  "library": "库与 SDK",
+  "framework": "框架",
+  "service": "服务与平台",
+  "runtime": "运行时与引擎",
+  "agent": "智能体",
+  "skill": "智能体技能",
+  "plugin": "插件与扩展",
+  "model": "模型",
+  "dataset": "数据集",
+  "tutorial": "教程与课程",
+  "list": "资源清单",
+  "spec": "规范与文档",
+  "research": "研究实现",
+  "template": "配置与模板",
+  "hardware": "硬件与实物"
+ },
+ "nodes": [
+  {
+   "id": "agent",
+   "label": "智能体基础设施",
+   "guidance": {
+    "includes": "面向智能体和大模型应用的底层能力，使用者是智能体本身，或构建智能体的开发者。"
+   }
+  },
+  {
+   "id": "agent.runtime",
+   "label": "运行时与编排",
+   "parent": "agent",
+   "guidance": {
+    "includes": "通用的（不限于编程的）智能体运行环境、harness、多智能体编排与调度、智能体操作系统、自主任务循环。",
+    "excludes": "判断顺序：先看是不是专为写代码（归 dev.coding-agent），再看是不是管理已有智能体的面板（归 dev.agent-ops），再看是不是面向个人对话的助手（归 assistant.personal），都不是才放这里。"
+   }
+  },
+  {
+   "id": "agent.memory",
+   "label": "记忆与上下文",
+   "parent": "agent",
+   "guidance": {
+    "includes": "长期记忆、对话与任务记忆、上下文压缩与节省 token、上下文工程。",
+    "excludes": "面向人阅读和整理的笔记、知识库归 knowledge.notes；围绕代码库的索引与图谱归 dev.code-intel。"
+   }
+  },
+  {
+   "id": "agent.tools",
+   "label": "工具与环境接入",
+   "parent": "agent",
+   "guidance": {
+    "includes": "让智能体操作外部世界：浏览器与桌面自动化、把网站或软件变成命令行、MCP 服务、联网检索。",
+    "excludes": "与智能体无关的通用爬虫和数据采集归 data.pipeline。"
+   }
+  },
+  {
+   "id": "agent.sandbox",
+   "label": "沙箱与隔离运行",
+   "parent": "agent",
+   "guidance": {
+    "includes": "为智能体提供安全隔离的执行环境与权限边界。",
+    "excludes": "对技能、提示词做安全扫描归 security.agent。"
+   }
+  },
+  {
+   "id": "agent.gateway",
+   "label": "模型接入与路由",
+   "parent": "agent",
+   "guidance": {
+    "includes": "多模型、多供应商接口聚合与网关，订阅或账号中转，额度与账号管理，免费模型接入。",
+    "excludes": "模型本身归 model.*；本地运行模型的引擎归 agent.inference。"
+   }
+  },
+  {
+   "id": "agent.inference",
+   "label": "模型推理与部署",
+   "parent": "agent",
+   "guidance": {
+    "includes": "大语言模型的本地或服务端推理引擎、量化、硬件适配与性能解锁、推理服务化。",
+    "excludes": "模型权重与架构研究归 model.llm；通用机器学习框架归 model.framework。"
+   }
+  },
+  {
+   "id": "agent.evaluation",
+   "label": "评估、审计与成本",
+   "parent": "agent",
+   "guidance": {
+    "includes": "智能体与模型的评测和审计、用量与成本统计、系统提示与行为的研究分析。"
+   }
+  },
+  {
+   "id": "agent.skills",
+   "label": "技能与提示词库",
+   "parent": "agent",
+   "guidance": {
+    "includes": "没有特定主题的通用技能集合、厂商或平台官方的技能集合、技能规范与管理工具、技能市场、提示词库、把书籍视频人物思维蒸馏成技能的工具。",
+    "excludes": "有明确单一主题的技能包按它服务的领域归类（营销技能归 business.marketing），形态标为智能体技能。"
+   }
+  },
+  {
+   "id": "agent.other",
+   "label": "其他智能体基础设施",
+   "parent": "agent",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "dev",
+   "label": "软件开发",
+   "guidance": {
+    "includes": "开发者编写、测试、交付软件的工具与方法，包括借助 AI 编程。"
+   }
+  },
+  {
+   "id": "dev.coding-agent",
+   "label": "编程智能体",
+   "parent": "dev",
+   "guidance": {
+    "includes": "专为写代码设计的智能体、其终端或编辑器界面、增强套件，以及针对编程智能体的插件与配置。",
+    "excludes": "通用智能体底座归 agent.runtime；管理多个已有智能体的面板归 dev.agent-ops。"
+   }
+  },
+  {
+   "id": "dev.workflow",
+   "label": "开发流程与工程方法",
+   "parent": "dev",
+   "guidance": {
+    "includes": "规范驱动开发、需求与计划拆解、元提示、给编程智能体的通用工程技能与方法论。"
+   }
+  },
+  {
+   "id": "dev.agent-ops",
+   "label": "编程智能体的管理与协作",
+   "parent": "dev",
+   "guidance": {
+    "includes": "运行在已有编程智能体之上的终端与工作台、多会话与多智能体看板、会话与用量面板。",
+    "excludes": "账号与额度中转归 agent.gateway。"
+   }
+  },
+  {
+   "id": "dev.code-intel",
+   "label": "代码理解与评审",
+   "parent": "dev",
+   "guidance": {
+    "includes": "代码索引与图谱（包括为智能体检索代码上下文的）、代码评审、为代码库生成文档、架构与调用关系的可视化。"
+   }
+  },
+  {
+   "id": "dev.testing",
+   "label": "测试与质量",
+   "parent": "dev",
+   "guidance": {
+    "includes": "测试框架、端到端测试、静态检查、对智能体产出代码的质量检查。"
+   }
+  },
+  {
+   "id": "dev.frontend",
+   "label": "前端与界面开发",
+   "parent": "dev",
+   "guidance": {
+    "includes": "UI 组件、设计系统的代码实现、前端框架与渲染、桌面应用框架、地图与图表组件。",
+    "excludes": "视觉与交互设计的方法与技能归 create.design。"
+   }
+  },
+  {
+   "id": "dev.tools",
+   "label": "通用开发工具",
+   "parent": "dev",
+   "guidance": {
+    "includes": "命令行与终端、编辑器、包与项目管理、版本控制与代码托管平台、构建与代码统计等开发辅助工具。",
+    "excludes": "通用编程库归 dev.libs；数据库及其客户端归 data.db。"
+   }
+  },
+  {
+   "id": "dev.language",
+   "label": "编程语言与编译器",
+   "parent": "dev",
+   "guidance": {
+    "includes": "编程语言及其编译器、解释器、运行时与语言平台本身，语言规范与发行公告。",
+    "excludes": "用该语言写的库与框架按用途归类。"
+   }
+  },
+  {
+   "id": "dev.backend",
+   "label": "后端与网站建设",
+   "parent": "dev",
+   "guidance": {
+    "includes": "后端 Web 框架、无头 CMS 与内容管理、静态站点生成器、后端即服务平台。"
+   }
+  },
+  {
+   "id": "dev.graphics",
+   "label": "图形与游戏引擎",
+   "parent": "dev",
+   "guidance": {
+    "includes": "图形与渲染库、物理与游戏引擎组件、游戏服务端框架、底层图形接口。"
+   }
+  },
+  {
+   "id": "dev.libs",
+   "label": "通用编程库",
+   "parent": "dev",
+   "guidance": {
+    "includes": "日志、序列化、标准库补全（polyfill）、数值与数据处理等与具体业务无关的编程库。",
+    "excludes": "UI 组件归 dev.frontend；机器学习库归 model.framework。"
+   }
+  },
+  {
+   "id": "dev.standards",
+   "label": "规范与编码实践",
+   "parent": "dev",
+   "guidance": {
+    "includes": "编码风格与规范、接口描述规范、整洁代码与工程实践指南。",
+    "excludes": "成体系的课程与教程归 learn.courses。"
+   }
+  },
+  {
+   "id": "dev.other",
+   "label": "其他软件开发",
+   "parent": "dev",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "create",
+   "label": "内容创作",
+   "guidance": {
+    "includes": "面向终端用户的视频、图像、音频、演示、写作与设计创作，包括 AI 生成与编辑。"
+   }
+  },
+  {
+   "id": "create.video",
+   "label": "视频",
+   "parent": "create",
+   "guidance": {
+    "includes": "视频生成、剪辑、抠像与特效、短剧与影视制作流水线、视频提示词案例。"
+   }
+  },
+  {
+   "id": "create.image",
+   "label": "图像与摄影",
+   "parent": "create",
+   "guidance": {
+    "includes": "图片生成与编辑、修图、矢量绘图、三维场景生成、图像提示词案例库。",
+    "excludes": "图像生成模型本体归 model.vision。"
+   }
+  },
+  {
+   "id": "create.audio",
+   "label": "语音与音乐",
+   "parent": "create",
+   "guidance": {
+    "includes": "语音合成与克隆应用、配音、音频制作。",
+    "excludes": "语音模型本体归 model.speech；音乐播放归 life.media。"
+   }
+  },
+  {
+   "id": "create.slides",
+   "label": "演示与排版",
+   "parent": "create",
+   "guidance": {
+    "includes": "幻灯片生成、文档与论文排版、出版物版式。"
+   }
+  },
+  {
+   "id": "create.design",
+   "label": "设计与界面",
+   "parent": "create",
+   "guidance": {
+    "includes": "界面与视觉设计的方法、技能和规范，设计系统的描述格式，去除“AI 味”的界面。",
+    "excludes": "组件的代码实现归 dev.frontend。"
+   }
+  },
+  {
+   "id": "create.writing",
+   "label": "写作与文本",
+   "parent": "create",
+   "guidance": {
+    "includes": "文案、润色、改写、翻译与本地化、去除 AI 写作痕迹。"
+   }
+  },
+  {
+   "id": "create.assets",
+   "label": "素材与图标",
+   "parent": "create",
+   "guidance": {
+    "includes": "图标、字体、图片与设计素材库。",
+    "excludes": "图标的前端组件封装归 dev.frontend。"
+   }
+  },
+  {
+   "id": "create.diagram",
+   "label": "图表与可视化",
+   "parent": "create",
+   "guidance": {
+    "includes": "技术图、信息图、地图海报、数据可视化的生成。"
+   }
+  },
+  {
+   "id": "create.other",
+   "label": "其他内容创作",
+   "parent": "create",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "knowledge",
+   "label": "知识与文档",
+   "guidance": {
+    "includes": "文档、笔记和知识的获取、转换与组织，使用者是人。"
+   }
+  },
+  {
+   "id": "knowledge.docs",
+   "label": "文档解析与转换",
+   "parent": "knowledge",
+   "guidance": {
+    "includes": "PDF、Office、OCR 与格式转换，文档阅读与编辑，办公文档的程序化处理。"
+   }
+  },
+  {
+   "id": "knowledge.notes",
+   "label": "笔记与知识库",
+   "parent": "knowledge",
+   "guidance": {
+    "includes": "个人知识库、Obsidian 类工具、LLM Wiki、第二大脑、书签与稍后读管理、个人学习记录、由资料自动构建知识库。",
+    "excludes": "供智能体检索的记忆与上下文归 agent.memory。"
+   }
+  },
+  {
+   "id": "knowledge.other",
+   "label": "其他知识与文档",
+   "parent": "knowledge",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "data",
+   "label": "数据与检索",
+   "guidance": {
+    "includes": "数据的存储、检索、管道与采集。"
+   }
+  },
+  {
+   "id": "data.db",
+   "label": "数据库",
+   "parent": "data",
+   "guidance": {
+    "includes": "关系型、图、时序等数据库，数据库客户端与管理工具，存储引擎。"
+   }
+  },
+  {
+   "id": "data.search",
+   "label": "向量与检索",
+   "parent": "data",
+   "guidance": {
+    "includes": "向量索引与向量数据库、搜索引擎、检索增强（RAG）引擎、命令行检索。"
+   }
+  },
+  {
+   "id": "data.pipeline",
+   "label": "数据管道与采集",
+   "parent": "data",
+   "guidance": {
+    "includes": "数据管道、网页爬取与抓取、数据工具包与行情数据接口。"
+   }
+  },
+  {
+   "id": "data.other",
+   "label": "其他数据与检索",
+   "parent": "data",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "science",
+   "label": "科研与工程",
+   "guidance": {
+    "includes": "学术研究，以及三维、硬件和空间数据等工程领域。"
+   }
+  },
+  {
+   "id": "science.research",
+   "label": "学术研究",
+   "parent": "science",
+   "guidance": {
+    "includes": "论文检索、写作与评审，自动化研究，科研技能与流程。"
+   }
+  },
+  {
+   "id": "science.cad",
+   "label": "三维与 CAD",
+   "parent": "science",
+   "guidance": {
+    "includes": "三维建模、CAD、参数化设计。",
+    "excludes": "三维生成与理解的模型归 model.vision。"
+   }
+  },
+  {
+   "id": "science.hardware",
+   "label": "硬件与机器人",
+   "parent": "science",
+   "guidance": {
+    "includes": "开源硬件、机器人、雷达与电子设备。"
+   }
+  },
+  {
+   "id": "science.geo",
+   "label": "地理与空间",
+   "parent": "science",
+   "guidance": {
+    "includes": "地理空间数据、卫星与地图数据平台。",
+    "excludes": "地图海报与可视化归 create.diagram。"
+   }
+  },
+  {
+   "id": "science.other",
+   "label": "其他科研与工程",
+   "parent": "science",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "business",
+   "label": "商业与行业",
+   "guidance": {
+    "includes": "金融、营销、办公等行业应用。"
+   }
+  },
+  {
+   "id": "business.finance",
+   "label": "金融与投资",
+   "parent": "business",
+   "guidance": {
+    "includes": "行情与投研、量化交易、股票分析、投资研究框架、加密货币与区块链。"
+   }
+  },
+  {
+   "id": "business.marketing",
+   "label": "营销与增长",
+   "parent": "business",
+   "guidance": {
+    "includes": "SEO、文案增长、内容营销与分析。"
+   }
+  },
+  {
+   "id": "business.commerce",
+   "label": "电商与业务系统",
+   "parent": "business",
+   "guidance": {
+    "includes": "电商与商城、订单与库存、支付、ERP 等业务系统。"
+   }
+  },
+  {
+   "id": "business.work",
+   "label": "办公与企业应用",
+   "parent": "business",
+   "guidance": {
+    "includes": "办公套件、客户关系、项目与产品管理、面向企业的智能体工作台。"
+   }
+  },
+  {
+   "id": "business.career",
+   "label": "求职与职业",
+   "parent": "business",
+   "guidance": {
+    "includes": "求职、简历与职业发展。"
+   }
+  },
+  {
+   "id": "business.legal",
+   "label": "法律与专业服务",
+   "parent": "business",
+   "guidance": {
+    "includes": "专利、合规、商业诊断与咨询方法等专业服务。"
+   }
+  },
+  {
+   "id": "business.intel",
+   "label": "情报与监测",
+   "parent": "business",
+   "guidance": {
+    "includes": "开源情报、新闻聚合与简报、全球态势与舆情监测。"
+   }
+  },
+  {
+   "id": "business.other",
+   "label": "其他商业与行业",
+   "parent": "business",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "assistant",
+   "label": "个人助手与自动化",
+   "guidance": {
+    "includes": "面向用户的助手、工作台、渠道接入与工作流自动化。"
+   }
+  },
+  {
+   "id": "assistant.personal",
+   "label": "个人助手",
+   "parent": "assistant",
+   "guidance": {
+    "includes": "面向个人长期运行、可对话、跨平台的通用 AI 助手及其轻量替代。",
+    "excludes": "面向开发者的智能体底座归 agent.runtime。"
+   }
+  },
+  {
+   "id": "assistant.workspace",
+   "label": "智能体工作台",
+   "parent": "assistant",
+   "guidance": {
+    "includes": "面向用户的多智能体对话与工作界面，网页端或桌面端的智能体外壳。"
+   }
+  },
+  {
+   "id": "assistant.messaging",
+   "label": "消息与渠道接入",
+   "parent": "assistant",
+   "guidance": {
+    "includes": "把智能体接入微信、飞书、WhatsApp、Telegram 等即时通讯渠道。"
+   }
+  },
+  {
+   "id": "assistant.automation",
+   "label": "工作流与自动化",
+   "parent": "assistant",
+   "guidance": {
+    "includes": "工作流编排、办公软件的命令行与自动化。"
+   }
+  },
+  {
+   "id": "assistant.other",
+   "label": "其他个人助手与自动化",
+   "parent": "assistant",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "system",
+   "label": "系统与桌面工具",
+   "guidance": {
+    "includes": "操作系统与设备层面的实用工具。"
+   }
+  },
+  {
+   "id": "system.desktop",
+   "label": "桌面与菜单栏工具",
+   "parent": "system",
+   "guidance": {
+    "includes": "桌面系统的实用工具、窗口与菜单栏管理、外设按键映射。"
+   }
+  },
+  {
+   "id": "system.mobile",
+   "label": "移动与设备",
+   "parent": "system",
+   "guidance": {
+    "includes": "手机、车机、电视盒子的工具与虚拟设备。"
+   }
+  },
+  {
+   "id": "system.files",
+   "label": "文件与格式",
+   "parent": "system",
+   "guidance": {
+    "includes": "文件格式转换、下载与媒体下载、个人数据导出与备份。"
+   }
+  },
+  {
+   "id": "system.other",
+   "label": "其他系统与桌面工具",
+   "parent": "system",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "security",
+   "label": "安全与隐私",
+   "guidance": {
+    "includes": "安全分析与防护，隐私工具。"
+   }
+  },
+  {
+   "id": "security.analysis",
+   "label": "逆向与漏洞分析",
+   "parent": "security",
+   "guidance": {
+    "includes": "逆向工程、渗透测试、漏洞发现与修复、安全审计。"
+   }
+  },
+  {
+   "id": "security.agent",
+   "label": "智能体安全",
+   "parent": "security",
+   "guidance": {
+    "includes": "智能体与技能的安全扫描和防护、越狱与对抗提示。"
+   }
+  },
+  {
+   "id": "security.privacy",
+   "label": "隐私与反检测",
+   "parent": "security",
+   "guidance": {
+    "includes": "反爬与反检测、隐私保护工具。"
+   }
+  },
+  {
+   "id": "security.defense",
+   "label": "防护与密钥管理",
+   "parent": "security",
+   "guidance": {
+    "includes": "密码管理、防火墙、终端防护、密钥与身份管理。"
+   }
+  },
+  {
+   "id": "security.other",
+   "label": "其他安全与隐私",
+   "parent": "security",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "infra",
+   "label": "网络与云基础设施",
+   "guidance": {
+    "includes": "云、部署、域名、网络与运维。"
+   }
+  },
+  {
+   "id": "infra.cloud",
+   "label": "云服务与本地模拟",
+   "parent": "infra",
+   "guidance": {
+    "includes": "云服务的封装、本地模拟与替代。"
+   }
+  },
+  {
+   "id": "infra.deploy",
+   "label": "部署与托管",
+   "parent": "infra",
+   "guidance": {
+    "includes": "应用部署平台与托管、自托管方案与指南。"
+   }
+  },
+  {
+   "id": "infra.container",
+   "label": "容器与虚拟化",
+   "parent": "infra",
+   "guidance": {
+    "includes": "容器运行时、虚拟机与微虚拟机、集群管理与编排、本地虚拟化。"
+   }
+  },
+  {
+   "id": "infra.network",
+   "label": "域名与网络",
+   "parent": "infra",
+   "guidance": {
+    "includes": "域名、DNS、端口与本地网络入口、代理与网络加速服务及其节点清单、证书与 HTTPS。"
+   }
+  },
+  {
+   "id": "infra.ops",
+   "label": "运维与可观测",
+   "parent": "infra",
+   "guidance": {
+    "includes": "排障、监控、日志、可靠性。"
+   }
+  },
+  {
+   "id": "infra.other",
+   "label": "其他网络与云基础设施",
+   "parent": "infra",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "model",
+   "label": "模型与算法",
+   "guidance": {
+    "includes": "模型本体、架构与算法研究。"
+   }
+  },
+  {
+   "id": "model.llm",
+   "label": "语言模型",
+   "parent": "model",
+   "guidance": {
+    "includes": "大语言模型及其架构研究、小模型。"
+   }
+  },
+  {
+   "id": "model.framework",
+   "label": "机器学习框架与库",
+   "parent": "model",
+   "guidance": {
+    "includes": "训练与推理框架、神经网络与数值计算库、机器学习工具链。",
+    "excludes": "大语言模型的推理服务引擎归 agent.inference。"
+   }
+  },
+  {
+   "id": "model.vision",
+   "label": "视觉与生成模型",
+   "parent": "model",
+   "guidance": {
+    "includes": "图像、视频、三维的生成与理解模型。"
+   }
+  },
+  {
+   "id": "model.speech",
+   "label": "语音与音频模型",
+   "parent": "model",
+   "guidance": {
+    "includes": "语音合成、语音克隆、语音对话模型。"
+   }
+  },
+  {
+   "id": "model.algorithm",
+   "label": "算法与理论",
+   "parent": "model",
+   "guidance": {
+    "includes": "推荐、决策等算法，数学与理论。"
+   }
+  },
+  {
+   "id": "model.other",
+   "label": "其他模型与算法",
+   "parent": "model",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "life",
+   "label": "生活与娱乐",
+   "guidance": {
+    "includes": "日常生活、娱乐与文化。"
+   }
+  },
+  {
+   "id": "life.media",
+   "label": "影音与阅读",
+   "parent": "life",
+   "guidance": {
+    "includes": "播放器、影视资源、媒体库。"
+   }
+  },
+  {
+   "id": "life.health",
+   "label": "健康与运动",
+   "parent": "life",
+   "guidance": {
+    "includes": "健身、运动与健康数据。"
+   }
+  },
+  {
+   "id": "life.travel",
+   "label": "出行与生活服务",
+   "parent": "life",
+   "guidance": {
+    "includes": "旅行规划、日常生活服务。"
+   }
+  },
+  {
+   "id": "life.culture",
+   "label": "文化与民俗",
+   "parent": "life",
+   "guidance": {
+    "includes": "命理、历法、传统文化。"
+   }
+  },
+  {
+   "id": "life.games",
+   "label": "游戏与模拟",
+   "parent": "life",
+   "guidance": {
+    "includes": "游戏、游戏移植与模拟器、游戏串流与远程游玩。"
+   }
+  },
+  {
+   "id": "life.other",
+   "label": "其他生活与娱乐",
+   "parent": "life",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "learn",
+   "label": "学习与教育",
+   "guidance": {
+    "includes": "教学与学习材料，主题放关联分类。"
+   }
+  },
+  {
+   "id": "learn.tutoring",
+   "label": "智能辅导与学习应用",
+   "parent": "learn",
+   "guidance": {
+    "includes": "AI 辅导、互动课堂、学习工具。"
+   }
+  },
+  {
+   "id": "learn.courses",
+   "label": "课程与教程",
+   "parent": "learn",
+   "guidance": {
+    "includes": "以学习为目的的课程、教程、书籍与文章，包括收集这类学习资料的清单；所讲主题记为关联分类。",
+    "excludes": "跨领域的 awesome 导航归 resource.catalog。"
+   }
+  },
+  {
+   "id": "learn.other",
+   "label": "其他学习与教育",
+   "parent": "learn",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  },
+  {
+   "id": "resource",
+   "label": "资源与指南",
+   "guidance": {
+    "includes": "跨领域的清单和非技术指南。"
+   }
+  },
+  {
+   "id": "resource.catalog",
+   "label": "综合资源清单",
+   "parent": "resource",
+   "guidance": {
+    "includes": "不以学习为目的、不局限于单一领域的 awesome 清单与导航合集。",
+    "excludes": "有明确主题的清单按主题领域归类，形态标为资源清单；学习资料清单归 learn.courses。"
+   }
+  },
+  {
+   "id": "resource.guide",
+   "label": "经验与指南",
+   "parent": "resource",
+   "guidance": {
+    "includes": "生活、职业等非技术的经验与指南。"
+   }
+  },
+  {
+   "id": "resource.other",
+   "label": "其他资源与指南",
+   "parent": "resource",
+   "guidance": {
+    "includes": "明确属于该领域、但不属于任何已有子类的项目。当这里积累到约 10 个、且其中能看出共同的主题时，应拆出新的子类，并把这些项目移过去。"
+   }
+  }
+ ]
+}

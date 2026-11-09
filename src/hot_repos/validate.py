@@ -38,7 +38,7 @@ def validate(data_dir: Path = config.DATA_DIR) -> list[str]:
 
 
 def validate_classification(data_dir: Path, repo_names: set[str] | None = None) -> list[str]:
-    """检查项目分类（目录与结果）。两个文件都不存在表示尚未分类，不算问题。
+    """检查项目分类（目录与结果）。目录可以先于结果存在；两个文件都不存在表示尚未分类，不算问题。
 
     `repo_names` 是总榜中的项目名；给出时要求分类结果的项目名与之完全一致（含大小写）。
     """
@@ -46,13 +46,12 @@ def validate_classification(data_dir: Path, repo_names: set[str] | None = None) 
     table_path = data_dir / config.CLASSIFICATION_FILE
     if not tax_path.exists() and not table_path.exists():
         return []
-    if not tax_path.exists() or not table_path.exists():
-        missing = config.TAXONOMY_FILE if not tax_path.exists() else config.CLASSIFICATION_FILE
-        return [
-            f"{missing}: 文件不存在（{config.TAXONOMY_FILE} 与 {config.CLASSIFICATION_FILE} 必须同时存在）"
-        ]
+    if not tax_path.exists():
+        return [f"{config.TAXONOMY_FILE}: 文件不存在（有分类结果时必须有对应的目录）"]
     taxonomy = json.loads(tax_path.read_text(encoding="utf-8"))
     problems = _check_taxonomy(taxonomy)
+    if not table_path.exists():
+        return problems
     table = pq.read_table(table_path)
     if not table.schema.equals(schema.CLASSIFICATION, check_metadata=False):
         problems.append(

@@ -136,12 +136,12 @@ def _classification(
     下标，与 repos 行对齐，未分类的项目为 null（关联分类和形态为空列表）。
     """
     taxonomy = classification.read_taxonomy(data_dir)
-    if taxonomy is None:
+    by_name = {r["full_name"]: r for r in classification.read_rows(data_dir)}
+    if taxonomy is None or not by_name:  # 只有目录、还没有分类结果时，页面不显示分类
         return None
     node_index = {n["id"]: i for i, n in enumerate(taxonomy["nodes"])}
     form_ids = list(taxonomy["forms"])
     form_index = {f: i for i, f in enumerate(form_ids)}
-    by_name = {r["full_name"]: r for r in classification.read_rows(data_dir)}
     rows = [by_name.get(r["full_name"]) for r in repos]
     file = {
         "note": taxonomy.get("note"),

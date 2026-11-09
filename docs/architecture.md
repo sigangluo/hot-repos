@@ -32,6 +32,7 @@ hot-repos/
 ├── docs/
 │   ├── architecture.md        本文
 │   ├── data-model.md          数据文件、字段、口径、质量约束
+│   ├── taxonomy.md            项目分类目录：设计原则、归类规则、扩展办法、检验记录
 │   ├── operations.md          抓取、续跑、限流、缓存、页面开发的操作手册
 │   ├── frontend.md            前端结构、加载方式、常见改动、安全与测试
 │   └── deployment.md          GitHub Pages 部署、数据更新、发布前检查清单
@@ -62,7 +63,7 @@ hot-repos/
 │   ├── star_weeks.parquet     官方周 Star 分布
 │   ├── rank_history.parquet   各快照日期的总榜名次
 │   ├── manifest.json          快照日期、运行参数、改名与缺失记录
-│   ├── taxonomy.json          项目分类目录（可选，当前没有）
+│   ├── taxonomy.json          项目分类目录（可选，设计见 docs/taxonomy.md）
 │   ├── classification.parquet 项目分类结果（可选，当前没有）
 │   └── trending/              Trending 每日快照，一天一个 YYYY-MM-DD.parquet，只追加
 ├── .cache/                    原始 API 响应与断点，不提交
@@ -116,4 +117,4 @@ hot-repos/
 5. ~~导出层（`export_web.py`）与前端：设计令牌 → 数据加载 → 表格 → 筛选 → 详情 → README~~ 已完成
 6. ~~CI 与 Pages 工作流、文档~~ 已完成；已推送并部署到 GitHub Pages，三个工作流均已在 GitHub 上跑通，见 [deployment.md](deployment.md)
 7. Trending：~~采集器、每日快照、校验、每日定时任务~~ 已完成；~~页面（与 Trending 对齐的"近期热点"视图）~~ 已完成；自动部署联动与历史功能（按日期回看、上榜天数与最高名次、详情中的上榜时间线）待做，历史功能需要先积累数据
-8. 项目分类：~~数据契约、校验、采集时与总榜对齐、导出、页面（分类树筛选、分类列、详情卡片）~~ 能力已完成；当前没有分类数据，待有可靠的分类来源后放入 `data/`
+8. 项目分类：~~数据契约、校验、采集时与总榜对齐、导出、页面（分类树筛选、分类列、详情卡片）~~ 能力已完成；目录已建立（见 [taxonomy.md](taxonomy.md)），分类结果待有可靠的来源后放入 `data/`

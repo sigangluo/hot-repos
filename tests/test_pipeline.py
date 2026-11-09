@@ -163,3 +163,13 @@ def test_pipeline_carries_classification_over(tmp_path, fake):
     assert validate(data) == []
     assert [r["full_name"] for r in classification.read_rows(data)] == [names[0]]
     assert classification.read_taxonomy(data) == taxonomy()
+
+
+def test_pipeline_keeps_a_taxonomy_without_results(tmp_path, fake):
+    run_pipeline(tmp_path, fake, n=3)
+    data = tmp_path / "data"
+    classification.write_taxonomy(data, taxonomy())
+    run_pipeline(tmp_path, fake, n=3)
+    assert validate(data) == []
+    assert classification.read_taxonomy(data) == taxonomy()
+    assert not (data / config.CLASSIFICATION_FILE).exists()

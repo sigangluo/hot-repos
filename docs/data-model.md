@@ -9,7 +9,7 @@
 | `rank_history.parquet` | 历次快照的总榜名次 | 一行一个快照日期的一个名次 |
 | `manifest.json` | 快照日期、运行参数、改名与缺失记录 | 单个对象 |
 | `trending/YYYY-MM-DD.parquet` | GitHub Trending 榜单的每日快照 | 一行一个（日期，时间段，语言）榜单中的一个项目 |
-| `taxonomy.json` | 项目分类目录（可选，与 `classification.parquet` 同时存在） | 单个对象 |
+| `taxonomy.json` | 项目分类目录（可选，可以先于分类结果存在） | 单个对象 |
 | `classification.parquet` | 项目的分类结果（可选） | 一行一个已分类的项目 |
 
 通用约定：
@@ -129,7 +129,7 @@
 
 ### taxonomy.json
 
-分类目录，随分类结果一起提交；没有分类时两个文件都不存在（当前仓库没有分类数据）。
+分类目录。可以先于分类结果存在（目录定好、结果还没有时，页面不显示分类）；有分类结果就必须有目录。目录的设计原则与扩展办法见 [taxonomy.md](taxonomy.md)。
 
 | 字段 | 类型 | 含义 |
 |---|---|---|
@@ -176,7 +176,7 @@
 - `rank_history`：每个快照内名次唯一、名称唯一，名次与 Star 数降序对应，`captured_at` 一致。
 - `star_weeks`：主键唯一，周起点为周日，同一项目的周连续（间隔 7 天），`days` 长度 7 且之和等于 `stars`，项目存在于 `repos`；有周数据的项目 `star_weeks_*` 必须有值，周数不超过已抓页数能容纳的上限。
 - 跨文件：`manifest.snapshot_date` 等于最新快照；最新快照与 `repos` 的名次和名称一一对应；`board_size` 不小于项目数；`aliases` 的键存在于 `repos` 且包含当前名称；`missing` 与 `repos` 不重叠。
-- `taxonomy.json` 与 `classification.parquet`：同时存在或同时不存在；目录的 `forms`、`nodes` 齐全，节点编号唯一、父节点存在且排在前面、编号以父节点编号开头、同一父节点下名称不重复；分类结果的表结构与 `schema.py` 一致，`full_name` 唯一且与 `repos.parquet` 完全一致，`category`、`related` 的编号都在目录中且 `related` 无重复、不含 `category`，`forms` 无重复且都在目录中，`summary` 不为空，`review_reason` 为 NULL 或非空。
+- `taxonomy.json` 与 `classification.parquet`：有结果就必须有目录，只有目录是允许的；目录的 `forms`、`nodes` 齐全，节点编号唯一、父节点存在且排在前面、编号以父节点编号开头、同一父节点下名称不重复；分类结果的表结构与 `schema.py` 一致，`full_name` 唯一且与 `repos.parquet` 完全一致，`category`、`related` 的编号都在目录中且 `related` 无重复、不含 `category`，`forms` 无重复且都在目录中，`summary` 不为空，`review_reason` 为 NULL 或非空。
 - `trending`：文件名是合法日期且等于 `snapshot_date`；`captured_at` 一致且其日期（UTC）等于文件名；每个（时间段，语言）榜单内 `rank` 从 1 起连续、`full_name` 唯一；"全部语言"三个时间段齐全；计数非负。写入前先按同样规则检查，不通过则不写入。
 
 ## 示例查询（DuckDB）

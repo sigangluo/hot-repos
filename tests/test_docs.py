@@ -77,3 +77,20 @@ def test_documented_commands_are_known():
     text = "".join(p.read_text(encoding="utf-8") for p in _markdown_files())
     for command in set(re.findall(r"hot-repos (\w+)", text)):
         assert command in subparsers.choices, command
+
+
+def test_taxonomy_doc_lists_every_top_level_domain():
+    """docs/taxonomy.md 的结构表必须覆盖 data/taxonomy.json 的全部一级领域（没有目录时跳过）。"""
+    import json
+
+    import pytest
+
+    path = config.DATA_DIR / config.TAXONOMY_FILE
+    if not path.exists():
+        pytest.skip("没有分类目录")
+    doc = (config.ROOT / "docs" / "taxonomy.md").read_text(encoding="utf-8")
+    nodes = json.loads(path.read_text(encoding="utf-8"))["nodes"]
+    missing = [
+        n["id"] for n in nodes if "parent" not in n and f"| `{n['id']}` | {n['label']} |" not in doc
+    ]
+    assert not missing

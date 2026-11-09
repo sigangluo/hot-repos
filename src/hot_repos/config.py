@@ -15,7 +15,7 @@ REPOS_FILE = "repos.parquet"
 STAR_WEEKS_FILE = "star_weeks.parquet"
 RANK_HISTORY_FILE = "rank_history.parquet"
 MANIFEST_FILE = "manifest.json"
-# 项目分类是可选数据：两个文件要么同时存在，要么都没有。
+# 项目分类是可选数据：目录可以先于结果存在，有结果就必须有目录。
 CLASSIFICATION_FILE = "classification.parquet"
 TAXONOMY_FILE = "taxonomy.json"
 TABLE_FILES = {

@@ -20,10 +20,19 @@ def test_valid_classification(dataset):
     assert validate(dataset) == []
 
 
-def test_both_files_must_exist_together(dataset):
+def test_results_need_a_taxonomy(dataset):
     write_classification(dataset)
     (dataset / config.TAXONOMY_FILE).unlink()
-    assert any(config.TAXONOMY_FILE in p and "必须同时存在" in p for p in validate(dataset))
+    assert any(config.TAXONOMY_FILE in p and "必须有对应的目录" in p for p in validate(dataset))
+
+
+def test_taxonomy_can_exist_before_any_results(dataset):
+    write_classification(dataset)
+    (dataset / config.CLASSIFICATION_FILE).unlink()
+    assert validate(dataset) == []
+    bad = taxonomy() | {"nodes": []}
+    classification.write_taxonomy(dataset, bad)
+    assert any("nodes 应为非空列表" in p for p in validate(dataset))
 
 
 @pytest.mark.parametrize(
@@ -148,6 +157,15 @@ def test_export_classification(dataset, tmp_path):
     assert details["review_reason"] == [None, "边界不清"]
     meta = export_web.read(out / "meta.json")
     assert meta["classified"] == 1
+
+
+def test_export_with_only_a_taxonomy_has_no_classification_file(dataset, tmp_path):
+    write_classification(dataset)
+    (dataset / config.CLASSIFICATION_FILE).unlink()
+    out = tmp_path / "web"
+    export_web.export(dataset, out)
+    assert not (out / "classification.json").exists()
+    assert export_web.read(out / "meta.json")["classified"] == 0
 
 
 def test_export_without_classification_removes_stale_file(dataset, tmp_path):
