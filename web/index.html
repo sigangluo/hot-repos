@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%232563eb' d='M8 1l2.1 4.6 5 .6-3.7 3.4 1 5L8 12.1 3.6 14.6l1-5L.9 6.2l5-.6z'/%3E%3C/svg%3E" />
+    <meta name="description" content="GitHub 总 Star 榜 Top 5000 项目的元数据与官方 Star 时间分布，支持搜索、筛选与详情查看。" />
+    <title>GitHub 热门项目看板</title>
+    <script>
+      // 在样式加载前应用已保存的主题，避免闪烁。
+      try {
+        const t = localStorage.getItem('hot-repos:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+# 环境与缓存
+.venv/
+.env
+.cache/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+
+# 前端
+web/node_modules/
+web/dist/
+web/public/data/
+
+# 系统与编辑器
+.DS_Store
+.idea/
+.vscode/

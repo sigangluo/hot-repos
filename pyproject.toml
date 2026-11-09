@@ -1,0 +1,40 @@
+[project]
+name = "hot-repos"
+version = "0.1.0"
+description = "采集 GitHub 总 Star 榜项目的元数据和官方 Star 时间分布"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "sigangluo" }]
+requires-python = ">=3.12"
+dependencies = [
+  "httpx>=0.28",
+  "pyarrow>=18",
+]
+
+[project.scripts]
+hot-repos = "hot_repos.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hot_repos"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]  # 行宽交给格式化器；中文提示信息允许超长
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,60 @@
+/* 设计令牌：全站的颜色、字号、间距、圆角都从这里取，组件样式里不写死数值。
+   明暗两套值用 light-dark() 写在同一处；data-theme 只切换 color-scheme。 */
+
+:root {
+  color-scheme: light dark;
+
+  --font-sans: system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --bg: light-dark(#f6f7f9, #0e1116);
+  --surface: light-dark(#ffffff, #161b22);
+  --surface-2: light-dark(#f0f2f5, #1c222b);
+  --border: light-dark(#dde1e7, #2a313c);
+  --text: light-dark(#1b1f27, #e6e9ee);
+  --text-muted: light-dark(#5c6575, #98a1b0);
+  --accent: light-dark(#1d4ed8, #6ea0ff);
+  --accent-soft: light-dark(#e6eefc, #1d2a44);
+  --focus: light-dark(#2563eb, #8db3ff);
+  --warn-bg: light-dark(#fff4d6, #3a2f12);
+  --warn-text: light-dark(#7a5300, #f0c36a);
+  --danger: light-dark(#b42318, #ff8a80);
+  --overlay: light-dark(rgb(15 20 30 / 35%), rgb(0 0 0 / 55%));
+  --shadow: 0 8px 32px light-dark(rgb(15 20 30 / 18%), rgb(0 0 0 / 55%));
+
+  /* 分类色（语言构成等）：最多 7 个具体类别，其余归入灰色“其他”。 */
+  --cat-1: #3b82f6;
+  --cat-2: #f59e0b;
+  --cat-3: #10b981;
+  --cat-4: #ef4444;
+  --cat-5: #8b5cf6;
+  --cat-6: #14b8a6;
+  --cat-7: #ec4899;
+  --cat-other: light-dark(#a0a8b6, #6b7482);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
