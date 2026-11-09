@@ -14,6 +14,8 @@ export interface Meta {
   star_weeks_per_page: number;
   /** 最新一天的 Trending 快照日期；还没有快照时为 null。 */
   trending_date: string | null;
+  /** 已分类的项目数；为 0 表示没有分类数据。 */
+  classified: number;
 }
 
 export interface RepoColumns {
@@ -59,6 +61,10 @@ export interface DetailColumns {
   star_weeks_fetched_at: (number | null)[];
   star_weeks_pages_fetched: (number | null)[];
   star_weeks_pages_total: (number | null)[];
+  /** 分类的一句话简介；未分类为 null。 */
+  summary: (string | null)[];
+  /** 需要复核的原因；无需复核或未分类为 null。 */
+  review_reason: (string | null)[];
 }
 
 export interface WeeksColumns {
@@ -86,4 +92,21 @@ export interface TrendingFile {
   /** [榜单语言的键, 显示名]，“全部语言”在前。 */
   languages: [string, string][];
   rows: TrendingColumns;
+}
+
+/**
+ * classification.json：分类目录与每个项目的分类。
+ * `category` / `related` / `form` 与 repos.json 的行对齐，值是 `nodes` / `forms` 的下标；
+ * 未分类的项目 `category` 为 null，`related` 与 `form` 为空数组。
+ */
+export interface ClassificationFile {
+  /** 目录附带的说明（如分类的来源与可信度），原样展示；没有则为 null。 */
+  note: string | null;
+  /** [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称]，父节点排在子节点之前。 */
+  nodes: [string, number, string][];
+  /** [形态编号, 名称]。 */
+  forms: [string, string][];
+  category: (number | null)[];
+  related: number[][];
+  form: number[][];
 }

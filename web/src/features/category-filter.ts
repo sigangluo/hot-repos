@@ -1,0 +1,89 @@
+import type { Taxonomy } from '../data/taxonomy';
+import { h } from '../lib/dom';
+import { int } from '../lib/format';
+import { categoryCounts, type CategoryScope, type Filters } from '../state/query';
+import type { Ctx } from './context';
+
+/** 记住展开的分支，重绘面板时不丢失；跟随页面的 Store，互不干扰。 */
+const expandedByStore = new WeakMap<object, Set<number>>();
+
+const SCOPES: readonly [CategoryScope, string][] = [
+  ['primary', '仅主分类'],
+  ['all', '含关联分类'],
+];
+
+/**
+ * 分类筛选：一棵可展开的树（最多三级），每一级都可勾选，勾选即包含其下全部子分类。
+ * 数量是“满足其他全部条件”时该分类下的项目数；没有项目的分支不显示（已选的除外）。
+ */
+export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filters, open: Set<string>): HTMLElement {
+  const { store } = ctx;
+  const expanded = expandedByStore.get(store) ?? expandedByStore.set(store, new Set()).get(store)!;
+  const counts = categoryCounts(ctx.repos, filters);
+  const { categories } = filters;
+
+  const hasSelectedBelow = (node: number): boolean =>
+    taxonomy.children(node).some((c) => categories.has(c) || hasSelectedBelow(c));
+
+  const choose = (node: number, on: boolean) => {
+    const next = new Set(store.state.filters.categories);
+    if (on) {
+      // 选中一个节点后，它的上级和下级不必再单独保留：上级已被收窄，下级已被它包含。
+      for (const n of taxonomy.pathNodes(node)) next.delete(n);
+      const drop = (n: number) => taxonomy.children(n).forEach((c) => (next.delete(c), drop(c)));
+      drop(node);
+      next.add(node);
+    } else next.delete(node);
+    store.set({ filters: { ...store.state.filters, categories: next } });
+  };
+
+  const item = (node: number): HTMLElement | null => {
+    const count = counts.get(node) ?? 0;
+    const selected = categories.has(node);
+    const below = hasSelectedBelow(node);
+    if (count === 0 && !selected && !below) return null;
+    const children = taxonomy.children(node).map(item).filter((c): c is HTMLElement => c !== null);
+    const isOpen = children.length > 0 && (expanded.has(node) || below);
+    const name = taxonomy.label(node);
+    const box = h('input', {
+      type: 'checkbox',
+      onchange: (e: Event) => choose(node, (e.target as HTMLInputElement).checked),
+    });
+    // checked / indeterminate 是 DOM 属性而非 attribute，需要显式设置。
+    box.checked = selected;
+    box.indeterminate = !selected && below;
+    const toggle = children.length
+      ? h('button', {
+          type: 'button',
+          class: 'tree-toggle',
+          'aria-expanded': String(isOpen),
+          'aria-label': `${isOpen ? '收起' : '展开'}${name}`,
+          onclick: () => {
+            if (isOpen) expanded.delete(node);
+            else expanded.add(node);
+            store.set({ filters: { ...store.state.filters } }); // 只为触发重绘
+          },
+        }, isOpen ? '▾' : '▸')
+      : h('span', { class: 'tree-toggle' });
+    return h('li', null,
+      h('div', { class: 'tree-row' }, toggle,
+        h('label', { class: 'option' }, box, h('span', null, name), h('span', { class: 'count' }, int(count)))),
+      isOpen ? h('ul', { class: 'tree' }, children) : null);
+  };
+
+  const setScope = (categoryScope: CategoryScope) =>
+    store.set({ filters: { ...store.state.filters, categoryScope } });
+
+  const details = h('details', { class: 'group', open: open.has('category') || categories.size > 0 },
+    h('summary', null, h('span', null, '分类'), categories.size ? h('span', { class: 'badge' }, `已选 ${categories.size}`) : null),
+    taxonomy.note ? h('p', { class: 'note' }, taxonomy.note) : null,
+    h('span', { class: 'seg', role: 'group', 'aria-label': '分类范围' },
+      SCOPES.map(([scope, label]) =>
+        h('button', { type: 'button', 'aria-pressed': String(filters.categoryScope === scope), onclick: () => setScope(scope) }, label))),
+    h('ul', { class: 'tree root' }, taxonomy.roots.map(item)));
+  details.addEventListener('toggle', () => {
+    if (details.open) open.add('category');
+    else open.delete('category');
+  });
+  return details;
+}

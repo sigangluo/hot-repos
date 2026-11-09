@@ -39,6 +39,14 @@ uv run hot-repos trending
 
 每天约增加 50 KB（一年约 18 MB）。每日定时任务见 [deployment.md](deployment.md)。
 
+## 项目分类
+
+分类是可选数据：`data/taxonomy.json`（目录）与 `data/classification.parquet`（结果）要么同时存在，要么都没有，字段与口径见 [data-model.md](data-model.md)。**当前仓库没有分类数据**，页面上的分类筛选、分类列和详情卡片因此都不出现；放入这两个文件并通过 `validate` 后，重新导出即生效。仓库里没有生成分类的命令，分类可以来自任何来源，来源与可信度写在目录的 `note` 里，页面会原样展示。
+
+- **写入**：用 `hot_repos.classification` 的 `write_taxonomy` / `write_rows`（按 schema 校验、行按项目名排序），或直接写出符合 `schema.CLASSIFICATION` 的 Parquet；之后运行 `validate`。节点编号必须稳定，新增分类先改目录。
+- **`fetch` 会维护对齐**：改名的项目换成当前名称，已不在总榜里的项目其分类结果被丢弃，日志里列出改名数和被丢弃的名称；这些结果和总榜一起先写入暂存目录、校验通过后才发布。新进总榜的项目没有分类。
+- **移除**：删除两个文件即可，导出时会一并清除旧的 `classification.json`。
+
 ## 断点续跑与限流
 
 - 每一步每完成一批就写入缓存。中断（网络、限流、手动停止）后，**重跑相同命令**即可，只补缺口，通常不需要 `--refresh`。
@@ -75,7 +83,7 @@ uv run hot-repos trending
 uv run hot-repos validate
 ```
 
-同时检查总榜数据和 `data/trending/` 下的全部快照，检查项见 [data-model.md](data-model.md#完整性约束)。提交 `data/` 前必须通过；测试中也包含对已提交数据的校验。
+同时检查总榜数据、项目分类和 `data/trending/` 下的全部快照，检查项见 [data-model.md](data-model.md#完整性约束)。提交 `data/` 前必须通过；测试中也包含对已提交数据的校验。
 
 ## 导出页面数据
 
@@ -83,7 +91,7 @@ uv run hot-repos validate
 uv run hot-repos export
 ```
 
-先校验 `data/`，通过后在 `web/public/data/` 生成 `meta.json`、`repos.json`、`details.json`、`weeks.json`，有 Trending 快照时再生成 `trending.json`（最新一天）。这些是生成物，不提交；本地开发和 Pages 构建时重新生成。文件内容见 [architecture.md](architecture.md) 的第 7 条设计决定与 `export_web.py` 的模块说明。
+先校验 `data/`，通过后在 `web/public/data/` 生成 `meta.json`、`repos.json`、`details.json`、`weeks.json`，有 Trending 快照时再生成 `trending.json`（最新一天），有分类数据时再生成 `classification.json`。这些是生成物，不提交；本地开发和 Pages 构建时重新生成。文件内容见 [architecture.md](architecture.md) 的第 7 条设计决定与 `export_web.py` 的模块说明。
 
 ## 页面开发与构建
 

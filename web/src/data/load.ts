@@ -1,4 +1,4 @@
-import type { DetailColumns, Meta, RepoColumns, TrendingFile, WeeksColumns } from './types';
+import type { ClassificationFile, DetailColumns, Meta, RepoColumns, TrendingFile, WeeksColumns } from './types';
 
 async function getJson<T>(file: string): Promise<T> {
   const response = await fetch(`data/${file}`);
@@ -6,9 +6,16 @@ async function getJson<T>(file: string): Promise<T> {
   return (await response.json()) as T;
 }
 
-/** 首屏数据：元信息与表格所需的精简列。 */
-export function loadCore(): Promise<[Meta, RepoColumns]> {
-  return Promise.all([getJson<Meta>('meta.json'), getJson<RepoColumns>('repos.json')]);
+/**
+ * 首屏数据：元信息、表格所需的精简列，以及分类（若有）。
+ * 分类是附加信息：加载失败时页面照常显示，只是没有分类筛选与分类列。
+ */
+export async function loadCore(): Promise<[Meta, RepoColumns, ClassificationFile | null]> {
+  const [meta, repos] = await Promise.all([getJson<Meta>('meta.json'), getJson<RepoColumns>('repos.json')]);
+  const classification = meta.classified > 0
+    ? await getJson<ClassificationFile>('classification.json').catch(() => null)
+    : null;
+  return [meta, repos, classification];
 }
 
 // 其余数据只请求一次，之后复用同一个 Promise。

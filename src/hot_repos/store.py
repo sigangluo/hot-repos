@@ -52,7 +52,12 @@ def publish(staging: Path, data_dir: Path) -> None:
     再依次用 os.replace 换上。后一步只剩几次重命名，被中断的窗口极小。
     """
     data_dir.mkdir(parents=True, exist_ok=True)
-    filenames = (*config.TABLE_FILES.values(), config.MANIFEST_FILE)
+    optional = (config.CLASSIFICATION_FILE, config.TAXONOMY_FILE)
+    filenames = (
+        *config.TABLE_FILES.values(),
+        config.MANIFEST_FILE,
+        *(f for f in optional if (staging / f).exists()),
+    )
     copied: list[Path] = []
     try:
         for filename in filenames:

@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Literal
 
-from . import config, schema, store
+from . import classification, config, schema, store
 from .cache import Journal, utcnow
 from .github import graphql
 from .github.client import GitHubClient
@@ -172,11 +172,30 @@ def _publish(opts: Options, tables: dict[str, list[dict]], manifest: dict) -> No
     for name in schema.TABLES:
         store.write_rows(staging, name, tables[name])
     store.write_manifest(staging, manifest)
+    _carry_classification(opts.data_dir, staging, tables["repos"], manifest["aliases"])
     problems = validate(staging)
     if problems:
         raise DataError("采集结果未通过校验，data/ 未修改：\n" + "\n".join(problems[:20]))
     store.publish(staging, opts.data_dir)
     shutil.rmtree(staging, ignore_errors=True)
+
+
+def _carry_classification(
+    data_dir: Path, staging: Path, repos: list[dict], aliases: dict[str, list[str]]
+) -> None:
+    """项目分类沿用到暂存目录：改名的项目换成当前名称，已不在总榜里的项目其分类结果被丢弃。"""
+    taxonomy = classification.read_taxonomy(data_dir)
+    if taxonomy is None:
+        return
+    rows, renamed, dropped = classification.reconcile(
+        classification.read_rows(data_dir), [r["full_name"] for r in repos], aliases
+    )
+    if renamed or dropped:
+        log.info("项目分类：%d 个项目改名，%d 个项目已不在总榜而被丢弃", renamed, len(dropped))
+        if dropped:
+            log.info("被丢弃的项目：%s", "、".join(dropped))
+    classification.write_taxonomy(staging, taxonomy)
+    classification.write_rows(staging, rows)
 
 
 def _compact_caches(cache_dir: Path, now: datetime) -> None:

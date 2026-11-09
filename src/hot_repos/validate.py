@@ -32,6 +32,105 @@ def validate(data_dir: Path = config.DATA_DIR) -> list[str]:
             problems,
         )
     problems += validate_trending(data_dir / config.TRENDING_DIR_NAME)
+    names = set(tables["repos"].column("full_name").to_pylist()) if "repos" in tables else None
+    problems += validate_classification(data_dir, names)
+    return problems
+
+
+def validate_classification(data_dir: Path, repo_names: set[str] | None = None) -> list[str]:
+    """检查项目分类（目录与结果）。两个文件都不存在表示尚未分类，不算问题。
+
+    `repo_names` 是总榜中的项目名；给出时要求分类结果的项目名与之完全一致（含大小写）。
+    """
+    tax_path = data_dir / config.TAXONOMY_FILE
+    table_path = data_dir / config.CLASSIFICATION_FILE
+    if not tax_path.exists() and not table_path.exists():
+        return []
+    if not tax_path.exists() or not table_path.exists():
+        missing = config.TAXONOMY_FILE if not tax_path.exists() else config.CLASSIFICATION_FILE
+        return [
+            f"{missing}: 文件不存在（{config.TAXONOMY_FILE} 与 {config.CLASSIFICATION_FILE} 必须同时存在）"
+        ]
+    taxonomy = json.loads(tax_path.read_text(encoding="utf-8"))
+    problems = _check_taxonomy(taxonomy)
+    table = pq.read_table(table_path)
+    if not table.schema.equals(schema.CLASSIFICATION, check_metadata=False):
+        problems.append(
+            f"{config.CLASSIFICATION_FILE}: 表结构与 schema.py 不一致\n"
+            f"  实际: {table.schema}\n  期望: {schema.CLASSIFICATION}"
+        )
+        return problems
+    if problems:  # 目录本身有问题时，逐行核对没有意义
+        return problems
+    problems += _check_classification_rows(table.to_pylist(), taxonomy, repo_names)
+    return problems
+
+
+def _check_taxonomy(taxonomy: dict) -> list[str]:
+    label = config.TAXONOMY_FILE
+    problems: list[str] = []
+    note = taxonomy.get("note")
+    if note is not None and (not isinstance(note, str) or not note.strip()):
+        problems.append(f"{label}: note 应为非空字符串（没有说明时省略该字段）")
+    forms = taxonomy.get("forms")
+    if (
+        not isinstance(forms, dict)
+        or not forms
+        or not all(isinstance(k, str) and isinstance(v, str) and v for k, v in forms.items())
+    ):
+        problems.append(f"{label}: forms 应为 {{编号: 名称}} 且不为空")
+    nodes = taxonomy.get("nodes")
+    if not isinstance(nodes, list) or not nodes:
+        return [*problems, f"{label}: nodes 应为非空列表"]
+    seen: set[str] = set()
+    siblings: set[tuple[str | None, str]] = set()
+    for node in nodes:
+        nid, name, parent = node.get("id"), node.get("label"), node.get("parent")
+        if not isinstance(nid, str) or not nid or not isinstance(name, str) or not name:
+            problems.append(f"{label}: 节点需要非空的 id 与 label: {node}")
+            continue
+        if nid in seen:
+            problems.append(f"{label}: 节点编号重复: {nid}")
+        if parent is None:
+            if "." in nid:
+                problems.append(f"{label}: 一级节点编号不应含「.」: {nid}")
+        elif parent not in seen:  # 父节点必须排在前面，页面据此按顺序建树
+            problems.append(f"{label}: {nid} 的父节点 {parent} 不存在或排在它之后")
+        elif not nid.startswith(f"{parent}."):
+            problems.append(f"{label}: {nid} 的编号应以父节点编号 {parent}. 开头")
+        if (parent, name) in siblings:
+            problems.append(f"{label}: 同一父节点下名称重复: {parent or '一级'} / {name}")
+        siblings.add((parent, name))
+        seen.add(nid)
+    return problems
+
+
+def _check_classification_rows(
+    rows: list[dict], taxonomy: dict, repo_names: set[str] | None
+) -> list[str]:
+    label = config.CLASSIFICATION_FILE
+    problems: list[str] = []
+    ids = {n["id"] for n in taxonomy["nodes"]}
+    forms = set(taxonomy["forms"])
+    for d in _duplicates(r["full_name"].casefold() for r in rows):
+        problems.append(f"{label}: full_name 重复（忽略大小写）: {d}")
+    for r in rows:
+        name = r["full_name"]
+        if repo_names is not None and name not in repo_names:
+            problems.append(f"{label}: {name} 不在 {config.REPOS_FILE} 中（或大小写不一致）")
+        if r["category"] not in ids:
+            problems.append(f"{label}: {name} 的 category 不在目录中: {r['category']}")
+        for c in r["related"]:
+            if c not in ids:
+                problems.append(f"{label}: {name} 的 related 不在目录中: {c}")
+        if len(set(r["related"])) != len(r["related"]) or r["category"] in r["related"]:
+            problems.append(f"{label}: {name} 的 related 有重复，或包含主分类 category")
+        if len(set(r["forms"])) != len(r["forms"]) or not set(r["forms"]) <= forms:
+            problems.append(f"{label}: {name} 的 forms 有重复或不在目录的 forms 中: {r['forms']}")
+        if not r["summary"].strip():
+            problems.append(f"{label}: {name} 的 summary 为空")
+        if r["review_reason"] is not None and not r["review_reason"].strip():
+            problems.append(f"{label}: {name} 的 review_reason 为空字符串（无需复核应为 NULL）")
     return problems
 
 

@@ -1,4 +1,5 @@
 import type { Repo } from '../data/model';
+import type { Taxonomy } from '../data/taxonomy';
 import type { Meta, WeeksColumns } from '../data/types';
 import type { Store } from '../state/store';
 
@@ -6,6 +7,8 @@ import type { Store } from '../state/store';
 export interface Ctx {
   meta: Meta;
   repos: readonly Repo[];
+  /** 分类目录；没有分类数据（或加载失败）时为 null。 */
+  taxonomy: Taxonomy | null;
   /** 数据的参照时间（毫秒）。 */
   now: number;
   store: Store;

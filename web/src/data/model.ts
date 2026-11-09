@@ -1,4 +1,5 @@
-import type { Meta, RepoColumns } from './types';
+import { buildTaxonomy } from './taxonomy';
+import type { ClassificationFile, Meta, RepoColumns } from './types';
 
 const DAY = 86_400_000;
 
@@ -57,7 +58,17 @@ export interface Repo {
   ageDays: number;
   /** 距最近一次推送的天数；没有推送记录为 null。 */
   pushedDaysAgo: number | null;
-  /** 小写的搜索文本：名称、描述、话题、语言。 */
+  /** 主分类路径，从一级到最具体的一级；未分类为空数组。 */
+  category: string[];
+  /** 关联分类路径（项目同时属于的其他分类）。 */
+  relatedPaths: string[][];
+  /** 主分类路径上的全部节点（目录下标，含各级父节点）：选中其中任一节点，该项目都算在它之下。 */
+  categoryNodes: number[];
+  /** 关联分类路径上的全部节点（去重）。 */
+  relatedNodes: number[];
+  /** 项目形态（应用、库、教程……），可多个。 */
+  forms: string[];
+  /** 小写的搜索文本：名称、描述、话题、语言、分类。 */
   haystack: string;
 }
 
@@ -66,9 +77,12 @@ export function asOf(meta: Meta): number {
   return (meta.repos_fetched_at?.[1] ?? meta.rank_captured_at) * 1000;
 }
 
+const unique = <T>(values: T[]): T[] => [...new Set(values)];
+
 const ms = (seconds: number | null): number | null => (seconds == null ? null : seconds * 1000);
 
-export function buildRepos(c: RepoColumns, now: number): Repo[] {
+export function buildRepos(c: RepoColumns, now: number, classification: ClassificationFile | null = null): Repo[] {
+  const taxonomy = classification && buildTaxonomy(classification);
   return c.full_name.map((fullName, i): Repo => {
     const [owner = '', name = ''] = fullName.split('/');
     const description = c.description[i] ?? null;
@@ -77,6 +91,12 @@ export function buildRepos(c: RepoColumns, now: number): Repo[] {
     const license = c.license[i] ?? null;
     const createdAt = (c.created_at[i] ?? 0) * 1000;
     const pushedAt = ms(c.pushed_at[i] ?? null);
+    const primary = classification?.category[i] ?? null;
+    const category = taxonomy && primary != null ? taxonomy.path(primary) : [];
+    const relatedPaths = taxonomy ? (classification?.related[i] ?? []).map((n) => taxonomy.path(n)) : [];
+    const paths = category.length ? [category, ...relatedPaths] : [];
+    const related = classification?.related[i] ?? [];
+    const forms = taxonomy ? (classification?.form[i] ?? []).map((f) => taxonomy.formLabel(f)) : [];
     return {
       index: i,
       rank: c.rank[i] ?? 0,
@@ -112,7 +132,14 @@ export function buildRepos(c: RepoColumns, now: number): Repo[] {
       hasReadme: c.has_readme[i] ?? false,
       ageDays: Math.max(0, (now - createdAt) / DAY),
       pushedDaysAgo: pushedAt == null ? null : Math.max(0, (now - pushedAt) / DAY),
-      haystack: [fullName, description ?? '', topics.join(' '), language].join('\n').toLowerCase(),
+      category,
+      relatedPaths,
+      categoryNodes: taxonomy && primary != null ? taxonomy.pathNodes(primary) : [],
+      relatedNodes: taxonomy ? unique(related.flatMap((n) => taxonomy.pathNodes(n))) : [],
+      forms,
+      haystack: [fullName, description ?? '', topics.join(' '), language, ...paths.flat(), ...forms]
+        .join('\n')
+        .toLowerCase(),
     };
   });
 }

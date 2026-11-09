@@ -1,15 +1,17 @@
 import { h, mount } from '../lib/dom';
 import { int } from '../lib/format';
-import { GROUPS, activeCount, emptyFilters, facetCounts, type Filters, type Group, type Range } from '../state/query';
+import { GROUPS, activeCount, emptyFilters, facetCounts, hasClassification, type Filters, type Group, type Range } from '../state/query';
+import { renderCategoryGroup } from './category-filter';
 import type { Ctx } from './context';
 
 /** 记住各分组的展开状态与“显示全部”，重绘面板时不丢失。 */
-const open = new Set<string>(['language', 'license']);
+const open = new Set<string>(['category', 'language', 'license']);
 const expanded = new Set<string>();
 
 export function renderFilters(ctx: Ctx): HTMLElement {
   const { store, repos } = ctx;
   const root = h('aside', { class: 'filters', 'aria-label': '筛选' });
+  const groups = GROUPS.filter((g) => g.available?.(repos) ?? true);
 
   const setSelected = (group: Group, value: string, on: boolean) => {
     const { filters } = store.state;
@@ -82,6 +84,7 @@ export function renderFilters(ctx: Ctx): HTMLElement {
             h('button', { type: 'button', 'aria-pressed': String(!!filters.matchAll[group.id]), onclick: () => setMatch(group, true) }, '满足全部'),
           )
         : null,
+      group.note ? h('p', { class: 'note' }, group.note) : null,
       h('div', { class: 'options' }, options),
       group.limit && all.length > group.limit
         ? h(
@@ -123,7 +126,8 @@ export function renderFilters(ctx: Ctx): HTMLElement {
       ),
       rangeField('Star 数', 'stars'),
       rangeField('贡献者数', 'contributors'),
-      ...GROUPS.map((g) => renderGroup(g, filters)),
+      ctx.taxonomy && hasClassification(repos) ? renderCategoryGroup(ctx, ctx.taxonomy, filters, open) : null,
+      ...groups.map((g) => renderGroup(g, filters)),
     );
   };
 

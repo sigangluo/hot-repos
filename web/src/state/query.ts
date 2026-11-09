@@ -14,6 +14,10 @@ export interface Group {
   allowAll?: boolean;
   /** 选项太多时只展示前若干个，其余通过搜索选择。 */
   limit?: number;
+  /** 分组标题下的补充说明。 */
+  note?: string;
+  /** 该分组在当前数据中是否可用；缺省总是可用。不可用的分组不显示。 */
+  available?: (repos: readonly Repo[]) => boolean;
 }
 
 const PUSH_BUCKETS = ['7 天内', '30 天内', '90 天内', '1 年内', '超过 1 年', '无推送记录'] as const;
@@ -39,7 +43,11 @@ export function ageBucket(days: number): (typeof AGE_BUCKETS)[number] {
   return '10 年以上';
 }
 
+/** 数据里有分类（没有导出或加载失败时没有）。 */
+export const hasClassification = (repos: readonly Repo[]) => repos.some((r) => r.category.length > 0);
+
 export const GROUPS: readonly Group[] = [
+  { id: 'form', label: '项目形态', values: (r) => r.forms, available: hasClassification },
   { id: 'language', label: '主要语言', values: (r) => [r.language], limit: 15 },
   { id: 'license', label: '许可证', values: (r) => [r.licenseClass], order: LICENSES },
   { id: 'topic', label: '话题', values: (r) => r.topics, allowAll: true, limit: 20 },
@@ -67,8 +75,14 @@ export interface Range {
   max: number | null;
 }
 
+/** 分类筛选按哪些分类计算：只看主分类，或同时包含关联分类。 */
+export type CategoryScope = 'primary' | 'all';
+
 export interface Filters {
   text: string;
+  /** 选中的分类节点（目录下标，任意一级）：项目在其下（含子分类）即通过。 */
+  categories: ReadonlySet<number>;
+  categoryScope: CategoryScope;
   /** 每个分组选中的取值。 */
   selected: Record<string, ReadonlySet<string>>;
   /** 多值分组（话题）的匹配方式。 */
@@ -80,6 +94,8 @@ export interface Filters {
 export function emptyFilters(): Filters {
   return {
     text: '',
+    categories: new Set(),
+    categoryScope: 'primary',
     selected: {},
     matchAll: {},
     stars: { min: null, max: null },
@@ -93,6 +109,15 @@ function inRange(value: number | null, range: Range): boolean {
   return (range.min == null || value >= range.min) && (range.max == null || value <= range.max);
 }
 
+/** 项目在分类树上占据的节点（含各级父节点）。 */
+function categoryNodes(repo: Repo, scope: CategoryScope): readonly number[] {
+  return scope === 'all' ? [...repo.categoryNodes, ...repo.relatedNodes] : repo.categoryNodes;
+}
+
+function matchesCategories(repo: Repo, filters: Filters): boolean {
+  return filters.categories.size === 0 || categoryNodes(repo, filters.categoryScope).some((n) => filters.categories.has(n));
+}
+
 function matchesGroup(repo: Repo, group: Group, filters: Filters): boolean {
   const chosen = filters.selected[group.id];
   if (!chosen || chosen.size === 0) return true;
@@ -102,12 +127,25 @@ function matchesGroup(repo: Repo, group: Group, filters: Filters): boolean {
     : values.some((v) => chosen.has(v));
 }
 
-/** 判断项目是否满足条件；`except` 指定的分组不参与判断（用于计算该分组各选项的数量）。 */
+/** 判断项目是否满足条件；`except` 指定的分组（分类树用 `CATEGORY_GROUP`）不参与判断，用于计算该分组各选项的数量。 */
 export function matches(repo: Repo, filters: Filters, except?: string): boolean {
   const text = filters.text.trim().toLowerCase();
   if (text && !text.split(/\s+/).every((word) => repo.haystack.includes(word))) return false;
   if (!inRange(repo.stars, filters.stars) || !inRange(repo.contributors, filters.contributors)) return false;
+  if (except !== CATEGORY_GROUP && !matchesCategories(repo, filters)) return false;
   return GROUPS.every((g) => g.id === except || matchesGroup(repo, g, filters));
+}
+
+export const CATEGORY_GROUP = 'category';
+
+/** 分类树各节点在“满足其他全部条件”时的项目数（节点含其子分类下的项目，每个项目在每个节点只计一次）。 */
+export function categoryCounts(repos: readonly Repo[], filters: Filters): Map<number, number> {
+  const counts = new Map<number, number>();
+  for (const repo of repos) {
+    if (!matches(repo, filters, CATEGORY_GROUP)) continue;
+    for (const node of new Set(categoryNodes(repo, filters.categoryScope))) counts.set(node, (counts.get(node) ?? 0) + 1);
+  }
+  return counts;
 }
 
 export function applyFilters(repos: readonly Repo[], filters: Filters): Repo[] {
@@ -129,7 +167,7 @@ export function facetCounts(repos: readonly Repo[], filters: Filters, group: Gro
 }
 
 export function activeCount(filters: Filters): number {
-  const groups = Object.values(filters.selected).reduce((n, set) => n + set.size, 0);
+  const groups = Object.values(filters.selected).reduce((n, set) => n + set.size, 0) + filters.categories.size;
   const ranges = [filters.stars, filters.contributors].filter((r) => r.min != null || r.max != null).length;
   return groups + ranges + (filters.text.trim() ? 1 : 0);
 }

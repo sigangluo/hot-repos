@@ -1,4 +1,5 @@
 import type { Repo } from '../data/model';
+import { PATH_SEPARATOR } from '../data/taxonomy';
 import { h, mount } from '../lib/dom';
 import { int } from '../lib/format';
 import { PAGE_SIZES } from '../state/prefs';
@@ -53,6 +54,13 @@ export function renderResults(ctx: Ctx): HTMLElement {
         store.set({ filters: { ...store.state.filters, text: '' } });
       }));
     }
+    for (const node of filters.categories) {
+      items.push(chip(`分类：${ctx.taxonomy?.path(node).join(PATH_SEPARATOR) ?? ''}`, () => {
+        const next = new Set(store.state.filters.categories);
+        next.delete(node);
+        store.set({ filters: { ...store.state.filters, categories: next } });
+      }));
+    }
     for (const group of GROUPS) {
       for (const value of filters.selected[group.id] ?? []) {
         items.push(chip(`${group.label}：${value}`, () => {
@@ -76,7 +84,7 @@ export function renderResults(ctx: Ctx): HTMLElement {
   const drawColumnMenu = () => {
     const panel = h('div', { class: 'panel', hidden: true });
     for (const c of COLUMNS) {
-      if (PINNED.includes(c.key)) continue;
+      if (PINNED.includes(c.key) || !shown(c.key)) continue;
       const box = h('input', { type: 'checkbox' });
       box.checked = store.state.columns.includes(c.key);
       box.addEventListener('change', () => {
@@ -104,6 +112,9 @@ export function renderResults(ctx: Ctx): HTMLElement {
     }
   });
 
+  /** 分类列只在有分类数据时显示。 */
+  const shown = (key: ColumnKey) => !column(key).needsClassification || ctx.taxonomy !== null;
+
   const cell = (repo: Repo, key: ColumnKey): HTMLTableCellElement => {
     const col = column(key);
     const classes = [col.numeric ? 'num' : '', key === 'rank' ? 'sticky-1' : key === 'name' ? 'sticky-2' : ''].filter(Boolean).join(' ');
@@ -116,14 +127,16 @@ export function renderResults(ctx: Ctx): HTMLElement {
     if (key === 'spark') {
       return h('td', { class: classes }, sparkline(weeksOf(ctx, repo)?.stars ?? null));
     }
-    return h('td', { class: classes }, col.text ? col.text(repo) : String(sortValue(repo, key) ?? '—'));
+    const text = col.text ? col.text(repo) : String(sortValue(repo, key) ?? '—');
+    if (key === 'category') return h('td', { class: 'clip', title: text }, text);
+    return h('td', { class: classes }, text);
   };
 
   const draw = () => {
     const { sortKey, sortDirection, page, pageSize, columns, filters } = store.state;
     const { sorted } = results();
     const view = paginate(sorted, page, pageSize);
-    const keys = columns;
+    const keys = columns.filter(shown);
 
     const head = h('tr', null, keys.map((key) => {
       const col = column(key);

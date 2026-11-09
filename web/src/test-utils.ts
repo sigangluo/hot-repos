@@ -1,6 +1,6 @@
 // 测试用的数据构造工具。
 import { buildRepos, type Repo } from './data/model';
-import type { RepoColumns } from './data/types';
+import type { ClassificationFile, RepoColumns } from './data/types';
 
 export const NOW = Date.UTC(2026, 0, 10);
 const DAY = 86_400;
@@ -26,6 +26,25 @@ export function columns(rows: RowOverrides[]): RepoColumns {
   return out as unknown as RepoColumns;
 }
 
-export function makeRepos(rows: RowOverrides[]): Repo[] {
-  return buildRepos(columns(rows), NOW);
+export function makeRepos(rows: RowOverrides[], classification: ClassificationFile | null = null): Repo[] {
+  return buildRepos(columns(rows), NOW, classification);
+}
+
+/** 一份小的分类数据：开发 › 工具 › 命令行、开发 › 编辑器、人工智能 › 智能体；参数是各行的（主分类, 关联, 形态）下标。 */
+export function classification(rows: [number | null, number[], number[]][], note: string | null = null): ClassificationFile {
+  return {
+    note,
+    nodes: [
+      ['dev', -1, '开发'],
+      ['dev.tools', 0, '工具'],
+      ['dev.tools.cli', 1, '命令行'],
+      ['dev.editor', 0, '编辑器'],
+      ['ai', -1, '人工智能'],
+      ['ai.agent', 4, '智能体'],
+    ],
+    forms: [['app', '应用'], ['library', '库']],
+    category: rows.map(([c]) => c),
+    related: rows.map(([, r]) => r),
+    form: rows.map(([, , f]) => f),
+  };
 }

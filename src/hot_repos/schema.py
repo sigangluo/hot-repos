@@ -101,6 +101,19 @@ TRENDING = pa.schema(
     ]
 )
 
+# 项目分类结果（data/classification.parquet），目录本身在 data/taxonomy.json。
+# 可选数据，不属于 TABLES：它不随总榜采集整体发布，采集时只按项目名对齐。
+CLASSIFICATION = pa.schema(
+    [
+        _f("full_name", pa.string()),
+        _f("category", pa.string()),
+        _f("related", pa.list_(pa.string())),
+        _f("forms", pa.list_(pa.string())),
+        _f("summary", pa.string()),
+        _f("review_reason", pa.string(), True),
+    ]
+)
+
 # data/ 下的 Parquet 表，键为不含扩展名的文件名。
 TABLES = {"repos": REPOS, "star_weeks": STAR_WEEKS, "rank_history": RANK_HISTORY}
 

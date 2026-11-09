@@ -10,8 +10,9 @@
 |---|---|---|
 | `meta.json` | 快照日期、各部分获取时间、数量、最新 Trending 快照日期（`trending_date`，为空则不显示“近期热点”） | 首屏 |
 | `repos.json` | 表格、筛选、搜索所需的精简列 | 首屏 |
+| `classification.json` | 分类目录和每个项目的主分类、关联分类、形态（与 `repos.json` 行对齐）；没有分类数据时不生成 | 首屏，在 `meta.json` 之后请求；失败时页面照常显示，只是没有分类 |
 | `weeks.json` | 官方周 Star 分布 | 首屏渲染后，用于迷你图；打开详情时复用 |
-| `details.json` | 语言构成、赞助链接、README 文件名等 | 首次打开详情时 |
+| `details.json` | 语言构成、赞助链接、README 文件名、分类的简介与复核原因等 | 首次打开详情时 |
 | `trending.json` | 最新一天的 Trending 快照；还没有快照时不生成，页面也不显示“近期热点” | 首次切到“近期热点”时，失败可重试 |
 
 页面类型在 `src/data/types.ts`，与 `src/hot_repos/export_web.py` 的列一一对应，由 `tests/test_export.py` 检查一致。**改导出的列时，先改 `export_web.py`，再改 `types.ts`，测试会提醒遗漏。**
@@ -23,7 +24,7 @@ README 正文不在数据里，查看详情时从 `raw.githubusercontent.com/{�
 | 目录 | 职责 |
 |---|---|
 | `src/main.ts` | 入口：加载数据、组装页面；地址对应页面状态，可直接分享：`#/trending` 近期热点，`#/owner/repo` 项目详情，空地址为总榜 |
-| `src/data/` | 类型、分层加载、把列式数据还原为行并派生字段（`model.ts`） |
+| `src/data/` | 类型、分层加载、把列式数据还原为行并派生字段（`model.ts`）、分类目录（`taxonomy.ts`） |
 | `src/state/` | `store.ts` 状态容器；`query.ts` 筛选、排序、分页（纯函数）；`prefs.ts` 本地偏好；`route.ts` 地址与视图的对应；`trending.ts` 把快照整理成（时间段，语言）榜单并标出已在总榜的项目 |
 | `src/features/` | 页面各部分：`header`、`filters`、`table`、`trending`、`drawer`、`readme`、`sparkline`、`position`、`columns` |
 | `src/charts/` | ECharts 按需注册（`echarts.ts`）与周 Star 图 |
@@ -33,6 +34,18 @@ README 正文不在数据里，查看详情时从 `raw.githubusercontent.com/{�
 **状态流**：`Store.set(patch)` 更新状态，通知订阅者并带上变化的字段集合，订阅者只重绘自己关心的部分。筛选、排序、每页条数变化后自动回到第一页。主题、列、每页条数保存在 `localStorage`（键前缀 `hot-repos:`），保存的值不合法或列已不存在时忽略。
 
 **纯函数与界面分离**：筛选、排序、分页、分桶、位置计算都在不碰 DOM 的纯函数里，测试直接覆盖。
+
+## 分类
+
+数据里有分类时（`meta.classified` 大于 0 且 `classification.json` 加载成功），页面多出：
+
+- **分类树**（`features/category-filter.ts`）：一棵可展开的树，最多三级，每一级都可勾选；勾选某一级就包含其下全部子分类，多个勾选取并集。选中子分类时，未选的父级显示半选并自动展开；选中一个节点时，它的上级和下级的单独勾选被收起（上级被收窄，下级已被包含）。数量是“满足其他全部条件”时该分类下的项目数，没有项目的分支隐藏（已选的除外），分类自身的勾选不影响自己的数量。树上方有“仅主分类 / 含关联分类”切换：默认只按主分类，每个项目只出现一次，各级数量可以相加；切到“含关联分类”后，项目也出现在它的关联分类下。没有分类的项目在勾选任何分类后不会出现。树的上方显示目录的 `note`（若有）。逻辑在 `state/query.ts`（`categoryCounts` 与筛选条件 `categories`、`categoryScope`），目录结构在 `data/taxonomy.ts`。
+- **项目形态**：与话题等一样，是 `GROUPS` 里的一个普通分组。
+- **表格列**“分类”：主分类的完整路径，过长时省略，悬停看全文，可排序，默认显示。
+- **详情卡片**：一句话简介、主分类、关联分类、项目形态、待复核原因和目录的 `note`（若有）；未分类的项目显示“尚未分类”。简介与复核原因来自 `details.json`，随详情数据到达后补上。
+- **搜索**：搜索文本包含分类名称和形态。
+
+没有分类数据（文件不存在或加载失败）时，上述分类相关的筛选、列内容和卡片都不出现，页面其余部分不受影响。
 
 ## 近期热点
 

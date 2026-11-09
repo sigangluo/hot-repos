@@ -4,9 +4,10 @@ from unittest.mock import patch
 
 import httpx
 import pytest
+from conftest import classification_row, taxonomy, write_classification
 from fake_github import FakeGitHub, sunday
 
-from hot_repos import config, store
+from hot_repos import classification, config, store
 from hot_repos.github.client import GitHubClient, GitHubError
 from hot_repos.pipeline import DataError, Options, run
 from hot_repos.validate import validate
@@ -150,3 +151,15 @@ def test_recent_mode_warns_when_replacing_longer_history(tmp_path, fake, caplog)
     with caplog.at_level("WARNING"):
         run_pipeline(tmp_path, fake, now=NOW + timedelta(days=2), n=3, max_age=timedelta(0))
     assert "更长的周 Star 历史" in caplog.text
+
+
+def test_pipeline_carries_classification_over(tmp_path, fake):
+    run_pipeline(tmp_path, fake, n=3)
+    data = tmp_path / "data"
+    names = [r["full_name"] for r in store.read_rows(data, "repos")]
+    write_classification(data, [classification_row(names[0]), classification_row("gone/repo")])
+    assert validate(data) != []  # gone/repo 不在总榜
+    run_pipeline(tmp_path, fake, n=3)
+    assert validate(data) == []
+    assert [r["full_name"] for r in classification.read_rows(data)] == [names[0]]
+    assert classification.read_taxonomy(data) == taxonomy()

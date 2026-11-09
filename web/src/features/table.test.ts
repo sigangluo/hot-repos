@@ -2,14 +2,15 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { Meta } from '../data/types';
 import { Store } from '../state/store';
-import { makeRepos, NOW } from '../test-utils';
+import { buildTaxonomy } from '../data/taxonomy';
+import { classification, makeRepos, NOW } from '../test-utils';
 import type { Ctx } from './context';
 import { renderResults } from './table';
 
 const META: Meta = {
   schema_version: 1, snapshot_date: '2026-01-10', board_size: 25, repos: 25, missing: 0,
   rank_captured_at: NOW / 1000, repos_fetched_at: [NOW / 1000, NOW / 1000], star_weeks_fetched_at: null,
-  star_weeks_per_page: 30, trending_date: null,
+  star_weeks_per_page: 30, trending_date: null, classified: 0,
 };
 
 function setup() {
@@ -22,7 +23,7 @@ function setup() {
     })),
   );
   const store = new Store();
-  const ctx: Ctx = { meta: META, repos, now: NOW, store, weeks: null };
+  const ctx: Ctx = { meta: META, repos, taxonomy: null, now: NOW, store, weeks: null };
   const root = renderResults(ctx);
   document.body.replaceChildren(root);
   const names = () => [...root.querySelectorAll('tbody tr .name')].map((a) => a.textContent);
@@ -38,6 +39,17 @@ describe('结果表格', () => {
     expect(names()).toHaveLength(10);
     expect(names()[0]).toBe('owner1/repo1');
     expect(summary()).toBe('共 25 个项目');
+  });
+
+  it('没有分类数据时不显示分类列，有分类数据时显示', () => {
+    const headers = (root: HTMLElement) => [...root.querySelectorAll('thead th')].map((th) => th.textContent?.replace(/[↑↓ ]/g, ''));
+    expect(headers(setup().root)).not.toContain('分类');
+
+    const file = classification([[2, [], []]]);
+    const repos = makeRepos([{ full_name: 'a/b' }], file);
+    const root = renderResults({ meta: META, repos, taxonomy: buildTaxonomy(file), now: NOW, store: new Store(), weeks: null });
+    expect(headers(root)).toContain('分类');
+    expect(root.querySelector('tbody td.clip')?.textContent).toBe('开发 › 工具 › 命令行');
   });
 
   it('翻页与每页条数', () => {
@@ -93,7 +105,7 @@ describe('结果表格', () => {
   it('项目名是文本而不是 HTML', () => {
     const repos = makeRepos([{ full_name: 'o/<img src=x onerror=alert(1)>', description: '<b>bold</b>' }]);
     const store = new Store();
-    const root = renderResults({ meta: META, repos, now: NOW, store, weeks: null });
+    const root = renderResults({ meta: META, repos, taxonomy: null, now: NOW, store, weeks: null });
     expect(root.querySelector('tbody img, tbody b')).toBeNull();
     expect(root.querySelector('tbody .name')?.textContent).toContain('<img');
   });

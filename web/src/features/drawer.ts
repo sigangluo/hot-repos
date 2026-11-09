@@ -126,8 +126,10 @@ async function fillOverview(ctx: Ctx, el: HTMLElement, repo: Repo, onChart: (c: 
   const chartHost = h('div', { class: 'loading' }, '正在加载周 Star 分布…');
   const langHost = h('div', { class: 'loading' }, '正在加载详情…');
   const linksHost = h('div', { class: 'chips' });
+  const classification = classificationCard(ctx, repo);
   mount(el,
     h('section', { class: 'card' }, h('h3', null, '基本信息'), facts),
+    classification?.card ?? null,
     positionCard(ctx, repo),
     h('section', { class: 'card' }, h('h3', null, '官方周 Star 分布'), chartHost),
     h('section', { class: 'card' }, h('h3', null, '语言构成'), langHost),
@@ -149,11 +151,54 @@ async function fillOverview(ctx: Ctx, el: HTMLElement, repo: Repo, onChart: (c: 
 
   if (detailsResult.status === 'fulfilled') {
     const d = detailsResult.value;
+    classification?.fill(d.summary[repo.index] ?? null, d.review_reason[repo.index] ?? null);
     mount(langHost, languageBar(d.languages[repo.index] ?? []));
     mount(linksHost, ...links(repo, d));
   } else {
     mount(langHost, h('p', { class: 'error' }, '详情数据加载失败。'));
   }
+}
+
+/** 分类路径：各级之间用淡色分隔符，最后一级加粗，窄时自然换行。 */
+function crumbs(path: string[]): Node {
+  return h('span', { class: 'crumbs' }, path.flatMap((name, i) => [
+    i > 0 ? h('i', { class: 'sep', 'aria-hidden': 'true' }, '›') : null,
+    h('span', null, name),
+  ]));
+}
+
+function kv(label: string, value: Node | Node[]) {
+  return h('div', null, h('dt', null, label), h('dd', null, value));
+}
+
+/** 分类卡片；简介和复核原因在详情数据到达后由 `fill` 补上。数据里没有任何分类时不显示。 */
+function classificationCard(ctx: Ctx, repo: Repo): { card: Node; fill: (summary: string | null, review: string | null) => void } | null {
+  if (ctx.meta.classified === 0) return null;
+  if (repo.category.length === 0) {
+    return { card: h('section', { class: 'card' }, h('h3', null, '分类'), h('p', { class: 'muted' }, '尚未分类。')), fill: () => undefined };
+  }
+  const summary = h('p', { class: 'class-summary' });
+  const review = h('p', { class: 'note' });
+  const card = h('section', { class: 'card' },
+    h('h3', null, '分类'),
+    summary,
+    h('dl', { class: 'kv-list' },
+      kv('主分类', crumbs(repo.category)),
+      repo.relatedPaths.length
+        ? kv('关联分类', h('div', { class: 'paths' }, repo.relatedPaths.map(crumbs)))
+        : null,
+      repo.forms.length
+        ? kv('项目形态', h('div', { class: 'chips' }, repo.forms.map((f) => h('span', { class: 'chip plain' }, f))))
+        : null),
+    review,
+    ctx.taxonomy?.note ? h('p', { class: 'note' }, ctx.taxonomy.note) : null);
+  return {
+    card,
+    fill: (text, reason) => {
+      mount(summary, text ?? '');
+      mount(review, reason ? `标记为待复核：${reason}` : '');
+    },
+  };
 }
 
 let positionValues: Map<string, number[]> | null = null;

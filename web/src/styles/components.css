@@ -376,9 +376,51 @@ tbody tr:hover td {
   background: var(--surface-2);
 }
 
+/* 分类树：缩进表示层级，展开按钮占固定宽度，使各级复选框对齐。 */
+.tree {
+  margin: 0;
+  padding: 0 0 0 var(--space-4);
+  list-style: none;
+}
+
+.tree.root {
+  padding-left: 0;
+}
+
+.tree-row {
+  display: flex;
+  align-items: center;
+}
+
+.tree-row .option {
+  flex: 1;
+  min-width: 0;
+  min-height: 1.625rem; /* 触控目标不小于 24px，且与相邻的展开按钮留出间距 */
+  margin-left: var(--space-2);
+}
+
+.tree-toggle {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
 .repo-cell {
   display: grid;
+  min-width: 240px; /* 列多时表格横向滚动，而不是把项目名挤成省略号 */
   max-width: 420px;
+}
+
+/* 内容较长的文本列：限制宽度，完整内容在悬停提示里。 */
+td.clip {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .repo-cell .name {
@@ -536,6 +578,49 @@ tbody tr:hover td {
   margin: 0;
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
+}
+
+/* 键值列表：左侧标签定宽，右侧内容占满剩余宽度，长内容在自己的列里换行。 */
+.kv-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.kv-list > div {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.kv-list dt {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.kv-list dd {
+  margin: 0;
+}
+
+.class-summary {
+  margin: 0 0 var(--space-3);
+  font-weight: 600;
+}
+
+.paths {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.crumbs .sep {
+  margin: 0 0.4em;
+  color: var(--text-muted);
+  font-style: normal;
+}
+
+.crumbs span:last-child {
+  font-weight: 600;
 }
 
 .pos {

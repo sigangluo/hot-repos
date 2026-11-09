@@ -124,6 +124,40 @@ def write_trending(directory: Path, rows: list[dict], name: str = "2026-01-10.pa
     pq.write_table(pa.Table.from_pylist(rows, schema=schema.TRENDING), directory / name)
 
 
+def taxonomy() -> dict:
+    return {
+        "note": "测试说明",
+        "forms": {"app": "应用", "list": "资源清单"},
+        "nodes": [
+            {"id": "dev", "label": "开发"},
+            {"id": "dev.tools", "label": "工具", "parent": "dev"},
+            {"id": "dev.tools.cli", "label": "命令行", "parent": "dev.tools"},
+            {"id": "ai", "label": "人工智能"},
+        ],
+    }
+
+
+def classification_row(name: str, **changes) -> dict:
+    return {
+        "full_name": name,
+        "category": "dev.tools.cli",
+        "related": ["ai"],
+        "forms": ["app"],
+        "summary": "一个工具",
+        "review_reason": None,
+    } | changes
+
+
+def write_classification(
+    path: Path, rows: list[dict] | None = None, tax: dict | None = None
+) -> None:
+    """在 path 下写入分类目录与结果（默认给 a/one 一行）。"""
+    from hot_repos import classification
+
+    classification.write_taxonomy(path, tax or taxonomy())
+    classification.write_rows(path, rows if rows is not None else [classification_row("a/one")])
+
+
 @pytest.fixture
 def dataset(tmp_path: Path) -> Path:
     return write_dataset(tmp_path / "data")

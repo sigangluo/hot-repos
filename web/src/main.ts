@@ -4,6 +4,7 @@ import './styles/components.css';
 
 import { loadCore, loadWeeks } from './data/load';
 import { asOf, buildRepos } from './data/model';
+import { buildTaxonomy } from './data/taxonomy';
 import type { Ctx } from './features/context';
 import { renderDrawer } from './features/drawer';
 import { renderFilters } from './features/filters';
@@ -16,10 +17,11 @@ import { Store } from './state/store';
 
 async function start(app: HTMLElement): Promise<void> {
   mount(app, h('p', { class: 'loading page' }, '正在加载数据…'));
-  const [meta, columns] = await loadCore();
-  const repos = buildRepos(columns, asOf(meta));
+  const [meta, columns, classification] = await loadCore();
+  const repos = buildRepos(columns, asOf(meta), classification);
   const store = new Store();
-  const ctx: Ctx = { meta, repos, now: asOf(meta), store, weeks: null };
+  const taxonomy = classification && buildTaxonomy(classification);
+  const ctx: Ctx = { meta, repos, taxonomy, now: asOf(meta), store, weeks: null };
 
   const drawerHost = h('div', { id: 'drawer-root' });
   const board = h('div', { class: 'layout' }, renderFilters(ctx), renderResults(ctx));

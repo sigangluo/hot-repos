@@ -21,6 +21,10 @@ def test_trending_field_table_matches_schema():
     assert documented_fields("trending/YYYY-MM-DD.parquet") == schema.TRENDING.names
 
 
+def test_classification_field_table_matches_schema():
+    assert documented_fields("classification.parquet") == schema.CLASSIFICATION.names
+
+
 def test_manifest_field_table_matches_schema():
     assert documented_fields("manifest.json") == list(schema.MANIFEST_FIELDS)
 
@@ -31,6 +35,8 @@ def test_files_listed_in_overview_exist_in_config():
         config.STAR_WEEKS_FILE,
         config.RANK_HISTORY_FILE,
         config.MANIFEST_FILE,
+        config.CLASSIFICATION_FILE,
+        config.TAXONOMY_FILE,
     ):
         assert f"`{filename}`" in DOC
 

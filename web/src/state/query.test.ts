@@ -1,16 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import { buildRepos, licenseClass, type Repo } from '../data/model';
-import { NOW, columns, makeRepos } from '../test-utils';
+import { NOW, classification, columns, makeRepos } from '../test-utils';
 import {
   GROUPS,
   activeCount,
   ageBucket,
   applyFilters,
+  categoryCounts,
   emptyFilters,
   facetCounts,
   paginate,
   pushBucket,
   sortRepos,
+  type Filters,
 } from './query';
 
 const repos = makeRepos;
@@ -131,5 +133,81 @@ describe('排序与分页', () => {
     expect(paginate(items, 99, 2).page).toBe(3);
     expect(paginate(items, 0, 2).page).toBe(1);
     expect(paginate([], 5, 10)).toEqual({ items: [], page: 1, pages: 1, total: 0 });
+  });
+});
+
+describe('分类筛选', () => {
+  // 节点：0 开发、1 工具、2 命令行、3 编辑器、4 人工智能、5 智能体
+  // a/cli：开发›工具›命令行（关联 人工智能›智能体）；b/editor：开发›编辑器；c/none：未分类
+  const data = makeRepos(
+    [{ full_name: 'a/cli' }, { full_name: 'b/editor' }, { full_name: 'c/none' }],
+    classification([[2, [5], [0]], [3, [], [0, 1]], [null, [], []]]),
+  );
+  const group = (id: string) => GROUPS.find((g) => g.id === id)!;
+  const names = (filters: Filters) => applyFilters(data, filters).map((r) => r.fullName);
+  const inCategories = (scope: 'primary' | 'all', ...nodes: number[]): Filters => ({
+    ...emptyFilters(),
+    categoryScope: scope,
+    categories: new Set(nodes),
+  });
+
+  it('项目带出主分类路径、关联路径、形态，以及路径上的全部节点', () => {
+    expect(data[0]).toMatchObject({
+      category: ['开发', '工具', '命令行'],
+      relatedPaths: [['人工智能', '智能体']],
+      forms: ['应用'],
+      categoryNodes: [0, 1, 2],
+      relatedNodes: [4, 5],
+    });
+    expect(data[2]).toMatchObject({ category: [], relatedPaths: [], categoryNodes: [], relatedNodes: [], forms: [] });
+  });
+
+  it('选中某一级即包含其下全部子分类', () => {
+    expect(names(inCategories('primary', 0))).toEqual(['a/cli', 'b/editor']);
+    expect(names(inCategories('primary', 1))).toEqual(['a/cli']);
+    expect(names(inCategories('primary', 2))).toEqual(['a/cli']);
+  });
+
+  it('多个选中的分类取并集，未分类的项目选中任何分类后都不出现', () => {
+    expect(names(inCategories('primary', 2, 3))).toEqual(['a/cli', 'b/editor']);
+    expect(names(inCategories('primary', 0, 1, 2, 3, 4, 5))).not.toContain('c/none');
+  });
+
+  it('默认只看主分类，切到“含关联分类”后关联分类也算', () => {
+    expect(names(inCategories('primary', 4))).toEqual([]);
+    expect(names(inCategories('all', 4))).toEqual(['a/cli']);
+    expect(names(inCategories('all', 5))).toEqual(['a/cli']);
+  });
+
+  it('分类树各节点的数量：父节点包含子节点，每个项目只计一次', () => {
+    const counts = categoryCounts(data, emptyFilters());
+    expect([0, 1, 2, 3, 4].map((n) => counts.get(n) ?? 0)).toEqual([2, 1, 1, 1, 0]);
+    // 含关联分类时，a/cli 同时落在开发与人工智能下，各计一次
+    const all = categoryCounts(data, { ...emptyFilters(), categoryScope: 'all' });
+    expect([0, 4, 5].map((n) => all.get(n))).toEqual([2, 1, 1]);
+  });
+
+  it('分类数量不受分类自身的选择影响，但受其他条件影响', () => {
+    const counts = categoryCounts(data, { ...inCategories('primary', 2), text: 'editor' });
+    expect(counts.get(0)).toBe(1);
+    expect(counts.get(2)).toBeUndefined();
+  });
+
+  it('选中的分类计入已选条件数', () => {
+    expect(activeCount(inCategories('primary', 1, 3))).toBe(2);
+  });
+
+  it('可按项目形态筛选，多值取任一', () => {
+    const filters = { ...emptyFilters(), selected: { form: new Set(['库']) } };
+    expect(names(filters)).toEqual(['b/editor']);
+  });
+
+  it('搜索能命中分类名称', () => {
+    expect(names({ ...emptyFilters(), text: '编辑器' })).toEqual(['b/editor']);
+  });
+
+  it('没有分类数据时，项目形态分组不可用', () => {
+    expect(group('form').available?.(makeRepos([{}]))).toBe(false);
+    expect(group('form').available?.(data)).toBe(true);
   });
 });
