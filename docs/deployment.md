@@ -2,7 +2,7 @@
 
 部署由 `.github/workflows/pages.yml` 完成：推送到 `main` 后，从已提交的 `data/` 现场导出页面数据、构建，并发布到 GitHub Pages。页面数据不入库。
 
-> 工作流尚未在 GitHub 上运行过，第一次推送后请查看 Actions 页的结果，必要时按报错调整。
+> 已发布：<https://sigangluo.github.io/hot-repos/>。`pages.yml` 与 `trending.yml` 都已在 GitHub 上手动运行成功；`trending.yml` 的定时触发尚待观察。
 
 ## 第一次发布
 
@@ -22,7 +22,7 @@
    git remote add origin git@github.com:<用户名>/hot-repos.git
    git push -u origin main
    ```
-4. **启用 Pages**：仓库 Settings → Pages → Build and deployment → Source 选 **GitHub Actions**。随后重新运行一次 `Deploy to GitHub Pages` 工作流（Actions 页 → Run workflow）。
+4. **启用 Pages**：免费账号只有公开仓库能用 Pages（私有仓库需要 Pro 或 Team 套餐）。仓库 Settings → Pages → Build and deployment → Source 选 **GitHub Actions**。随后重新运行一次 `Deploy to GitHub Pages` 工作流（Actions 页 → Run workflow）。
 5. 部署成功后，地址形如 `https://<用户名>.github.io/hot-repos/`。构建使用相对路径，仓库改名不需要改配置。
 
 ## 更新数据
@@ -65,9 +65,10 @@ cd web && npm run typecheck && npm test && npm run build
 
 ## 发布前检查清单
 
-- [ ] `uv run hot-repos validate` 通过
-- [ ] 本地检查命令全部通过
-- [ ] `git status` 中没有缓存、虚拟环境、依赖目录和构建产物
+- [x] `uv run hot-repos validate` 通过
+- [x] 本地检查命令全部通过
+- [x] `git status` 中没有缓存、虚拟环境、依赖目录和构建产物
 - [x] LICENSE（MIT）已添加，`pyproject.toml` 与 `web/package.json` 的协议字段已填
-- [ ] Pages 来源已设为 GitHub Actions
-- [ ] 手动触发一次 Trending 工作流，确认能抓取、校验并推送；之后几天确认定时任务在运行
+- [x] Pages 来源已设为 GitHub Actions
+- [x] 手动触发一次 Trending 工作流，确认能抓取、校验并推送、触发部署
+- [ ] 确认 Trending 的定时任务（每天 01:30 UTC）真的在自动运行

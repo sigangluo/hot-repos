@@ -2,7 +2,7 @@
 
 采集 GitHub 总 Star 榜 Top N 项目的元数据和官方 Star 时间分布，输出为 Parquet，并提供可检索、可筛选的静态看板。
 
-> 状态：采集、校验和看板均已可用。GitHub Pages 部署工作流已编写，尚未在 GitHub 上运行过，见 [docs/deployment.md](docs/deployment.md)。
+> 状态：采集、校验和看板均已可用，已部署到 <https://sigangluo.github.io/hot-repos/>，部署与每日任务见 [docs/deployment.md](docs/deployment.md)。
 
 ## 功能
 
@@ -37,7 +37,7 @@ cd web && npm ci && npm run dev       # 开发服务器
 
 ## 数据
 
-`data/` 包含当前快照的项目元数据、官方周 Star 分布和历次快照的名次。用 DuckDB 读取的例子：
+`data/` 包含当前快照的项目元数据、官方周 Star 分布、历次快照的名次，以及 `data/trending/` 下每天一个文件的 Trending 快照。用 DuckDB 读取的例子：
 
 ```bash
 uv run --with duckdb python -c "
@@ -51,6 +51,7 @@ duckdb.sql(\"select rank, full_name, stars from 'data/repos.parquet' order by ra
 - Star 总数是累计规模，不表示近期增长速度。
 - 周 Star 分布统计的是采集时仍保留的 Star 按创建时间的分布，已取消的 Star 不在其中，不能据此还原历史净增长。
 - 总榜是一次采集快照，不是事务一致的时点排名；排名和元数据的获取时间不同，各自记录。
+- Trending 数据来自解析网页，历史只能从开始采集那天算起，无法补抓。
 
 ## 项目结构
 

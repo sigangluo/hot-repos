@@ -23,7 +23,7 @@ async function start(app: HTMLElement): Promise<void> {
 
   const drawerHost = h('div', { id: 'drawer-root' });
   const board = h('div', { class: 'layout' }, renderFilters(ctx), renderResults(ctx));
-  mount(app, h('div', { class: 'page' },
+  mount(app, h('main', { class: 'page' },
     renderHeader(ctx),
     board,
     meta.trending_date ? renderTrendingPage(ctx) : null),

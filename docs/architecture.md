@@ -55,6 +55,7 @@ hot-repos/
 │   ├── pipeline.py            采集流程编排：抓取 → 组装 → 校验 → 发布
 │   └── validate.py            数据完整性与一致性检查
 ├── tests/                     与 src 对应；网络一律用桩，不访问真实 API
+│   └── data/                  从真实 Trending 页面截取的 HTML 样本，用来固定解析器
 ├── data/                      规范数据，提交到 git
 │   ├── repos.parquet          当前快照，一行一个项目
 │   ├── star_weeks.parquet     官方周 Star 分布
@@ -68,7 +69,7 @@ hot-repos/
     └── src/
         ├── main.ts            入口：加载数据、组装页面、地址 `#/owner/repo` 对应详情
         ├── data/              types.ts（页面数据类型）、load.ts（分层加载）、model.ts（行模型与派生字段）
-        ├── state/             store.ts（状态容器）、query.ts（筛选/排序/分页，纯函数）、prefs.ts（本地偏好）
+        ├── state/             store.ts（状态容器）、query.ts（筛选/排序/分页，纯函数）、prefs.ts（本地偏好）、route.ts（地址与视图）、trending.ts（Trending 榜单整理）
         ├── features/          header / filters / table / trending / drawer / readme / sparkline / columns
         ├── charts/            echarts.ts（按需注册）、star-chart.ts
         ├── lib/               dom、format、theme、readme-links
@@ -91,7 +92,7 @@ hot-repos/
 4. **采集缓存与规范数据分离**：`.cache/` 可随时删除并重建，`data/` 才是成果。
 5. **原子与可续跑**：所有落盘先写临时文件再替换；长任务按批追加日志，中断后重跑只补缺口。
 6. **前端依赖走 npm**：不手工放置压缩后的第三方文件；ECharts 按需引入以控制体积。
-7. **页面数据分层加载**：导出为列式 JSON（`trending.json` 仅在有 Trending 快照时生成）（`{列名: [值]}`，各列等长、按名次排序），不拆成每项目一个文件。首屏只加载 `meta.json` 和 `repos.json`（5000 项目约 1.9MB，gzip 后约 0.7MB）；`weeks.json`（周 Star，迷你图和详情用）在首屏之后加载，`details.json`（语言构成、赞助链接等）在首次打开详情时加载，`trending.json` 在首次切到“近期热点”时加载。时间戳统一为 Unix 秒。首屏体积是性能预算的第一项。
+7. **页面数据分层加载**：导出为列式 JSON（`{列名: [值]}`，各列等长、按名次排序；`trending.json` 的行同样是列式，外层另有快照日期与语言列表，且仅在有 Trending 快照时生成），不拆成每项目一个文件。首屏只加载 `meta.json` 和 `repos.json`（5000 项目约 1.9MB，gzip 后约 0.7MB）；`weeks.json`（周 Star，迷你图和详情用）在首屏之后加载，`details.json`（语言构成、赞助链接等）在首次打开详情时加载，`trending.json` 在首次切到“近期热点”时加载。时间戳统一为 Unix 秒。首屏体积是性能预算的第一项。
 8. **页面通过 HTTP 访问**：使用 ES 模块，本地用 `npm run dev` / `npm run preview`，不再支持双击 `file://` 打开。
 9. **视觉统一**：颜色、间距、字号、圆角集中为 CSS 变量（设计令牌），明暗主题只切换令牌，组件样式不写死颜色值。
 10. **README 外部内容的两道防线**：净化（DOMPurify）加内容安全策略（构建时注入，脚本只能来自本站）。
@@ -109,5 +110,5 @@ hot-repos/
 3. ~~已有快照迁入 `data/` 并通过 `validate`~~ 已完成
 4. ~~采集层：`github/*`、`cache.py`、`collect.py`、`transform.py`、`store.py`、`pipeline.py`、`cli.py`，附测试~~ 已完成
 5. ~~导出层（`export_web.py`）与前端：设计令牌 → 数据加载 → 表格 → 筛选 → 详情 → README~~ 已完成
-6. ~~CI 与 Pages 工作流、文档~~ 已完成；工作流尚未在 GitHub 上运行。LICENSE 与首次提交待定，见 [deployment.md](deployment.md)
+6. ~~CI 与 Pages 工作流、文档~~ 已完成；已推送并部署到 GitHub Pages，三个工作流均已在 GitHub 上跑通，见 [deployment.md](deployment.md)
 7. Trending：~~采集器、每日快照、校验、每日定时任务~~ 已完成；~~页面（与 Trending 对齐的"近期热点"视图）~~ 已完成；自动部署联动与历史功能（按日期回看、上榜天数与最高名次、详情中的上榜时间线）待做，历史功能需要先积累数据
