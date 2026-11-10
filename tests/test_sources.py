@@ -407,6 +407,7 @@ def test_registry_has_all_sources():
     assert list(registry()) == [
         "explore",
         "awesome",
+        "awesome-site",
         "ossinsight",
         "wikidata",
         "borges",
@@ -791,3 +792,104 @@ def test_awesome_scheme_dates_come_from_the_list_repos():
     guidance = listing["guidance"]["includes"]
     assert "创建于 2018-05-06" in guidance and "最近推送 2026-10-01" in guidance
     assert_meta_valid(collected)
+
+
+# ---------- awesome：本站分组 ----------
+
+VOCAB = {
+    "web": {"label": "网页开发", "definition": "网页相关的清单。"},
+    "other-stuff": {"label": "别的", "definition": "别的清单。"},
+}
+
+
+def test_build_site_groups_by_the_site_vocabulary():
+    readmes = {"me/awesome-demo": README}
+    board = {"a/one", "b/two", "c/three", "d/four", "f/six"}
+    collected = awesome.build_site(
+        [row("me/awesome-demo", 1)], readmes, board, VOCAB, {"Me/Awesome-Demo": "web"}
+    )
+    assert [n["id"] for n in collected.meta["nodes"]] == [
+        "web",
+        "web.me-awesome-demo",
+        "web.me-awesome-demo.web",
+        "web.me-awesome-demo.data",
+    ]
+    group = collected.meta["nodes"][0]
+    assert (
+        group["label"] == "网页开发"
+        and group["guidance"]["includes"] == "本站定义：网页相关的清单。"
+    )
+    assert collected.meta["method"] == "model" and collected.meta["name"].endswith("本站分组")
+    assert collected.meta["order"] == 16 and collected.meta["primary"] is False
+    assert collected.members["a/one"] == ["web.me-awesome-demo.web"]
+    assert_meta_valid(collected)
+
+
+def test_build_site_puts_unmapped_lists_in_the_other_group():
+    readmes = {"me/awesome-demo": README}
+    board = {"a/one", "b/two", "c/three", "d/four", "f/six"}
+    collected = awesome.build_site(
+        [row("me/awesome-demo", 1)], readmes, board, VOCAB, {"me/awesome-demo": "gone"}
+    )
+    group = collected.meta["nodes"][0]
+    assert (group["id"], group["label"]) == ("other", awesome.SITE_OTHER_LABEL)
+    assert_meta_valid(collected)
+
+
+def test_the_two_awesome_views_share_lists_and_sections_but_not_groups():
+    readmes = {"me/awesome-demo": README}
+    board = {"a/one", "b/two", "c/three", "d/four", "f/six"}
+    lists = [row("me/awesome-demo", 1)]
+    other = awesome.build(lists, readmes, board, {"me/awesome-demo": "Security"})
+    site = awesome.build_site(lists, readmes, board, VOCAB, {"me/awesome-demo": "web"})
+    tail = lambda c: [n["id"].split(".", 1)[1] for n in c.meta["nodes"] if "." in n["id"]]  # noqa: E731
+    assert tail(other) == tail(site)
+    assert other.meta["nodes"][0]["label"] != site.meta["nodes"][0]["label"]
+
+
+def test_the_groups_file_is_consistent():
+    mapping = awesome.load_groups()
+    vocabulary = mapping["vocabulary"]
+    assert all(v["label"].strip() and v["definition"].strip() for v in vocabulary.values())
+    assert all(re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", key) for key in vocabulary)
+    assert len({v["label"] for v in vocabulary.values()}) == len(vocabulary)
+    assert set(mapping["groups"].values()) <= set(vocabulary)
+    assert not {n.lower() for n in mapping["groups"]} & {n.lower() for n in mapping["exclude"]}
+
+
+def test_candidate_lists_drop_excluded_repositories():
+    rows = [row("me/awesome-demo", 2), row("lissy93/dashy", 1, topics=["awesome"])]
+    assert [r["full_name"] for r in awesome.candidate_lists(rows)] == ["me/awesome-demo"]
+
+
+def test_collect_site_does_not_need_the_index():
+    seen = []
+
+    def handler(request):
+        seen.append(str(request.url))
+        return httpx.Response(200, text=README)
+
+    fetcher = Fetcher(client=httpx.Client(transport=httpx.MockTransport(handler)), pause=0)
+    board = [
+        row("me/awesome-demo", 1),
+        row("a/one", 2, readme_path=None),
+        row("b/two", 3),
+        row("c/three", 4),
+        row("d/four", 5),
+    ]
+    collected = awesome.collect_site(fetcher, board)
+    assert awesome.INDEX_URL not in seen
+    assert collected.meta["nodes"][0]["id"] == "other"  # 映射文件里没有 me/awesome-demo
+
+
+def test_fetcher_reuses_text_within_a_run():
+    calls = []
+
+    def handler(request):
+        calls.append(str(request.url))
+        return httpx.Response(200, text="x")
+
+    fetcher = Fetcher(client=httpx.Client(transport=httpx.MockTransport(handler)), pause=0)
+    assert [fetcher.text("https://example.com/a") for _ in range(3)] == ["x", "x", "x"]
+    fetcher.text("https://example.com/a", {"Accept": "text/csv"})  # 请求头不同，另取
+    assert len(calls) == 2

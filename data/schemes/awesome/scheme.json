@@ -4,7 +4,7 @@
  "method": "curated",
  "order": 15,
  "primary": false,
- "note": "清单由各自的作者围绕一个主题挑选项目，收录有取舍，被收录不等于质量保证；一个项目可以被多个清单、多个章节收录。只保留在总榜里收录了至少 3 个项目的清单。清单的领域分组来自 Awesome 总索引（sindresorhus/awesome），总索引没收录的清单（多是较新的）归在“其他”组，不是本站另外判断的。章节名称沿用清单原文，由本站按标题层级自动解析，个别清单结构特殊时可能不准；各清单的许可见它的分类说明。",
+ "note": "清单由各自的作者围绕一个主题挑选项目，收录有取舍，被收录不等于质量保证；一个项目可以被多个清单、多个章节收录。只保留在总榜里收录了至少 3 个项目的清单。章节名称沿用清单原文，由本站按标题层级自动解析，个别清单结构特殊时可能不准；各清单的许可见它的分类说明。清单的领域分组来自 Awesome 总索引（sindresorhus/awesome），总索引没收录的清单（多是较新的）归在“其他”组，不是本站另外判断的；想看本站自己的分组，切换到“Awesome 清单 · 本站分组”。",
  "source": {
   "name": "总榜里的 Awesome 类仓库的 README（入口：sindresorhus/awesome）",
   "url": "https://github.com/sindresorhus/awesome",
@@ -4241,29 +4241,6 @@
    "id": "platforms.sindresorhus-awesome-electron.tools",
    "label": "Tools",
    "parent": "platforms.sindresorhus-awesome-electron"
-  },
-  {
-   "id": "other.lissy93-dashy",
-   "label": "lissy93/dashy",
-   "parent": "other",
-   "guidance": {
-    "includes": "🚀 A self-hostable personal dashboard built for you. Includes status-checking, widgets, themes, icon packs, a UI editor and tons more!（清单仓库创建于 2021-02-28，最近推送 2026-11-07；清单许可：MIT）"
-   }
-  },
-  {
-   "id": "other.lissy93-dashy.icons",
-   "label": "Icons 🧸",
-   "parent": "other.lissy93-dashy"
-  },
-  {
-   "id": "other.lissy93-dashy.cloud-backup-sync",
-   "label": "Cloud Backup & Sync ☁",
-   "parent": "other.lissy93-dashy"
-  },
-  {
-   "id": "other.lissy93-dashy.alternatives",
-   "label": "Alternatives 🙌",
-   "parent": "other.lissy93-dashy"
   },
   {
    "id": "other.igglybuff-awesome-piracy",

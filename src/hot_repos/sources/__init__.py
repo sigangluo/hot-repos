@@ -59,9 +59,15 @@ class Fetcher:
         self.client = client or httpx.Client(timeout=60, follow_redirects=True)
         self.attempts = attempts
         self.pause = pause
+        self._texts: dict[
+            tuple[str, tuple[tuple[str, str], ...]], str
+        ] = {}  # 同一次运行里同一地址只取一次
 
     def text(self, url: str, headers: Mapping[str, str] | None = None) -> str:
-        return self._get(url, headers).text
+        key = (url, tuple(sorted((headers or {}).items())))
+        if key not in self._texts:
+            self._texts[key] = self._get(url, headers).text
+        return self._texts[key]
 
     def json(self, url: str) -> Any:
         return self._get(url).json()
@@ -120,6 +126,7 @@ def registry(board: Sequence[Mapping[str, Any]] | None = None) -> dict[str, Coll
     return {
         "explore": explore.collect,
         "awesome": partial(awesome.collect, board_rows=board or []),
+        "awesome-site": partial(awesome.collect_site, board_rows=board or []),
         "ossinsight": ossinsight.collect,
         "wikidata": wikidata.collect,
         "borges": borges.collect,

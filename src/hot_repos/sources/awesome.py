@@ -12,10 +12,13 @@ Awesome 清单是有人围绕一个主题收集的链接，README 里按章节�
 不转存清单里的描述文字；各清单的许可写在它的分类说明里。
 """
 
+import json
 import logging
 import re
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from . import Collected, Fetcher, SourceError
@@ -29,6 +32,8 @@ INDEX_URL = "https://raw.githubusercontent.com/sindresorhus/awesome/main/readme.
 INDEX_LEVEL = 2  # 总索引里领域分组是二级标题
 OTHER_ID = "other"
 OTHER_LABEL = "其他（总索引未收录）"
+SITE_OTHER_LABEL = "其他（尚未分组）"
+GROUPS_FILE = Path(__file__).with_name("awesome_groups.json")  # 本站分组的词表与映射
 MIN_BOARD_MEMBERS = 3  # 清单在总榜里至少收录这么多个项目才保留
 MIN_LINKS = 5  # README 里至少有这么多个不同的仓库链接才算清单（排除只是名字带 awesome 的普通项目）
 MAX_FAILURES = 0.2  # README 取不到的清单超过这个比例时，认为来源出了问题
@@ -216,22 +221,116 @@ def _fetch_readmes(fetcher: Fetcher, lists: Sequence[Mapping[str, Any]]) -> dict
     return {name: text for name, text in results if text is not None}
 
 
-def build(
+@dataclass(frozen=True)
+class Group:
+    """清单上面的一级分组：编号、名称、说明。"""
+
+    id: str
+    label: str
+    guidance: str
+
+
+Assigner = Callable[[str], Group]  # 清单仓库名 -> 它所属的分组
+
+
+def load_groups() -> dict[str, Any]:
+    """本站分组的词表（vocabulary）、清单归属（groups）和不是清单的仓库（exclude）。"""
+    return json.loads(GROUPS_FILE.read_text(encoding="utf-8"))
+
+
+def index_assigner(groups: Mapping[str, str]) -> Assigner:
+    """按 Awesome 总索引分组：groups 是 {清单仓库名（小写）: 领域分组名}，没有的归入“其他”。"""
+
+    def assign(name: str) -> Group:
+        label = groups.get(name.lower())
+        if label is None:
+            return Group(
+                OTHER_ID,
+                OTHER_LABEL,
+                f"总榜里的 Awesome 清单中，没有被 Awesome 总索引（{INDEX_REPO}）收录的，所以没有领域分组。",
+            )
+        return Group(
+            slugify(label), label, f"Awesome 总索引（{INDEX_REPO}）里「{label}」章节收录的清单。"
+        )
+
+    return assign
+
+
+def site_assigner(
+    vocabulary: Mapping[str, Mapping[str, str]], groups: Mapping[str, str]
+) -> Assigner:
+    """按本站自己的分组：vocabulary 是 {分组编号: {label, definition}}，groups 是 {清单仓库名: 分组编号}。"""
+    by_name = {name.lower(): group for name, group in groups.items()}
+
+    def assign(name: str) -> Group:
+        group = by_name.get(name.lower())
+        if group not in vocabulary:
+            return Group(
+                OTHER_ID,
+                SITE_OTHER_LABEL,
+                "不在本站的分组映射里的清单（多是新进总榜的），尚未分组。",
+            )
+        item = vocabulary[group]
+        return Group(group, item["label"], f"本站定义：{item['definition']}")
+
+    return assign
+
+
+_SOURCE = {
+    "name": "总榜里的 Awesome 类仓库的 README（入口：sindresorhus/awesome）",
+    "url": "https://github.com/sindresorhus/awesome",
+    "license": "各清单仓库自行声明，见各分类说明",
+    "attribution": "各 Awesome 清单的作者与贡献者。本站只保存清单收录了哪些项目及其章节名称，不转存清单的其他内容。",
+}
+_NOTE_COMMON = (
+    "清单由各自的作者围绕一个主题挑选项目，收录有取舍，被收录不等于质量保证；一个项目可以被多个清单、多个章节收录。"
+    f"只保留在总榜里收录了至少 {MIN_BOARD_MEMBERS} 个项目的清单。章节名称沿用清单原文，由本站按标题层级自动解析，"
+    "个别清单结构特殊时可能不准；各清单的许可见它的分类说明。"
+)
+
+
+def index_meta() -> dict[str, Any]:
+    return {
+        "name": "Awesome 清单",
+        "summary": "总榜里的 Awesome 类仓库（各领域的项目清单）自己的分类：清单按 Awesome 总索引的领域分组，每个清单是一个分类，清单里的章节是子分类，收录的项目属于对应章节。",
+        "method": "curated",
+        "order": 15,
+        "primary": False,
+        "note": (
+            f"{_NOTE_COMMON}清单的领域分组来自 Awesome 总索引（{INDEX_REPO}），总索引没收录的清单（多是较新的）"
+            "归在“其他”组，不是本站另外判断的；想看本站自己的分组，切换到“Awesome 清单 · 本站分组”。"
+        ),
+        "source": _SOURCE,
+    }
+
+
+def site_meta() -> dict[str, Any]:
+    return {
+        "name": "Awesome 清单 · 本站分组",
+        "summary": "同样是总榜里的 Awesome 清单及其章节，但清单按本站自己的领域词表分组（编程语言、前端、AI 智能体……），与“Awesome 清单”里总索引的分法互为对照。",
+        "method": "model",
+        "order": 16,
+        "primary": False,
+        "note": (
+            f"{_NOTE_COMMON}清单的分组是本站（语言模型）依据清单名称与描述判断的，词表也是本站定的，没有经过人工验证；"
+            "清单与章节来自各 Awesome 仓库。别人（Awesome 总索引）的分法见“Awesome 清单”体系。"
+        ),
+        "source": _SOURCE,
+    }
+
+
+def _build(
     lists: Sequence[Mapping[str, Any]],
     readmes: Mapping[str, str],
     board: set[str],
-    groups: Mapping[str, str] | None = None,
+    assign: Assigner,
+    meta: dict[str, Any],
 ) -> Collected:
-    """lists：总榜里的清单行（按名次）；readmes：{仓库名: README 文本}；board：总榜项目名（小写）；
-    groups：{清单仓库名（小写）: 领域分组}，来自 Awesome 总索引，没有的清单归入“其他”组。
-
-    三级：领域分组 › 清单 › 章节。
-    """
-    groups = groups or {}
+    """三级：领域分组 › 清单 › 章节。分组由 assign 决定；创建与更新日期取各清单仓库的最早创建与最晚推送。"""
     nodes: list[dict[str, Any]] = []
     members: dict[str, list[str]] = {}
-    group_nodes: dict[str, str] = {}  # 分组名 -> 节点编号
-    list_ids: dict[str, set[str]] = {}  # 节点编号 -> 其下已用的清单编号片段
+    group_ids: set[str] = set()
+    list_ids: dict[str, set[str]] = {}  # 分组编号 -> 其下已用的清单编号片段
     created_days: list[str] = []
     updated_days: list[str] = []
     for row in lists:
@@ -245,31 +344,19 @@ def build(
             or len({m for m in distinct if m.lower() in board}) < MIN_BOARD_MEMBERS
         ):
             continue
-        group_label = groups.get(name.lower(), OTHER_LABEL)
-        if group_label not in group_nodes:
-            group_id = (
-                OTHER_ID
-                if group_label == OTHER_LABEL
-                else unique_slug(slugify(group_label), set(group_nodes.values()))
-            )
-            group_nodes[group_label] = group_id
-            list_ids[group_id] = set()
+        group = assign(name)
+        if group.id not in group_ids:
+            group_ids.add(group.id)
+            list_ids[group.id] = set()
             nodes.append(
                 {
-                    "id": group_id,
-                    "label": group_label,
+                    "id": group.id,
+                    "label": group.label,
                     "parent": None,
-                    "guidance": {
-                        "includes": (
-                            f"Awesome 总索引（{INDEX_REPO}）里「{group_label}」章节收录的清单。"
-                            if group_label != OTHER_LABEL
-                            else f"总榜里的 Awesome 清单中，没有被 Awesome 总索引（{INDEX_REPO}）收录的，所以没有领域分组。"
-                        )
-                    },
+                    "guidance": {"includes": group.guidance},
                 }
             )
-        group_id = group_nodes[group_label]
-        list_id = f"{group_id}.{unique_slug(slugify(name), list_ids[group_id])}"
+        list_id = f"{group.id}.{unique_slug(slugify(name), list_ids[group.id])}"
         license_text = f"清单许可：{row['license']}" if row.get("license") else "清单没有声明许可"
         description = first_paragraph(row.get("description") or "", 200)
         created, pushed = _day(row.get("created_at")), _day(row.get("pushed_at"))
@@ -288,7 +375,7 @@ def build(
             {
                 "id": list_id,
                 "label": name,
-                "parent": group_id,
+                "parent": group.id,
                 "guidance": {"includes": f"{description}（{details}）" if description else details},
             }
         )
@@ -309,38 +396,59 @@ def build(
                 )
             for repo in repos:
                 members.setdefault(repo, []).append(node_id)
-    meta = {
-        "name": "Awesome 清单",
-        "summary": "总榜里的 Awesome 类仓库（各领域的项目清单）自己的分类：清单按 Awesome 总索引的领域分组，每个清单是一个分类，清单里的章节是子分类，收录的项目属于对应章节。",
-        "method": "curated",
-        "order": 15,
-        "primary": False,
-        "note": (
-            "清单由各自的作者围绕一个主题挑选项目，收录有取舍，被收录不等于质量保证；一个项目可以被多个清单、多个章节收录。"
-            f"只保留在总榜里收录了至少 {MIN_BOARD_MEMBERS} 个项目的清单。清单的领域分组来自 Awesome 总索引（{INDEX_REPO}），"
-            "总索引没收录的清单（多是较新的）归在“其他”组，不是本站另外判断的。章节名称沿用清单原文，由本站按标题层级自动解析，"
-            "个别清单结构特殊时可能不准；各清单的许可见它的分类说明。"
-        ),
-        "source": {
-            "name": "总榜里的 Awesome 类仓库的 README（入口：sindresorhus/awesome）",
-            "url": "https://github.com/sindresorhus/awesome",
-            "license": "各清单仓库自行声明，见各分类说明",
-            "attribution": "各 Awesome 清单的作者与贡献者。本站只保存清单收录了哪些项目及其章节名称，不转存清单的其他内容。",
-        },
-        "nodes": nodes,
-    }
-    if (
-        created_days
-    ):  # 体系的创建日期取最早的清单，最近更新取最近一次推送的清单；每个清单自己的日期在分类说明里
+    meta = meta | {"nodes": nodes}
+    if created_days:  # 每个清单自己的日期写在它的分类说明里
         meta |= {"created": min(created_days), "updated": max(updated_days or created_days)}
     return Collected(meta=meta, members=members)
 
 
-def collect(fetcher: Fetcher, board_rows: Sequence[Mapping[str, Any]]) -> Collected:
-    """board_rows：总榜的项目行（至少含 full_name、rank、default_branch、readme_path、topics、description、license）。"""
-    lists = sorted((r for r in board_rows if is_awesome_list(r)), key=lambda r: r["rank"])
+def build(
+    lists: Sequence[Mapping[str, Any]],
+    readmes: Mapping[str, str],
+    board: set[str],
+    groups: Mapping[str, str] | None = None,
+) -> Collected:
+    """“Awesome 清单”体系：lists 是总榜里的清单行（按名次），readmes 是 {仓库名: README}，board 是总榜项目名（小写），
+    groups 是 {清单仓库名（小写）: 领域分组}，来自 Awesome 总索引，没有的清单归入“其他”组。"""
+    return _build(lists, readmes, board, index_assigner(groups or {}), index_meta())
+
+
+def build_site(
+    lists: Sequence[Mapping[str, Any]],
+    readmes: Mapping[str, str],
+    board: set[str],
+    vocabulary: Mapping[str, Mapping[str, str]],
+    groups: Mapping[str, str],
+) -> Collected:
+    """“Awesome 清单 · 本站分组”体系：同样的清单与章节，分组用本站自己的词表与映射。"""
+    return _build(lists, readmes, board, site_assigner(vocabulary, groups), site_meta())
+
+
+def candidate_lists(board_rows: Sequence[Mapping[str, Any]]) -> list[Mapping[str, Any]]:
+    """总榜里的 Awesome 清单（按名次），去掉映射文件里声明“不是清单”的仓库。"""
+    excluded = {name.lower() for name in load_groups().get("exclude", [])}
+    lists = sorted(
+        (r for r in board_rows if is_awesome_list(r) and r["full_name"].lower() not in excluded),
+        key=lambda r: r["rank"],
+    )
     if not lists:
         raise SourceError("总榜里没有找到 Awesome 清单（总榜数据可能不完整）")
+    return lists
+
+
+def _log(label: str, candidates: int, collected: Collected) -> None:
+    log.info(
+        "%s：%d 个候选清单，保留 %d 个，%d 个节点",
+        label,
+        candidates,
+        sum(n["id"].count(".") == 1 for n in collected.meta["nodes"]),  # 编号只含一个点的是清单
+        len(collected.meta["nodes"]),
+    )
+
+
+def collect(fetcher: Fetcher, board_rows: Sequence[Mapping[str, Any]]) -> Collected:
+    """board_rows：总榜的项目行（至少含 full_name、rank、default_branch、readme_path、topics、description、license）。"""
+    lists = candidate_lists(board_rows)
     readmes = _fetch_readmes(fetcher, lists)
     board = {r["full_name"].lower() for r in board_rows}
     groups = parse_groups(fetcher.text(INDEX_URL))
@@ -349,10 +457,18 @@ def collect(fetcher: Fetcher, board_rows: Sequence[Mapping[str, Any]]) -> Collec
     collected = build(lists, readmes, board, groups)
     if not collected.meta["nodes"]:
         raise SourceError("没有解析出任何 Awesome 清单（README 格式可能变了）")
-    log.info(
-        "awesome：%d 个候选清单，保留 %d 个，%d 个节点",
-        len(lists),
-        sum(n["id"].count(".") == 1 for n in collected.meta["nodes"]),  # 编号只含一个点的是清单
-        len(collected.meta["nodes"]),
-    )
+    _log("awesome", len(lists), collected)
+    return collected
+
+
+def collect_site(fetcher: Fetcher, board_rows: Sequence[Mapping[str, Any]]) -> Collected:
+    """同 collect，分组换成本站自己的词表与映射（awesome_groups.json）；README 不会重复下载。"""
+    lists = candidate_lists(board_rows)
+    readmes = _fetch_readmes(fetcher, lists)
+    board = {r["full_name"].lower() for r in board_rows}
+    mapping = load_groups()
+    collected = build_site(lists, readmes, board, mapping["vocabulary"], mapping["groups"])
+    if not collected.meta["nodes"]:
+        raise SourceError("没有解析出任何 Awesome 清单（README 格式可能变了）")
+    _log("awesome-site", len(lists), collected)
     return collected

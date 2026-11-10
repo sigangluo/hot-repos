@@ -1,0 +1,217 @@
+{
+ "说明": "Awesome 清单 · 本站分组体系用的分组：词表与每个清单的归属都是本站（语言模型）依据清单名称与描述判断的，没有经过人工验证。新进总榜的清单没有映射时归入“其他”组，需要时在 groups 里补一行；不是清单的仓库（只是名字或话题带 awesome）放进 exclude。",
+ "vocabulary": {
+  "lang": {
+   "label": "编程语言",
+   "definition": "某一门编程语言、运行时或平台（Python、Go、Rust、Java、C/C++、.NET、Node.js……）的库、框架与资源清单。"
+  },
+  "frontend": {
+   "label": "前端与界面",
+   "definition": "前端框架（React、Vue、Redux、Vite……）、组件库、界面库与前端工程化的清单。"
+  },
+  "backend": {
+   "label": "后端与架构",
+   "definition": "后端 Web 框架（Django、Flask、FastAPI、Laravel、NestJS）、GraphQL、微服务与系统架构的清单。"
+  },
+  "mobile": {
+   "label": "移动与跨平台应用开发",
+   "definition": "iOS、Android、Flutter、React Native、Electron 等移动与跨平台应用开发的库、工具与界面资源。"
+  },
+  "ai-ml": {
+   "label": "机器学习与大模型",
+   "definition": "机器学习、深度学习、自然语言处理、计算机视觉、大语言模型、生成式模型与 MLOps 的资源、论文与教程清单。"
+  },
+  "ai-agents": {
+   "label": "AI 智能体、技能与工具",
+   "definition": "AI 智能体、Claude 等智能体的技能与插件、MCP 服务、大模型接入与周边工具的清单。"
+  },
+  "data": {
+   "label": "数据与大数据",
+   "definition": "数据科学、大数据框架与数据处理资源的清单。"
+  },
+  "devtools": {
+   "label": "开发工具与环境",
+   "definition": "命令行、终端、Shell、编辑器（Vim、Neovim、VS Code）、Git 与 GitHub 使用、静态分析、低代码等开发辅助工具的清单。"
+  },
+  "ops": {
+   "label": "运维与基础设施",
+   "definition": "Docker、云服务、系统管理、自托管、隧道与内网穿透、免费云服务额度等运维与基础设施的清单。"
+  },
+  "security": {
+   "label": "安全与隐私",
+   "definition": "渗透测试、漏洞、CTF、开源情报、Web 安全与隐私保护的资源清单。"
+  },
+  "apps": {
+   "label": "软件与应用合集",
+   "definition": "按平台或用途收集好用软件的清单：macOS、Linux、iOS 应用、Python 写的应用、自托管应用、开源替代品。"
+  },
+  "learn": {
+   "label": "学习、面试与职业",
+   "definition": "给初学者的项目、从零造轮子的教程、面试题、远程工作、CTO 与独立开发者资源等学习与职业发展的清单。"
+  },
+  "cs": {
+   "label": "计算机科学与工程实践",
+   "definition": "设计模式、系统设计、函数式编程概念、编码规范等不绑定某一语言或工具的工程知识清单。"
+  },
+  "design": {
+   "label": "设计与创意",
+   "definition": "设计工具、设计系统与创意编程的清单。"
+  },
+  "fun": {
+   "label": "游戏与娱乐",
+   "definition": "开源游戏、游戏开发资源、影视与其他娱乐资源的清单。"
+  },
+  "hardware": {
+   "label": "硬件",
+   "definition": "具体硬件设备（如 Flipper Zero）的资源清单。"
+  },
+  "finance": {
+   "label": "金融与区块链",
+   "definition": "量化交易、系统化交易与区块链技术的清单。"
+  },
+  "meta": {
+   "label": "清单的清单与综合资源",
+   "definition": "收集其他清单的清单，以及不限定主题的综合资源汇总。"
+  }
+ },
+ "groups": {
+  "codecrafters-io/build-your-own-x": "learn",
+  "sindresorhus/awesome": "meta",
+  "awesome-selfhosted/awesome-selfhosted": "apps",
+  "vinta/awesome-python": "lang",
+  "trimstray/the-book-of-secret-knowledge": "meta",
+  "avelino/awesome-go": "lang",
+  "ripienaar/free-for-dev": "ops",
+  "Hack-with-Github/Awesome-Hacking": "security",
+  "jaywcjlove/awesome-mac": "apps",
+  "punkpeye/awesome-mcp-servers": "ai-agents",
+  "MunGell/awesome-for-beginners": "learn",
+  "DopplerHQ/awesome-interview-questions": "learn",
+  "ComposioHQ/awesome-claude-skills": "ai-agents",
+  "enaqx/awesome-react": "frontend",
+  "josephmisiti/awesome-machine-learning": "ai-ml",
+  "fffaraz/awesome-cpp": "lang",
+  "vuejs/awesome-vue": "frontend",
+  "sindresorhus/awesome-nodejs": "lang",
+  "Solido/awesome-flutter": "mobile",
+  "xingshaocheng/architect-awesome": "backend",
+  "rust-unofficial/awesome-rust": "lang",
+  "tiimgreen/github-cheat-sheet": "devtools",
+  "wasabeef/awesome-android-ui": "mobile",
+  "hesreallyhim/awesome-claude-code": "ai-agents",
+  "vsouza/awesome-ios": "mobile",
+  "dkhamsing/open-source-ios-apps": "apps",
+  "serhii-londar/open-source-mac-os-apps": "apps",
+  "lukasz-madon/awesome-remote-job": "learn",
+  "DovAmir/awesome-design-patterns": "cs",
+  "akullpp/awesome-java": "lang",
+  "sickn33/agentic-awesome-skills": "ai-agents",
+  "brillout/awesome-react-components": "frontend",
+  "goabstract/Awesome-Design-Tools": "design",
+  "deepseek-ai/awesome-deepseek-integration": "ai-agents",
+  "alebcay/awesome-shell": "devtools",
+  "ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code": "ai-ml",
+  "veggiemonk/awesome-docker": "ops",
+  "VoltAgent/awesome-agent-skills": "ai-agents",
+  "kuchin/awesome-cto": "learn",
+  "jondot/awesome-react-native": "mobile",
+  "awesome-foss/awesome-sysadmin": "ops",
+  "sorrycc/awesome-javascript": "lang",
+  "bayandin/awesome-awesomeness": "meta",
+  "abhisheknaiidu/awesome-github-profile-readme": "devtools",
+  "jivoi/awesome-osint": "security",
+  "e2b-dev/awesome-ai-agents": "ai-agents",
+  "jobbole/awesome-python-cn": "lang",
+  "wilsonfreitas/awesome-quant": "finance",
+  "academic/awesome-datascience": "data",
+  "viatsko/awesome-vscode": "devtools",
+  "ChristosChristofidis/awesome-deep-learning": "ai-ml",
+  "sdras/awesome-actions": "devtools",
+  "enaqx/awesome-pentest": "security",
+  "Hannibal046/Awesome-LLM": "ai-ml",
+  "sindresorhus/awesome-electron": "mobile",
+  "Igglybuff/awesome-piracy": "fun",
+  "matteocrippa/awesome-swift": "lang",
+  "alexpate/awesome-design-systems": "design",
+  "luong-komorebi/Awesome-Linux-Software": "apps",
+  "djsime1/awesome-flipperzero": "hardware",
+  "kahun/awesome-sysadmin": "ops",
+  "awesome-dsh-plugin/awesome-dsh-plugin": "ai-agents",
+  "jbhuang0604/awesome-computer-vision": "ai-ml",
+  "mikeroyal/Self-Hosting-Guide": "ops",
+  "AiHubCN/Awesome-Chinese-LLM": "ai-ml",
+  "dipakkr/awesome-ai-engineering": "ai-ml",
+  "anderspitman/awesome-tunneling": "ops",
+  "jbee37142/Interview_Question_for_Beginner": "learn",
+  "quozd/awesome-dotnet": "lang",
+  "matiassingers/awesome-readme": "devtools",
+  "rockerBOO/awesome-neovim": "devtools",
+  "thangchung/awesome-dotnet-core": "lang",
+  "LiLittleCat/awesome-free-chatgpt": "ai-agents",
+  "EthicalML/awesome-production-machine-learning": "ai-ml",
+  "rothgar/awesome-tuis": "devtools",
+  "birobirobiro/awesome-shadcn-ui": "frontend",
+  "agarrharr/awesome-cli-apps": "devtools",
+  "pluja/awesome-privacy": "security",
+  "RunaCapital/awesome-oss-alternatives": "apps",
+  "iCHAIT/awesome-macOS": "apps",
+  "keon/awesome-nlp": "ai-ml",
+  "chaozh/awesome-blockchain-cn": "finance",
+  "hemanth/functional-programming-jargon": "cs",
+  "ujjwalkarn/Machine-Learning-Tutorials": "ai-ml",
+  "mahmoud/awesome-python-applications": "apps",
+  "unixorn/awesome-zsh-plugins": "devtools",
+  "BradyFU/Awesome-Multimodal-Large-Language-Models": "ai-ml",
+  "mhinz/vim-galore": "devtools",
+  "bobeff/open-source-games": "fun",
+  "dexteryy/spellbook-of-modern-webdev": "frontend",
+  "ellisonleao/magictools": "fun",
+  "vitalysim/Awesome-Hacking-Resources": "security",
+  "jtoy/awesome-tensorflow": "ai-ml",
+  "carpedm20/awesome-hacking": "security",
+  "Wechat-ggGitHub/Awesome-GitHub-Repo": "meta",
+  "vitejs/awesome-vite": "frontend",
+  "owainlewis/awesome-artificial-intelligence": "ai-ml",
+  "bharathgs/Awesome-pytorch-list": "ai-ml",
+  "travisvn/awesome-claude-skills": "ai-agents",
+  "jobbole/awesome-java-cn": "lang",
+  "terkelg/awesome-creative-coding": "design",
+  "paperswithbacktest/awesome-systematic-trading": "finance",
+  "chentsulin/awesome-graphql": "backend",
+  "sbilly/awesome-security": "security",
+  "laoma528/awesome-zhuiju-free": "fun",
+  "analysis-tools-dev/static-analysis": "devtools",
+  "taowen/awesome-lowcode": "devtools",
+  "oxnr/awesome-bigdata": "data",
+  "mfornos/awesome-microservices": "backend",
+  "visenger/awesome-mlops": "ai-ml",
+  "donnemartin/awesome-aws": "ops",
+  "markets/awesome-ruby": "lang",
+  "qazbnm456/awesome-web-security": "security",
+  "nestjs/awesome-nestjs": "backend",
+  "k4m4/terminals-are-sexy": "devtools",
+  "chiraggude/awesome-laravel": "backend",
+  "steven2358/awesome-generative-ai": "ai-ml",
+  "humiaozuzu/awesome-flask": "backend",
+  "opendigg/awesome-github-vue": "frontend",
+  "madd86/awesome-system-design": "cs",
+  "JStumpp/awesome-android": "mobile",
+  "diff-usion/Awesome-Diffusion-Models": "ai-ml",
+  "xgrommx/awesome-redux": "frontend",
+  "k4m4/movies-for-hackers": "fun",
+  "apsdehal/awesome-ctf": "security",
+  "mezod/awesome-indie": "learn",
+  "mjhea0/awesome-fastapi": "backend",
+  "oz123/awesome-c": "lang",
+  "jnv/lists": "meta",
+  "hackstoic/golang-open-source-projects": "lang",
+  "wsvincent/awesome-django": "backend",
+  "Kristories/awesome-guidelines": "cs",
+  "cjwirth/awesome-ios-ui": "mobile",
+  "jobbole/awesome-cpp-cn": "lang",
+  "kjw0612/awesome-deep-vision": "ai-ml"
+ },
+ "exclude": [
+  "lissy93/dashy"
+ ]
+}

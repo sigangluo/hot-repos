@@ -56,7 +56,7 @@ hot-repos/
 │   ├── trending.py            Trending 每日快照：整天采集、写入、读取
 │   ├── schemes.py             分类体系的读写，采集时让各体系的标注与总榜项目名对齐
 │   ├── sync.py                同步外部分类体系：取来源 → 对上总榜 → 校验 → 写入
-│   ├── sources/               外部分类体系的来源，一个来源一个模块（borges、explore、awesome、ossinsight、wikidata、landscape）
+│   ├── sources/               外部分类体系的来源，一个来源一个模块（borges、explore、awesome、ossinsight、wikidata、landscape）；awesome_groups.json 是 Awesome 清单本站分组的词表与映射
 │   ├── export_web.py          data/ → web/public/data/（列式 JSON）
 │   ├── pipeline.py            采集流程编排：抓取 → 组装 → 校验 → 发布
 │   └── validate.py            数据完整性与一致性检查
@@ -120,4 +120,4 @@ hot-repos/
 5. ~~导出层（`export_web.py`）与前端：设计令牌 → 数据加载 → 表格 → 筛选 → 详情 → README~~ 已完成
 6. ~~CI 与 Pages 工作流、文档~~ 已完成；已推送并部署到 GitHub Pages，三个工作流均已在 GitHub 上跑通，见 [deployment.md](deployment.md)
 7. Trending：~~采集器、每日快照、校验、每日定时任务~~ 已完成；~~页面（与 Trending 对齐的"近期热点"视图）~~ 已完成；自动部署联动与历史功能（按日期回看、上榜天数与最高名次、详情中的上榜时间线）待做，历史功能需要先积累数据
-8. 项目分类：~~数据契约、校验、采集时与总榜对齐、导出、页面（分类树筛选、分类列、详情卡片）~~ 能力已完成；~~多套分类体系（体系选择、外部来源同步、详情并排对照）~~ 已完成，见 [schemes.md](schemes.md)：本站分类（361 个项目，语言模型判断、未经人工验证）加七套外部体系；待做：本站分类覆盖其余项目、人工抽样验收
+8. 项目分类：~~数据契约、校验、采集时与总榜对齐、导出、页面（分类树筛选、分类列、详情卡片）~~ 能力已完成；~~多套分类体系（体系选择、外部来源同步、详情并排对照）~~ 已完成，见 [schemes.md](schemes.md)：本站分类（361 个项目，语言模型判断、未经人工验证）加八套外部体系；待做：本站分类覆盖其余项目、人工抽样验收
