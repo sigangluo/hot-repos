@@ -15,9 +15,10 @@ REPOS_FILE = "repos.parquet"
 STAR_WEEKS_FILE = "star_weeks.parquet"
 RANK_HISTORY_FILE = "rank_history.parquet"
 MANIFEST_FILE = "manifest.json"
-# 项目分类是可选数据：目录可以先于结果存在，有结果就必须有目录。
-CLASSIFICATION_FILE = "classification.parquet"
-TAXONOMY_FILE = "taxonomy.json"
+# 分类体系是可选数据：每个体系一个目录 data/schemes/<编号>/，含体系定义和各项目的标注。
+SCHEMES_DIR_NAME = "schemes"
+SCHEME_META_FILE = "scheme.json"
+SCHEME_LABELS_FILE = "labels.parquet"
 TABLE_FILES = {
     "repos": REPOS_FILE,
     "star_weeks": STAR_WEEKS_FILE,

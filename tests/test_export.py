@@ -20,9 +20,9 @@ def test_export_writes_aligned_columns(dataset, tmp_path):
     export(dataset, out)
     repos, details, weeks = (read(out / f) for f in ("repos.json", "details.json", "weeks.json"))
     assert set(repos) == {*REPO_COLUMNS, *REPO_FLAGS}
-    assert set(details) == {*DETAIL_COLUMNS, *export_web.CLASSIFICATION_DETAIL_COLUMNS}
+    assert set(details) == {*DETAIL_COLUMNS, "scheme_text"}
     assert {len(v) for v in repos.values()} == {2}
-    assert {len(v) for v in details.values()} == {2}
+    assert {len(v) for k, v in details.items() if k != "scheme_text"} == {2}
     assert [len(weeks["week_start"]), len(weeks["stars"])] == [2, 2]
     assert repos["rank"] == [1, 3]  # 名次可以不连续
     assert repos["full_name"] == ["a/one", "b/two"]
@@ -130,9 +130,20 @@ def test_web_types_match_exported_columns():
         return re.findall(r"^  (\w+):", body.group(1), re.M)
 
     assert fields("RepoColumns") == [*REPO_COLUMNS, *REPO_FLAGS]
-    assert fields("DetailColumns") == [*DETAIL_COLUMNS, *export_web.CLASSIFICATION_DETAIL_COLUMNS]
+    assert fields("DetailColumns") == [*DETAIL_COLUMNS, "scheme_text"]
     assert fields("WeeksColumns") == ["week_start", "stars"]
     assert fields("TrendingColumns") == TRENDING_COLUMNS
     assert fields("TrendingFile") == ["snapshot_date", "captured_at", "languages", "rows"]
-    assert fields("Meta")[-2:] == ["trending_date", "classified"]
-    assert fields("ClassificationFile") == ["note", "nodes", "forms", "category", "related", "form"]
+    assert fields("Meta")[-2:] == ["trending_date", "schemes"]
+    assert fields("SchemeInfo") == [
+        "id",
+        "name",
+        "summary",
+        "method",
+        "source",
+        "as_of",
+        "note",
+        "primary",
+        "classified",
+    ]
+    assert fields("SchemeFile") == ["nodes", "forms", "category", "related", "form"]

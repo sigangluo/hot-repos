@@ -1,15 +1,15 @@
 """data/ → web/public/data/：页面用的静态数据文件。
 
-六个文件的数据均为列式（`{列名: [每行的值]}`，各列等长且行顺序一致；除 trending 外按名次升序；
+数据均为列式（`{列名: [每行的值]}`，各列等长且行顺序一致；除 trending 外按名次升序；
 `trending.json` 的列在 `rows` 下，外层另有快照日期、抓取时间和语言列表；
-`classification.json` 外层另有目录，见下），
+`scheme-<编号>.json` 外层另有体系的节点和形态，见下），
 列名不在每行重复，体积约为按行存储的一半：
 
 | 文件 | 内容 | 加载时机 |
 |---|---|---|
-| `meta.json` | 快照日期、各部分获取时间、数量、最新 Trending 快照日期 | 首屏 |
+| `meta.json` | 快照日期、各部分获取时间、数量、最新 Trending 快照日期、各分类体系的简介与覆盖数 | 首屏 |
 | `repos.json` | 表格、筛选、搜索所需的精简列 | 首屏 |
-| `classification.json` | 分类目录，及每个项目的主分类、关联分类、形态（与 repos.json 行对齐）；还没有分类时不生成 | 首屏，失败时页面不带分类 |
+| `scheme-<编号>.json` | 一个分类体系的节点、形态，及每个项目的主分类、关联分类、形态（与 repos.json 行对齐）；没有标注的体系不生成 | 默认体系在首屏，其余在切换到它时；失败时页面不带分类 |
 | `details.json` | 语言构成、赞助链接、README 文件名、分类简介等详情字段 | 首次打开详情时 |
 | `weeks.json` | 官方周 Star 分布 | 首屏之后（迷你图）与详情 |
 | `trending.json` | 最新一天的 Trending 快照；还没有快照时不生成 | 首次打开“近期热点”时 |
@@ -22,7 +22,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from . import cache, classification, config, store, trending
+from . import cache, config, schemes, store, trending
 from .validate import validate
 
 META_FILE = "meta.json"
@@ -30,7 +30,7 @@ REPOS_FILE = "repos.json"
 DETAILS_FILE = "details.json"
 WEEKS_FILE = "weeks.json"
 TRENDING_FILE = "trending.json"
-CLASSIFICATION_FILE = "classification.json"
+SCHEME_FILE_PREFIX = "scheme-"
 
 # 直接取自 repos.parquet 的列（时间列转为 Unix 秒）。
 REPO_COLUMNS = [
@@ -123,48 +123,85 @@ def _trending(data_dir: Path) -> dict[str, Any] | None:
     }
 
 
-# 分类的简介与复核原因只在详情里用，放在 details.json（与 repos 行对齐，未分类为 null）。
-CLASSIFICATION_DETAIL_COLUMNS = ["summary", "review_reason"]
+# 分类的简介与复核原因只在详情里用，放在 details.json 的 scheme_text 下，按体系编号分组
+# （与 repos 行对齐，没有则为 null）；没有任何简介或复核原因的体系不列出。
+SCHEME_TEXT_COLUMNS = ["summary", "review_reason"]
 
 
-def _classification(
-    data_dir: Path, repos: list[dict]
-) -> tuple[dict[str, Any], dict[str, list]] | None:
-    """返回（classification.json 的内容，details.json 的分类列）；没有分类数据时为 None。
+def scheme_file_name(scheme_id: str) -> str:
+    return f"{SCHEME_FILE_PREFIX}{scheme_id}.json"
 
-    目录节点导出为 [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称, 收录说明, 排除说明]（说明没有则为 null）；
-    形态导出为 [编号, 名称, 定义]；项目一列一列地引用节点和形态的
-    下标，与 repos 行对齐，未分类的项目为 null（关联分类和形态为空列表）。
+
+def _scheme(
+    scheme_id: str, meta: dict[str, Any], by_name: dict[str, dict], repos: list[dict]
+) -> tuple[dict[str, Any], dict[str, list]]:
+    """返回（体系文件的内容，详情里的文字列）。
+
+    节点导出为 [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称, 收录说明, 排除说明]（说明没有则为 null）；
+    形态导出为 [编号, 名称, 定义]；项目一列一列地引用节点和形态的下标，与 repos 行对齐，
+    没有标注的项目为 null（关联分类和形态为空列表）。
     """
-    taxonomy = classification.read_taxonomy(data_dir)
-    by_name = {r["full_name"]: r for r in classification.read_rows(data_dir)}
-    if taxonomy is None or not by_name:  # 只有目录、还没有分类结果时，页面不显示分类
-        return None
-    node_index = {n["id"]: i for i, n in enumerate(taxonomy["nodes"])}
-    form_ids = list(taxonomy["forms"])
-    form_index = {f: i for i, f in enumerate(form_ids)}
+    node_index = {n["id"]: i for i, n in enumerate(meta["nodes"])}
+    forms = meta.get("forms") or {}
+    form_index = {f: i for i, f in enumerate(forms)}
     rows = [by_name.get(r["full_name"]) for r in repos]
     file = {
-        "note": taxonomy.get("note"),
         "nodes": [
             [
                 n["id"],
-                node_index[n["parent"]] if "parent" in n else -1,
+                node_index[n["parent"]] if n.get("parent") is not None else -1,
                 n["label"],
                 n.get("guidance", {}).get("includes"),
                 n.get("guidance", {}).get("excludes"),
             ]
-            for n in taxonomy["nodes"]
+            for n in meta["nodes"]
         ],
-        "forms": [
-            [f, taxonomy["forms"][f]["label"], taxonomy["forms"][f]["definition"]] for f in form_ids
-        ],
-        "category": [node_index[r["category"]] if r else None for r in rows],
+        "forms": [[f, forms[f]["label"], forms[f]["definition"]] for f in forms],
+        "category": [node_index[r["category"]] if r and r["category"] else None for r in rows],
         "related": [[node_index[c] for c in r["related"]] if r else [] for r in rows],
         "form": [[form_index[f] for f in r["forms"]] if r else [] for r in rows],
     }
-    details = {c: [r[c] if r else None for r in rows] for c in CLASSIFICATION_DETAIL_COLUMNS}
-    return file, details
+    text = {c: [r[c] if r else None for r in rows] for c in SCHEME_TEXT_COLUMNS}
+    return file, text
+
+
+def _scheme_summary(scheme_id: str, meta: dict[str, Any], classified: int) -> dict[str, Any]:
+    """meta.json 里关于体系的部分：页面在加载体系文件之前就能列出并介绍它们。"""
+    return {
+        "id": scheme_id,
+        "name": meta["name"],
+        "summary": meta["summary"],
+        "method": meta["method"],
+        "source": meta.get("source"),
+        "as_of": meta.get("as_of"),
+        "note": meta.get("note"),
+        "primary": meta["primary"],
+        "classified": classified,
+    }
+
+
+def _schemes(
+    data_dir: Path, repos: list[dict]
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]], dict[str, dict[str, list]]]:
+    """返回（meta 里的体系列表，体系文件，详情里的文字列）；只含已有标注的体系。"""
+    summaries: list[dict[str, Any]] = []
+    files: dict[str, dict[str, Any]] = {}
+    texts: dict[str, dict[str, list]] = {}
+    for scheme_id in schemes.scheme_ids(data_dir):
+        meta = schemes.read_meta(data_dir, scheme_id)
+        by_name = {r["full_name"]: r for r in schemes.read_rows(data_dir, scheme_id)}
+        if meta is None or not by_name:  # 只有体系定义、还没有标注时，页面不列出
+            continue
+        file, text = _scheme(scheme_id, meta, by_name, repos)
+        classified = sum(
+            bool(c is not None or rel)
+            for c, rel in zip(file["category"], file["related"], strict=True)
+        )
+        summaries.append(_scheme_summary(scheme_id, meta, classified))
+        files[scheme_file_name(scheme_id)] = file
+        if any(v is not None for column in text.values() for v in column):
+            texts[scheme_id] = text
+    return summaries, files, texts
 
 
 def build(data_dir: Path) -> dict[str, Any]:
@@ -181,10 +218,8 @@ def build(data_dir: Path) -> dict[str, Any]:
     detail_cols["languages"] = [[[x["name"], x["bytes"]] for x in r["languages"]] for r in repos]
     detail_cols["funding"] = [[[x["platform"], x["url"]] for x in r["funding"]] for r in repos]
 
-    classified = _classification(data_dir, repos)
-    classification_file, class_details = classified or (None, {})
-    for column in CLASSIFICATION_DETAIL_COLUMNS:
-        detail_cols[column] = class_details.get(column, [None] * len(repos))
+    scheme_summaries, scheme_files, scheme_texts = _schemes(data_dir, repos)
+    detail_cols["scheme_text"] = scheme_texts
 
     weeks_by_repo: dict[str, list[dict]] = {}
     for w in store.read_rows(data_dir, "star_weeks"):
@@ -212,9 +247,7 @@ def build(data_dir: Path) -> dict[str, Any]:
         ),
         "star_weeks_per_page": manifest["star_weeks_per_page"],
         "trending_date": trending_page["snapshot_date"] if trending_page else None,
-        "classified": sum(c is not None for c in classification_file["category"])
-        if classification_file
-        else 0,
+        "schemes": scheme_summaries,
     }
     files = {
         META_FILE: meta,
@@ -224,8 +257,7 @@ def build(data_dir: Path) -> dict[str, Any]:
     }
     if trending_page:
         files[TRENDING_FILE] = trending_page
-    if classification_file:
-        files[CLASSIFICATION_FILE] = classification_file
+    files.update(scheme_files)
     return files
 
 
@@ -235,9 +267,12 @@ def export(data_dir: Path = config.DATA_DIR, out_dir: Path = config.WEB_DATA_DIR
     if problems:
         raise ExportError("data/ 未通过校验，未导出：\n" + "\n".join(problems[:20]))
     files = build(data_dir)
-    for optional in (TRENDING_FILE, CLASSIFICATION_FILE):
-        if optional not in files:  # 清除以前导出的旧文件，避免页面展示过期数据
-            (out_dir / optional).unlink(missing_ok=True)
+    # 清除以前导出的旧文件，避免页面展示过期数据。
+    if TRENDING_FILE not in files:
+        (out_dir / TRENDING_FILE).unlink(missing_ok=True)
+    for stale in out_dir.glob(f"{SCHEME_FILE_PREFIX}*.json"):
+        if stale.name not in files:
+            stale.unlink()
     sizes = {}
     for name, content in files.items():
         cache.write_json(out_dir / name, content, compact=True)

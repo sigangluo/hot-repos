@@ -124,8 +124,13 @@ def write_trending(directory: Path, rows: list[dict], name: str = "2026-01-10.pa
     pq.write_table(pa.Table.from_pylist(rows, schema=schema.TRENDING), directory / name)
 
 
-def taxonomy() -> dict:
+def scheme_meta(**changes) -> dict:
+    """一个最小的合法体系定义（有主分类、有形态的本站分类）。"""
     return {
+        "name": "测试体系",
+        "summary": "用于测试的体系",
+        "method": "model",
+        "primary": True,
         "note": "测试说明",
         "forms": {
             "app": {"label": "应用", "definition": "直接使用的应用"},
@@ -142,10 +147,23 @@ def taxonomy() -> dict:
             {"id": "dev.tools.cli", "label": "命令行", "parent": "dev.tools"},
             {"id": "ai", "label": "人工智能"},
         ],
-    }
+    } | changes
 
 
-def classification_row(name: str, **changes) -> dict:
+def external_meta(**changes) -> dict:
+    """一个来自外部来源、没有主分类的体系定义。"""
+    meta = scheme_meta(
+        name="外部体系",
+        method="curated",
+        primary=False,
+        source={"name": "某来源", "url": "https://example.com/x", "license": "CC-BY-4.0"},
+        as_of="2026-01-09",
+    )
+    del meta["forms"], meta["note"]
+    return meta | changes
+
+
+def label_row(name: str, **changes) -> dict:
     return {
         "full_name": name,
         "category": "dev.tools.cli",
@@ -156,14 +174,17 @@ def classification_row(name: str, **changes) -> dict:
     } | changes
 
 
-def write_classification(
-    path: Path, rows: list[dict] | None = None, tax: dict | None = None
+def write_scheme(
+    path: Path,
+    rows: list[dict] | None = None,
+    meta: dict | None = None,
+    scheme_id: str = "site",
 ) -> None:
-    """在 path 下写入分类目录与结果（默认给 a/one 一行）。"""
-    from hot_repos import classification
+    """在 path 下写入一个体系的定义与标注（默认给 a/one 一行）。"""
+    from hot_repos import schemes
 
-    classification.write_taxonomy(path, tax or taxonomy())
-    classification.write_rows(path, rows if rows is not None else [classification_row("a/one")])
+    schemes.write_meta(path, scheme_id, meta or scheme_meta())
+    schemes.write_rows(path, scheme_id, rows if rows is not None else [label_row("a/one")])
 
 
 @pytest.fixture

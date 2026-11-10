@@ -1,0 +1,207 @@
+{
+ "name": "LF AI & Data Landscape",
+ "summary": "Linux Foundation 旗下 LF AI & Data 基金会维护的人工智能与数据领域全景图，把相关开源项目归入“类别 / 子类别”。",
+ "method": "curated",
+ "order": 50,
+ "primary": true,
+ "note": "只收录在全景图里登记了 GitHub 仓库的项目，侧重 AI 与数据领域的开源基础设施，对总榜的覆盖面有限。一个项目可能出现在多个子类别：第一个作为主分类，其余作为关联分类；类别和子类别的名称保持英文原样。",
+ "source": {
+  "name": "LF AI & Data Landscape（lfai/lfai-landscape）",
+  "url": "https://github.com/lfai/lfai-landscape",
+  "license": "Apache-2.0",
+  "attribution": "LF AI & Data Foundation 及 landscape 贡献者，lfai/lfai-landscape 的 landscape.yml（Apache-2.0，该文件另以 CC-BY-4.0 提供）。不含其中的 Crunchbase 数据与 logo。"
+ },
+ "nodes": [
+  {
+   "id": "machine-learning",
+   "label": "Machine Learning",
+   "parent": null
+  },
+  {
+   "id": "machine-learning.framework",
+   "label": "Framework",
+   "parent": "machine-learning"
+  },
+  {
+   "id": "machine-learning.platform",
+   "label": "Platform",
+   "parent": "machine-learning"
+  },
+  {
+   "id": "machine-learning.library",
+   "label": "Library",
+   "parent": "machine-learning"
+  },
+  {
+   "id": "deep-learning",
+   "label": "Deep Learning",
+   "parent": null
+  },
+  {
+   "id": "deep-learning.framework",
+   "label": "Framework",
+   "parent": "deep-learning"
+  },
+  {
+   "id": "deep-learning.library",
+   "label": "Library",
+   "parent": "deep-learning"
+  },
+  {
+   "id": "deep-learning.tool",
+   "label": "Tool",
+   "parent": "deep-learning"
+  },
+  {
+   "id": "data",
+   "label": "Data",
+   "parent": null
+  },
+  {
+   "id": "data.relational-db",
+   "label": "Relational DB",
+   "parent": "data"
+  },
+  {
+   "id": "data.store-format",
+   "label": "Store & Format",
+   "parent": "data"
+  },
+  {
+   "id": "data.operations",
+   "label": "Operations",
+   "parent": "data"
+  },
+  {
+   "id": "data.stream-processing",
+   "label": "Stream Processing",
+   "parent": "data"
+  },
+  {
+   "id": "data.sql-engine",
+   "label": "SQL Engine",
+   "parent": "data"
+  },
+  {
+   "id": "data.visualization",
+   "label": "Visualization",
+   "parent": "data"
+  },
+  {
+   "id": "data.pipeline-management",
+   "label": "Pipeline Management",
+   "parent": "data"
+  },
+  {
+   "id": "reinforcement-learning",
+   "label": "Reinforcement Learning",
+   "parent": null
+  },
+  {
+   "id": "reinforcement-learning.reinforcement-learning",
+   "label": "Reinforcement Learning",
+   "parent": "reinforcement-learning"
+  },
+  {
+   "id": "generative-ai",
+   "label": "Generative AI",
+   "parent": null
+  },
+  {
+   "id": "generative-ai.tools",
+   "label": "Tools",
+   "parent": "generative-ai"
+  },
+  {
+   "id": "natural-language-processing",
+   "label": "Natural Language Processing",
+   "parent": null
+  },
+  {
+   "id": "natural-language-processing.natural-language-processing",
+   "label": "Natural Language Processing",
+   "parent": "natural-language-processing"
+  },
+  {
+   "id": "model",
+   "label": "Model",
+   "parent": null
+  },
+  {
+   "id": "model.inference",
+   "label": "Inference",
+   "parent": "model"
+  },
+  {
+   "id": "model.training",
+   "label": "Training",
+   "parent": "model"
+  },
+  {
+   "id": "model.format-interface",
+   "label": "Format & Interface",
+   "parent": "model"
+  },
+  {
+   "id": "model.workflow",
+   "label": "Workflow",
+   "parent": "model"
+  },
+  {
+   "id": "model.tool",
+   "label": "Tool",
+   "parent": "model"
+  },
+  {
+   "id": "programming",
+   "label": "Programming",
+   "parent": null
+  },
+  {
+   "id": "programming.programming",
+   "label": "Programming",
+   "parent": "programming"
+  },
+  {
+   "id": "distributed-computing",
+   "label": "Distributed Computing",
+   "parent": null
+  },
+  {
+   "id": "distributed-computing.computing-management",
+   "label": "Computing & Management",
+   "parent": "distributed-computing"
+  },
+  {
+   "id": "trusted-responsible-ai",
+   "label": "Trusted & Responsible AI",
+   "parent": null
+  },
+  {
+   "id": "trusted-responsible-ai.explainability",
+   "label": "Explainability",
+   "parent": "trusted-responsible-ai"
+  },
+  {
+   "id": "notebook-environment",
+   "label": "Notebook Environment",
+   "parent": null
+  },
+  {
+   "id": "notebook-environment.notebook-environment",
+   "label": "Notebook Environment",
+   "parent": "notebook-environment"
+  },
+  {
+   "id": "security-privacy",
+   "label": "Security & Privacy",
+   "parent": null
+  },
+  {
+   "id": "security-privacy.security-privacy",
+   "label": "Security & Privacy",
+   "parent": "security-privacy"
+  }
+ ],
+ "as_of": "2026-11-10"
+}

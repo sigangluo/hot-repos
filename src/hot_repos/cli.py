@@ -1,4 +1,4 @@
-"""命令行入口：`hot-repos fetch` 采集总榜、`trending` 采集 Trending、`validate` 校验、`export` 导出页面数据。"""
+"""命令行入口：`hot-repos fetch` 采集总榜、`trending` 采集 Trending、`schemes sync` 同步外部分类体系、`validate` 校验、`export` 导出页面数据。"""
 
 import argparse
 import asyncio
@@ -7,10 +7,11 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
-from . import config, export_web, trending
+from . import config, export_web, sync, trending
 from .github.client import GitHubClient, GitHubError, get_token
 from .github.trending import TrendingError
 from .pipeline import DataError, Options, run
+from .sources import Fetcher, SourceError
 from .validate import validate
 
 
@@ -47,6 +48,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="每秒请求数上限（默认 %(default)s）",
     )
     trend.add_argument("--data-dir", type=Path, default=config.DATA_DIR)
+
+    schemes = sub.add_parser("schemes", help="分类体系：同步别人已经做好的公开分类")
+    schemes_sub = schemes.add_subparsers(dest="schemes_command", required=True)
+    sync_cmd = schemes_sub.add_parser(
+        "sync", help="从公开来源取分类，把总榜里的项目对上去，写入 data/schemes/"
+    )
+    sync_cmd.add_argument(
+        "ids", nargs="*", help="要同步的来源编号（默认全部），如 borges cncf；见 docs/taxonomy.md"
+    )
+    sync_cmd.add_argument("--data-dir", type=Path, default=config.DATA_DIR)
 
     export = sub.add_parser("export", help="把 data/ 导出为页面用的数据文件")
     export.add_argument("--data-dir", type=Path, default=config.DATA_DIR)
@@ -95,6 +106,17 @@ async def _trending(args: argparse.Namespace) -> None:
         await trending.run(client, args.data_dir / config.TRENDING_DIR_NAME)
 
 
+def _schemes_sync(args: argparse.Namespace) -> int:
+    try:
+        token: str | None = get_token()
+    except GitHubError:  # 没有 Token 也能同步，只是 GitHub 接口的额度更低
+        token = None
+    results = sync.run(args.data_dir, args.ids, Fetcher(token))
+    for scheme_id, text in results.items():
+        print(f"{scheme_id}: {text}")
+    return 1 if any(t.startswith("失败") for t in results.values()) else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s", datefmt="%H:%M:%S")
@@ -104,6 +126,8 @@ def main(argv: list[str] | None = None) -> int:
             asyncio.run(_fetch(args))
         elif args.command == "trending":
             asyncio.run(_trending(args))
+        elif args.command == "schemes":
+            return _schemes_sync(args)
         elif args.command == "export":
             for name, size in export_web.export(args.data_dir, args.out_dir).items():
                 print(f"{args.out_dir / name}  {size / 1024:.0f} KB")
@@ -113,7 +137,7 @@ def main(argv: list[str] | None = None) -> int:
                 print("\n".join(problems), file=sys.stderr)
                 return 1
             print("数据校验通过")
-    except (GitHubError, TrendingError, DataError, export_web.ExportError) as e:
+    except (GitHubError, TrendingError, DataError, SourceError, export_web.ExportError) as e:
         print(f"错误：{e}", file=sys.stderr)
         return 1
     return 0

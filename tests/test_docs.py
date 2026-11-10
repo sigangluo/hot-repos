@@ -21,8 +21,8 @@ def test_trending_field_table_matches_schema():
     assert documented_fields("trending/YYYY-MM-DD.parquet") == schema.TRENDING.names
 
 
-def test_classification_field_table_matches_schema():
-    assert documented_fields("classification.parquet") == schema.CLASSIFICATION.names
+def test_labels_field_table_matches_schema():
+    assert documented_fields("schemes/<编号>/labels.parquet") == schema.LABELS.names
 
 
 def test_manifest_field_table_matches_schema():
@@ -35,8 +35,8 @@ def test_files_listed_in_overview_exist_in_config():
         config.STAR_WEEKS_FILE,
         config.RANK_HISTORY_FILE,
         config.MANIFEST_FILE,
-        config.CLASSIFICATION_FILE,
-        config.TAXONOMY_FILE,
+        f"{config.SCHEMES_DIR_NAME}/<编号>/{config.SCHEME_LABELS_FILE}",
+        f"{config.SCHEMES_DIR_NAME}/<编号>/{config.SCHEME_META_FILE}",
     ):
         assert f"`{filename}`" in DOC
 
@@ -80,14 +80,14 @@ def test_documented_commands_are_known():
 
 
 def test_taxonomy_doc_lists_every_top_level_domain():
-    """docs/taxonomy.md 的结构表必须覆盖 data/taxonomy.json 的全部一级领域（没有目录时跳过）。"""
+    """docs/taxonomy.md 的结构表必须覆盖本站分类（site）的全部一级领域（没有这个体系时跳过）。"""
     import json
 
     import pytest
 
-    path = config.DATA_DIR / config.TAXONOMY_FILE
+    path = config.DATA_DIR / config.SCHEMES_DIR_NAME / "site" / config.SCHEME_META_FILE
     if not path.exists():
-        pytest.skip("没有分类目录")
+        pytest.skip("没有本站分类")
     doc = (config.ROOT / "docs" / "taxonomy.md").read_text(encoding="utf-8")
     nodes = json.loads(path.read_text(encoding="utf-8"))["nodes"]
     missing = [

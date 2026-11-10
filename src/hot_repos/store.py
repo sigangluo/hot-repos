@@ -45,6 +45,12 @@ def merge_rank_history(
     return sorted(kept + snapshot, key=lambda r: (r["snapshot_date"], r["rank"]))
 
 
+def scheme_files(root: Path) -> list[str]:
+    """root 下全部分类体系文件的相对路径。"""
+    base = root / config.SCHEMES_DIR_NAME
+    return sorted(str(p.relative_to(root)) for p in base.rglob("*") if p.is_file())
+
+
 def publish(staging: Path, data_dir: Path) -> None:
     """把暂存目录中的数据文件替换到 data_dir。
 
@@ -52,16 +58,12 @@ def publish(staging: Path, data_dir: Path) -> None:
     再依次用 os.replace 换上。后一步只剩几次重命名，被中断的窗口极小。
     """
     data_dir.mkdir(parents=True, exist_ok=True)
-    optional = (config.CLASSIFICATION_FILE, config.TAXONOMY_FILE)
-    filenames = (
-        *config.TABLE_FILES.values(),
-        config.MANIFEST_FILE,
-        *(f for f in optional if (staging / f).exists()),
-    )
+    filenames = (*config.TABLE_FILES.values(), config.MANIFEST_FILE, *scheme_files(staging))
     copied: list[Path] = []
     try:
         for filename in filenames:
             tmp = data_dir / (filename + ".tmp")
+            tmp.parent.mkdir(parents=True, exist_ok=True)
             copied.append(tmp)
             shutil.copyfile(staging / filename, tmp)
     except BaseException:

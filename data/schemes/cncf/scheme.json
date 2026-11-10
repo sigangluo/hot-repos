@@ -1,0 +1,342 @@
+{
+ "name": "CNCF Cloud Native Landscape",
+ "summary": "云原生计算基金会（CNCF）维护的云原生全景图，由社区提交、CNCF 审核，把云原生项目归入“类别 / 子类别”。",
+ "method": "curated",
+ "order": 40,
+ "primary": true,
+ "note": "只收录在全景图里登记了 GitHub 仓库的项目，侧重云原生与基础设施，对总榜的覆盖面有限。一个项目可能出现在多个子类别：第一个作为主分类，其余作为关联分类；类别和子类别的名称保持英文原样。",
+ "source": {
+  "name": "CNCF Cloud Native Landscape（cncf/landscape）",
+  "url": "https://github.com/cncf/landscape",
+  "license": "Apache-2.0",
+  "attribution": "Cloud Native Computing Foundation (CNCF) 及 landscape 贡献者，cncf/landscape 的 landscape.yml（Apache-2.0，该文件另以 CC-BY-4.0 提供）。不含其中的 Crunchbase 数据与 logo。"
+ },
+ "nodes": [
+  {
+   "id": "provisioning",
+   "label": "Provisioning",
+   "parent": null
+  },
+  {
+   "id": "provisioning.automation-configuration",
+   "label": "Automation & Configuration",
+   "parent": "provisioning"
+  },
+  {
+   "id": "provisioning.container-registry",
+   "label": "Container Registry",
+   "parent": "provisioning"
+  },
+  {
+   "id": "provisioning.security-compliance",
+   "label": "Security & Compliance",
+   "parent": "provisioning"
+  },
+  {
+   "id": "provisioning.key-management",
+   "label": "Key Management",
+   "parent": "provisioning"
+  },
+  {
+   "id": "runtime",
+   "label": "Runtime",
+   "parent": null
+  },
+  {
+   "id": "runtime.cloud-native-storage",
+   "label": "Cloud Native Storage",
+   "parent": "runtime"
+  },
+  {
+   "id": "runtime.container-runtime",
+   "label": "Container Runtime",
+   "parent": "runtime"
+  },
+  {
+   "id": "runtime.cloud-native-network",
+   "label": "Cloud Native Network",
+   "parent": "runtime"
+  },
+  {
+   "id": "orchestration-management",
+   "label": "Orchestration & Management",
+   "parent": null
+  },
+  {
+   "id": "orchestration-management.scheduling-orchestration",
+   "label": "Scheduling & Orchestration",
+   "parent": "orchestration-management"
+  },
+  {
+   "id": "orchestration-management.coordination-service-discovery",
+   "label": "Coordination & Service Discovery",
+   "parent": "orchestration-management"
+  },
+  {
+   "id": "orchestration-management.remote-procedure-call",
+   "label": "Remote Procedure Call",
+   "parent": "orchestration-management"
+  },
+  {
+   "id": "orchestration-management.service-proxy",
+   "label": "Service Proxy",
+   "parent": "orchestration-management"
+  },
+  {
+   "id": "orchestration-management.api-gateway",
+   "label": "API Gateway",
+   "parent": "orchestration-management"
+  },
+  {
+   "id": "orchestration-management.service-mesh",
+   "label": "Service Mesh",
+   "parent": "orchestration-management"
+  },
+  {
+   "id": "app-definition-and-development",
+   "label": "App Definition and Development",
+   "parent": null
+  },
+  {
+   "id": "app-definition-and-development.database",
+   "label": "Database",
+   "parent": "app-definition-and-development"
+  },
+  {
+   "id": "app-definition-and-development.streaming-messaging",
+   "label": "Streaming & Messaging",
+   "parent": "app-definition-and-development"
+  },
+  {
+   "id": "app-definition-and-development.application-definition-image-build",
+   "label": "Application Definition & Image Build",
+   "parent": "app-definition-and-development"
+  },
+  {
+   "id": "app-definition-and-development.continuous-integration-delivery",
+   "label": "Continuous Integration & Delivery",
+   "parent": "app-definition-and-development"
+  },
+  {
+   "id": "platform",
+   "label": "Platform",
+   "parent": null
+  },
+  {
+   "id": "platform.certified-kubernetes-distribution",
+   "label": "Certified Kubernetes - Distribution",
+   "parent": "platform"
+  },
+  {
+   "id": "platform.certified-kubernetes-installer",
+   "label": "Certified Kubernetes - Installer",
+   "parent": "platform"
+  },
+  {
+   "id": "platform.paas-container-service",
+   "label": "PaaS/Container Service",
+   "parent": "platform"
+  },
+  {
+   "id": "serverless",
+   "label": "Serverless",
+   "parent": null
+  },
+  {
+   "id": "serverless.tools",
+   "label": "Tools",
+   "parent": "serverless"
+  },
+  {
+   "id": "serverless.framework",
+   "label": "Framework",
+   "parent": "serverless"
+  },
+  {
+   "id": "serverless.installable-platform",
+   "label": "Installable Platform",
+   "parent": "serverless"
+  },
+  {
+   "id": "observability-and-analysis",
+   "label": "Observability and Analysis",
+   "parent": null
+  },
+  {
+   "id": "observability-and-analysis.feature-flagging",
+   "label": "Feature Flagging",
+   "parent": "observability-and-analysis"
+  },
+  {
+   "id": "observability-and-analysis.continuous-optimization",
+   "label": "Continuous Optimization",
+   "parent": "observability-and-analysis"
+  },
+  {
+   "id": "observability-and-analysis.observability",
+   "label": "Observability",
+   "parent": "observability-and-analysis"
+  },
+  {
+   "id": "wasm",
+   "label": "Wasm",
+   "parent": null
+  },
+  {
+   "id": "wasm.languages",
+   "label": "Languages",
+   "parent": "wasm"
+  },
+  {
+   "id": "wasm.runtimes",
+   "label": "Runtimes",
+   "parent": "wasm"
+  },
+  {
+   "id": "wasm.ai-machine-learning",
+   "label": "AI/Machine Learning",
+   "parent": "wasm"
+  },
+  {
+   "id": "wasm.embedded-functions",
+   "label": "Embedded Functions",
+   "parent": "wasm"
+  },
+  {
+   "id": "wasm.tooling",
+   "label": "Tooling",
+   "parent": "wasm"
+  },
+  {
+   "id": "wasm.orchestration-management",
+   "label": "Orchestration & Management",
+   "parent": "wasm"
+  },
+  {
+   "id": "wasm.packaging-registries-application-delivery",
+   "label": "Packaging, Registries & Application Delivery",
+   "parent": "wasm"
+  },
+  {
+   "id": "ai-agent",
+   "label": "AI Agent",
+   "parent": null
+  },
+  {
+   "id": "ai-agent.agent-framework",
+   "label": "Agent Framework",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "ai-agent.agent-tool",
+   "label": "Agent Tool",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "ai-agent.evaluation",
+   "label": "Evaluation",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "ai-agent.protocol",
+   "label": "Protocol",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "ai-agent.rag",
+   "label": "RAG",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "ai-agent.state-and-memory",
+   "label": "State and Memory",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "ai-agent.structured-output",
+   "label": "Structured Output",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "ai-agent.vector-database",
+   "label": "Vector Database",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "ai-agent.workflow-orchestration",
+   "label": "Workflow Orchestration",
+   "parent": "ai-agent"
+  },
+  {
+   "id": "inference",
+   "label": "Inference",
+   "parent": null
+  },
+  {
+   "id": "inference.runtime",
+   "label": "Runtime",
+   "parent": "inference"
+  },
+  {
+   "id": "data",
+   "label": "Data",
+   "parent": null
+  },
+  {
+   "id": "data.data-architecture",
+   "label": "Data Architecture",
+   "parent": "data"
+  },
+  {
+   "id": "data.data-science",
+   "label": "Data Science",
+   "parent": "data"
+  },
+  {
+   "id": "training",
+   "label": "Training",
+   "parent": null
+  },
+  {
+   "id": "training.distributed-training",
+   "label": "Distributed Training",
+   "parent": "training"
+  },
+  {
+   "id": "training.post-training",
+   "label": "Post Training",
+   "parent": "training"
+  },
+  {
+   "id": "training.evaluation",
+   "label": "Evaluation",
+   "parent": "training"
+  },
+  {
+   "id": "ai-native-infra",
+   "label": "AI Native Infra",
+   "parent": null
+  },
+  {
+   "id": "ai-native-infra.workload-runtime",
+   "label": "Workload Runtime",
+   "parent": "ai-native-infra"
+  },
+  {
+   "id": "ai-native-infra.accelerator-and-superpod",
+   "label": "Accelerator and SuperPod",
+   "parent": "ai-native-infra"
+  },
+  {
+   "id": "ai-native-infra.observability",
+   "label": "Observability",
+   "parent": "ai-native-infra"
+  },
+  {
+   "id": "ai-native-infra.continuous-integration-and-delivery",
+   "label": "Continuous Integration and Delivery",
+   "parent": "ai-native-infra"
+  }
+ ],
+ "as_of": "2026-11-10"
+}
