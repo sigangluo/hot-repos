@@ -1,25 +1,25 @@
 // @vitest-environment happy-dom
 import { beforeEach, describe, expect, it } from 'vitest';
 import { buildTaxonomy } from '../data/taxonomy';
-import type { Meta } from '../data/types';
+import type { Meta, SchemeFile } from '../data/types';
 import { Store } from '../state/store';
-import { NOW, classification, makeRepos } from '../test-utils';
+import { NOW, classification, makeRepos, schemeInfo } from '../test-utils';
 import { renderFilters } from './filters';
 import type { Ctx } from './context';
 
 const META: Meta = {
   schema_version: 1, snapshot_date: '2026-01-10', board_size: 3, repos: 3, missing: 0,
   rank_captured_at: NOW / 1000, repos_fetched_at: null, star_weeks_fetched_at: null,
-  star_weeks_per_page: 30, trending_date: null, classified: 2,
+  star_weeks_per_page: 30, trending_date: null, schemes: [],
 };
 
 // 开发›工具›命令行（a/cli，关联 人工智能›智能体）、开发›编辑器（b/editor）、未分类（c/none）
-const FILE = classification([[2, [5], [0]], [3, [], [0, 1]], [null, [], []]], '仅供参考的说明');
+const FILE = classification([[2, [5], [0]], [3, [], [0, 1]], [null, [], []]]);
 
-function setup() {
-  const repos = makeRepos([{ full_name: 'a/cli' }, { full_name: 'b/editor' }, { full_name: 'c/none' }], FILE);
+function setup(file = FILE, info = schemeInfo()) {
+  const repos = makeRepos([{ full_name: 'a/cli' }, { full_name: 'b/editor' }, { full_name: 'c/none' }], file);
   const store = new Store();
-  const ctx: Ctx = { meta: META, repos, taxonomy: buildTaxonomy(FILE), now: NOW, store, weeks: null };
+  const ctx: Ctx = { meta: { ...META, schemes: [info] }, repos, scheme: info, taxonomy: buildTaxonomy(file), now: NOW, store, weeks: null };
   const root = renderFilters(ctx);
   document.body.replaceChildren(root);
   const rows = () =>
@@ -35,10 +35,9 @@ describe('分类树', () => {
     document.body.replaceChildren();
   });
 
-  it('初始只显示有项目的一级分类和数量，并显示目录附带的说明', () => {
-    const { rows, root } = setup();
+  it('初始只显示有项目的一级分类和数量', () => {
+    const { rows } = setup();
     expect(rows()).toEqual(['开发2']);
-    expect(root.querySelector('.group .note')?.textContent).toBe('仅供参考的说明');
   });
 
   it('展开后显示子分类，再展开显示第三级；没有项目的分支不出现', () => {
@@ -86,8 +85,28 @@ describe('分类树', () => {
     expect(root.querySelector('.def-block')?.textContent).toContain('写代码的工具与方法');
   });
 
-  it('分类树上方有分类的定义', () => {
+  it('分类树上方有分类的定义，有主分类的体系说明主分类与关联分类', () => {
     const { root } = setup();
-    expect(root.querySelector('.group .def')?.textContent).toContain('按项目服务的领域归类');
+    expect(root.querySelector('.group .def')?.textContent).toContain('一个项目有一个主分类'.replace('一个项目有', '每个项目有'));
+  });
+
+  it('没有主分类的体系：没有“仅主分类”切换，一个项目可以属于多个分类', () => {
+    // 没有主分类时全部分类都在 related 里；节点 3 编辑器在 a/cli 与 b/editor 都有
+    const flat = { ...FILE, category: [null, null, null], related: [[2, 3], [3], []] };
+    const { root, rows, store } = setup(flat, schemeInfo({ primary: false }));
+    store.set({ filters: { ...store.state.filters, categoryScope: 'all' } }); // switchScheme 会这样设置
+    expect(root.querySelector('[aria-label="分类范围"]')).toBeNull();
+    expect(root.querySelector('.group .def')?.textContent).toContain('可以同时属于多个分类');
+    expect(rows()).toEqual(['开发2']);
+  });
+
+  it('没有层级的体系按项目数从多到少排列', () => {
+    const flatFile = {
+      nodes: [['a', -1, '甲', null, null], ['b', -1, '乙', null, null], ['c', -1, '丙', null, null]] as SchemeFile['nodes'],
+      forms: [], category: [null, null, null], related: [[0], [1], [1]], form: [[], [], []],
+    };
+    const { store, rows } = setup(flatFile, schemeInfo({ primary: false }));
+    store.set({ filters: { ...store.state.filters, categoryScope: 'all' } });
+    expect(rows()).toEqual(['乙2', '甲1']);
   });
 });

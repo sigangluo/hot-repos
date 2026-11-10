@@ -1,4 +1,4 @@
-import { CATEGORY_DEFINITION } from '../data/glossary';
+import { categoryDefinition } from '../data/glossary';
 import type { Taxonomy } from '../data/taxonomy';
 import { h } from '../lib/dom';
 import { int } from '../lib/format';
@@ -19,6 +19,7 @@ const SCOPES: readonly [CategoryScope, string][] = [
 /**
  * 分类筛选：一棵可展开的树（最多三级），每一级都可勾选，勾选即包含其下全部子分类。
  * 数量是“满足其他全部条件”时该分类下的项目数；没有项目的分支不显示（已选的除外）。
+ * 没有层级的体系（如各种合集）按项目数从多到少排列。
  */
 export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filters, open: Set<string>): HTMLElement {
   const { store } = ctx;
@@ -100,14 +101,19 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
   const setScope = (categoryScope: CategoryScope) =>
     store.set({ filters: { ...store.state.filters, categoryScope } });
 
+  const primary = ctx.scheme?.primary ?? true;
+  const roots = taxonomy.flat
+    ? [...taxonomy.roots].sort((a, b) => (counts.get(b) ?? 0) - (counts.get(a) ?? 0) || taxonomy.label(a).localeCompare(taxonomy.label(b)))
+    : taxonomy.roots;
   const details = h('details', { class: 'group', open: open.has('category') || categories.size > 0 },
     h('summary', null, h('span', null, '分类'), categories.size ? h('span', { class: 'badge' }, `已选 ${categories.size}`) : null),
-    h('p', { class: 'def' }, CATEGORY_DEFINITION),
-    taxonomy.note ? h('p', { class: 'note' }, taxonomy.note) : null,
-    h('span', { class: 'seg', role: 'group', 'aria-label': '分类范围' },
-      SCOPES.map(([scope, label]) =>
-        h('button', { type: 'button', 'aria-pressed': String(filters.categoryScope === scope), onclick: () => setScope(scope) }, label))),
-    h('ul', { class: 'tree root' }, taxonomy.roots.map(item)));
+    h('p', { class: 'def' }, categoryDefinition(primary)),
+    primary
+      ? h('span', { class: 'seg', role: 'group', 'aria-label': '分类范围' },
+          SCOPES.map(([scope, label]) =>
+            h('button', { type: 'button', 'aria-pressed': String(filters.categoryScope === scope), onclick: () => setScope(scope) }, label)))
+      : null,
+    h('ul', { class: 'tree root' }, roots.map(item)));
   details.addEventListener('toggle', () => {
     if (details.open) open.add('category');
     else open.delete('category');

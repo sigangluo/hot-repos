@@ -9,6 +9,8 @@ export interface Prefs {
   pageSize: number;
   /** 用户选择的列；没有保存过为 null，使用默认列。 */
   columns: ColumnKey[] | null;
+  /** 上次选择的分类体系编号；没有保存过为 null。 */
+  scheme: string | null;
 }
 
 const PREFIX = 'hot-repos:';
@@ -27,12 +29,14 @@ export function loadPrefs(): Prefs {
   const theme = read('theme');
   const pageSize = read('pageSize');
   const columns = read('columns');
+  const scheme = read('scheme');
   const known = new Set<string>(COLUMNS.map((c) => c.key));
   const valid = Array.isArray(columns) ? columns.filter((c): c is ColumnKey => known.has(c)) : [];
   return {
     theme: theme === 'light' || theme === 'dark' ? theme : 'auto',
     pageSize: PAGE_SIZES.includes(pageSize as 10) ? (pageSize as number) : 10,
     columns: valid.length > 0 ? valid : null,
+    scheme: typeof scheme === 'string' ? scheme : null,
   };
 }
 

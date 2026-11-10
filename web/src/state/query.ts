@@ -46,15 +46,15 @@ export function ageBucket(days: number): (typeof AGE_BUCKETS)[number] {
   return '10 年以上';
 }
 
-/** 数据里有分类（没有导出或加载失败时没有）。 */
-export const hasClassification = (repos: readonly Repo[]) => repos.some((r) => r.category.length > 0);
+/** 当前分类体系里有项目带形态（没有分类，或体系没有形态时没有）。 */
+export const hasForms = (repos: readonly Repo[]) => repos.some((r) => r.forms.length > 0);
 
 export const GROUPS: readonly Group[] = [
   {
     id: 'form',
     label: '项目形态',
     values: (r) => r.forms,
-    available: hasClassification,
+    available: hasForms,
     definition: '项目是什么样的东西（应用、库、智能体技能……），与“分类”（它服务于什么领域）相互独立；一个项目可以有多个形态。',
     optionDefinitions: (taxonomy) => Object.fromEntries((taxonomy?.forms ?? []).map((f) => [f.label, f.definition])),
   },

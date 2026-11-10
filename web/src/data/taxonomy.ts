@@ -1,9 +1,7 @@
-import type { ClassificationFile } from './types';
+import type { SchemeFile } from './types';
 
-/** 分类目录：节点按父在前、子在后排列，下标即 classification.json 中引用的值。 */
+/** 一个分类体系的目录：节点按父在前、子在后排列，下标即体系文件中引用的值。 */
 export interface Taxonomy {
-  /** 目录附带的说明，没有则为 null。 */
-  note: string | null;
   /** 一级节点，按目录顺序。 */
   roots: readonly number[];
   /** 节点的直接子节点，按目录顺序。 */
@@ -16,13 +14,15 @@ export interface Taxonomy {
   path(node: number): string[];
   /** 节点的收录说明与排除说明；没有则为 null。 */
   definition(node: number): { includes: string | null; excludes: string | null };
+  /** 全部节点都是一级（没有层级）。 */
+  flat: boolean;
   /** 形态名称。 */
   formLabel(form: number): string;
   /** 全部形态的名称与定义，按目录顺序。 */
   forms: readonly { label: string; definition: string }[];
 }
 
-export function buildTaxonomy(file: ClassificationFile): Taxonomy {
+export function buildTaxonomy(file: SchemeFile): Taxonomy {
   const nodes: number[][] = [];
   const children = new Map<number, number[]>();
   const roots: number[] = [];
@@ -33,8 +33,8 @@ export function buildTaxonomy(file: ClassificationFile): Taxonomy {
   });
   const label = (node: number) => file.nodes[node]?.[2] ?? '';
   return {
-    note: file.note,
     roots,
+    flat: roots.length === file.nodes.length,
     children: (node) => children.get(node) ?? [],
     label,
     pathNodes: (node) => nodes[node] ?? [],

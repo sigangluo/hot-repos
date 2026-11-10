@@ -4,25 +4,26 @@ import './styles/components.css';
 
 import { loadCore, loadWeeks } from './data/load';
 import { asOf, buildRepos } from './data/model';
-import { buildTaxonomy } from './data/taxonomy';
 import type { Ctx } from './features/context';
 import { renderDrawer } from './features/drawer';
 import { renderFilters } from './features/filters';
 import { renderGlossary } from './features/glossary';
 import { renderHeader } from './features/header';
 import { renderResults } from './features/table';
+import { initialScheme, switchScheme } from './features/schemes';
 import { renderTrendingPage } from './features/trending';
 import { h, mount } from './lib/dom';
+import { loadPrefs } from './state/prefs';
 import { parseHash } from './state/route';
 import { Store } from './state/store';
 
 async function start(app: HTMLElement): Promise<void> {
   mount(app, h('p', { class: 'loading page' }, '正在加载数据…'));
-  const [meta, columns, classification] = await loadCore();
-  const repos = buildRepos(columns, asOf(meta), classification);
+  const [meta, columns] = await loadCore();
+  const repos = buildRepos(columns, asOf(meta));
   const store = new Store();
-  const taxonomy = classification && buildTaxonomy(classification);
-  const ctx: Ctx = { meta, repos, taxonomy, now: asOf(meta), store, weeks: null };
+  const ctx: Ctx = { meta, repos, scheme: null, taxonomy: null, now: asOf(meta), store, weeks: null };
+  await switchScheme(ctx, initialScheme(meta.schemes, loadPrefs().scheme));
 
   const drawerHost = h('div', { id: 'drawer-root' });
   const board = h('div', { class: 'layout' }, renderFilters(ctx), renderResults(ctx));

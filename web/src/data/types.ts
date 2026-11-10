@@ -14,8 +14,34 @@ export interface Meta {
   star_weeks_per_page: number;
   /** 最新一天的 Trending 快照日期；还没有快照时为 null。 */
   trending_date: string | null;
-  /** 已分类的项目数；为 0 表示没有分类数据。 */
+  /** 可选的分类体系，按页面列出的顺序；没有分类数据时为空数组。 */
+  schemes: SchemeInfo[];
+}
+
+/** 分类体系的简介（来自 meta.json），在加载体系文件之前就能列出并介绍它们。 */
+export interface SchemeInfo {
+  id: string;
+  name: string;
+  summary: string;
+  /** 标注方式：model 语言模型判断，manual 研究者人工标注，curated 来源方人工策展。 */
+  method: 'model' | 'manual' | 'curated';
+  /** 外部来源的出处与许可；本站自己的分类为 null。 */
+  source: SchemeSource | null;
+  /** 取得来源数据的日期；本站自己的分类为 null。 */
+  as_of: string | null;
+  /** 使用时需要注意的说明（如数据的年代、可信度），没有则为 null。 */
+  note: string | null;
+  /** 每个已标注的项目是否都有主分类；没有主分类的体系，一个项目只有若干并列的分类。 */
+  primary: boolean;
+  /** 体系里已有标注的项目数。 */
   classified: number;
+}
+
+export interface SchemeSource {
+  name: string;
+  url: string;
+  license: string;
+  attribution?: string;
 }
 
 export interface RepoColumns {
@@ -61,9 +87,14 @@ export interface DetailColumns {
   star_weeks_fetched_at: (number | null)[];
   star_weeks_pages_fetched: (number | null)[];
   star_weeks_pages_total: (number | null)[];
-  /** 分类的一句话简介；未分类为 null。 */
+  /** 各分类体系为项目写的文字，键是体系编号；没有这类文字的体系不出现。 */
+  scheme_text: Record<string, SchemeText>;
+}
+
+export interface SchemeText {
+  /** 一句话简介；没有为 null。 */
   summary: (string | null)[];
-  /** 需要复核的原因；无需复核或未分类为 null。 */
+  /** 需要复核的原因；无需复核为 null。 */
   review_reason: (string | null)[];
 }
 
@@ -95,16 +126,15 @@ export interface TrendingFile {
 }
 
 /**
- * classification.json：分类目录与每个项目的分类。
+ * scheme-<编号>.json：一个分类体系的节点、形态，及每个项目的分类。
  * `category` / `related` / `form` 与 repos.json 的行对齐，值是 `nodes` / `forms` 的下标；
- * 未分类的项目 `category` 为 null，`related` 与 `form` 为空数组。
+ * 没有标注的项目 `category` 为 null，`related` 与 `form` 为空数组；
+ * 没有主分类的体系，`category` 全为 null，项目的全部分类都在 `related` 里。
  */
-export interface ClassificationFile {
-  /** 目录附带的说明（如分类的来源与可信度），原样展示；没有则为 null。 */
-  note: string | null;
+export interface SchemeFile {
   /** [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称, 收录说明, 排除说明]，父节点排在子节点之前；说明没有则为 null。 */
   nodes: [string, number, string, string | null, string | null][];
-  /** [形态编号, 名称, 定义]。 */
+  /** [形态编号, 名称, 定义]；体系没有形态时为空数组。 */
   forms: [string, string, string][];
   category: (number | null)[];
   related: number[][];

@@ -1,9 +1,10 @@
 import { h, mount } from '../lib/dom';
 import { int } from '../lib/format';
-import { GROUPS, activeCount, emptyFilters, facetCounts, hasClassification, type Filters, type Group, type Range } from '../state/query';
+import { GROUPS, activeCount, emptyFilters, facetCounts, type Filters, type Group, type Range } from '../state/query';
 import { RANGE_DEFINITIONS } from '../data/glossary';
 import { renderCategoryGroup } from './category-filter';
 import type { Ctx } from './context';
+import { renderSchemePicker } from './scheme-picker';
 
 /** 记住各分组的展开状态与“显示全部”，重绘面板时不丢失。 */
 const open = new Set<string>(['category', 'language', 'license']);
@@ -13,7 +14,6 @@ const openDefs = new Set<string>();
 export function renderFilters(ctx: Ctx): HTMLElement {
   const { store, repos } = ctx;
   const root = h('aside', { class: 'filters', 'aria-label': '筛选' });
-  const groups = GROUPS.filter((g) => g.available?.(repos) ?? true);
 
   const setSelected = (group: Group, value: string, on: boolean) => {
     const { filters } = store.state;
@@ -148,10 +148,11 @@ export function renderFilters(ctx: Ctx): HTMLElement {
         h('h2', null, '筛选'),
         h('button', { type: 'button', class: 'btn', disabled: activeCount(filters) === 0, onclick: () => store.set({ filters: emptyFilters() }) }, '清除全部'),
       ),
+      renderSchemePicker(ctx),
       rangeField('Star 数', 'stars', RANGE_DEFINITIONS.stars),
       rangeField('贡献者数', 'contributors', RANGE_DEFINITIONS.contributors),
-      ctx.taxonomy && hasClassification(repos) ? renderCategoryGroup(ctx, ctx.taxonomy, filters, open) : null,
-      ...groups.map((g) => renderGroup(g, filters)),
+      ctx.taxonomy ? renderCategoryGroup(ctx, ctx.taxonomy, filters, open) : null,
+      ...GROUPS.filter((g) => g.available?.(repos) ?? true).map((g) => renderGroup(g, filters)),
     );
   };
 

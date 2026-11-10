@@ -1,6 +1,7 @@
 // 测试用的数据构造工具。
-import { buildRepos, type Repo } from './data/model';
-import type { ClassificationFile, RepoColumns } from './data/types';
+import { applyScheme, buildRepos, type Repo } from './data/model';
+import { buildTaxonomy } from './data/taxonomy';
+import type { RepoColumns, SchemeFile, SchemeInfo } from './data/types';
 
 export const NOW = Date.UTC(2026, 0, 10);
 const DAY = 86_400;
@@ -26,14 +27,24 @@ export function columns(rows: RowOverrides[]): RepoColumns {
   return out as unknown as RepoColumns;
 }
 
-export function makeRepos(rows: RowOverrides[], classification: ClassificationFile | null = null): Repo[] {
-  return buildRepos(columns(rows), NOW, classification);
+/** 生成项目；给出分类体系文件时，把它应用到全部项目。 */
+export function makeRepos(rows: RowOverrides[], file: SchemeFile | null = null): Repo[] {
+  const repos = buildRepos(columns(rows), NOW);
+  if (file) applyScheme(repos, { file, taxonomy: buildTaxonomy(file) });
+  return repos;
+}
+
+/** 一个分类体系的简介。 */
+export function schemeInfo(changes: Partial<SchemeInfo> = {}): SchemeInfo {
+  return {
+    id: 'site', name: '测试体系', summary: '用于测试的体系', method: 'model', source: null, as_of: null,
+    note: null, primary: true, classified: 2, ...changes,
+  };
 }
 
 /** 一份小的分类数据：开发 › 工具 › 命令行、开发 › 编辑器、人工智能 › 智能体；参数是各行的（主分类, 关联, 形态）下标。 */
-export function classification(rows: [number | null, number[], number[]][], note: string | null = null): ClassificationFile {
+export function classification(rows: [number | null, number[], number[]][]): SchemeFile {
   return {
-    note,
     nodes: [
       ['dev', -1, '开发', '写代码的工具与方法', null],
       ['dev.tools', 0, '工具', '命令行与编辑器', '数据库归 data'],

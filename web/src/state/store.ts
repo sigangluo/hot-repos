@@ -14,6 +14,8 @@ export interface AppState {
   view: View;
   /** 详情抽屉打开的项目；null 表示关闭。 */
   openRepo: string | null;
+  /** 当前使用的分类体系编号；null 表示没有可用的体系。 */
+  scheme: string | null;
 }
 
 type Listener = (state: AppState, changed: ReadonlySet<keyof AppState>) => void;
@@ -35,6 +37,7 @@ export class Store {
       theme: prefs.theme,
       view: 'board',
       openRepo: null,
+      scheme: null,
     };
   }
 
@@ -64,6 +67,7 @@ export class Store {
     if (changed.has('theme')) savePref('theme', this.state.theme);
     if (changed.has('columns')) savePref('columns', this.state.columns);
     if (changed.has('pageSize')) savePref('pageSize', this.state.pageSize);
+    if (changed.has('scheme') && this.state.scheme) savePref('scheme', this.state.scheme);
     // 复制一份再遍历：订阅者可能在回调里新增或取消订阅。
     for (const listener of [...this.listeners]) listener(this.state, changed);
   }

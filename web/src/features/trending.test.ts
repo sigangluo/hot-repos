@@ -9,7 +9,7 @@ import { renderTrending, renderTrendingPage } from './trending';
 const META: Meta = {
   schema_version: 1, snapshot_date: '2026-01-10', board_size: 5, repos: 5, missing: 0,
   rank_captured_at: NOW / 1000, repos_fetched_at: null, star_weeks_fetched_at: null,
-  star_weeks_per_page: 30, trending_date: '2026-01-10', classified: 0,
+  star_weeks_per_page: 30, trending_date: '2026-01-10', schemes: [],
 };
 
 const FILE: TrendingFile = {
@@ -32,7 +32,7 @@ const FILE: TrendingFile = {
 
 function setup(file: TrendingFile = FILE) {
   const repos = makeRepos([{ rank: 28, full_name: 'Owner/Known' }]);
-  const ctx: Ctx = { meta: META, repos, taxonomy: null, now: NOW, store: new Store(), weeks: null };
+  const ctx: Ctx = { meta: META, repos, scheme: null, taxonomy: null, now: NOW, store: new Store(), weeks: null };
   const root = renderTrending(ctx, file);
   document.body.replaceChildren(root);
   const names = () => [...root.querySelectorAll('.trend-item .name')].map((a) => a.textContent);
@@ -93,7 +93,7 @@ describe('近期热点页面', () => {
 
   it('第一次切换到该视图时才加载，之后不重复加载', async () => {
     const store = new Store();
-    const ctx: Ctx = { meta: META, repos: [], taxonomy: null, now: NOW, store, weeks: null };
+    const ctx: Ctx = { meta: META, repos: [], scheme: null, taxonomy: null, now: NOW, store, weeks: null };
     let loads = 0;
     const host = renderTrendingPage(ctx, () => (loads++, Promise.resolve(FILE)));
     expect(host.hidden).toBe(true);
@@ -111,7 +111,7 @@ describe('近期热点页面', () => {
   it('加载失败时给出提示，可以重试', async () => {
     const store = new Store();
     store.set({ view: 'trending' });
-    const ctx: Ctx = { meta: META, repos: [], taxonomy: null, now: NOW, store, weeks: null };
+    const ctx: Ctx = { meta: META, repos: [], scheme: null, taxonomy: null, now: NOW, store, weeks: null };
     let fail = true;
     const host = renderTrendingPage(ctx, () => (fail ? Promise.reject(new Error('HTTP 500')) : Promise.resolve(FILE)));
     await flush();

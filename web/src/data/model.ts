@@ -1,5 +1,5 @@
-import { buildTaxonomy } from './taxonomy';
-import type { ClassificationFile, Meta, RepoColumns } from './types';
+import type { Taxonomy } from './taxonomy';
+import type { Meta, RepoColumns, SchemeFile } from './types';
 
 const DAY = 86_400_000;
 
@@ -66,16 +66,18 @@ export interface Repo {
   ageDays: number;
   /** 距最近一次推送的天数；没有推送记录为 null。 */
   pushedDaysAgo: number | null;
-  /** 主分类路径，从一级到最具体的一级；未分类为空数组。 */
+  /** 当前分类体系里的主分类路径，从一级到最具体的一级；没有主分类（未标注，或体系没有主分类）为空数组。 */
   category: string[];
-  /** 关联分类路径（项目同时属于的其他分类）。 */
+  /** 其余分类的路径（项目同时属于的其他分类；体系没有主分类时就是它的全部分类）。 */
   relatedPaths: string[][];
   /** 主分类路径上的全部节点（目录下标，含各级父节点）：选中其中任一节点，该项目都算在它之下。 */
   categoryNodes: number[];
   /** 关联分类路径上的全部节点（去重）。 */
   relatedNodes: number[];
-  /** 项目形态（应用、库、教程……），可多个。 */
+  /** 项目形态（应用、库、教程……），可多个；体系没有形态时为空。 */
   forms: string[];
+  /** 搜索文本里与分类无关的部分（名称、描述、话题、语言），切换分类体系时据此重算 haystack。 */
+  searchBase: string;
   /** 小写的搜索文本：名称、描述、话题、语言、分类。 */
   haystack: string;
 }
@@ -89,8 +91,7 @@ const unique = <T>(values: T[]): T[] => [...new Set(values)];
 
 const ms = (seconds: number | null): number | null => (seconds == null ? null : seconds * 1000);
 
-export function buildRepos(c: RepoColumns, now: number, classification: ClassificationFile | null = null): Repo[] {
-  const taxonomy = classification && buildTaxonomy(classification);
+export function buildRepos(c: RepoColumns, now: number): Repo[] {
   return c.full_name.map((fullName, i): Repo => {
     const [owner = '', name = ''] = fullName.split('/');
     const description = c.description[i] ?? null;
@@ -99,12 +100,7 @@ export function buildRepos(c: RepoColumns, now: number, classification: Classifi
     const license = c.license[i] ?? null;
     const createdAt = (c.created_at[i] ?? 0) * 1000;
     const pushedAt = ms(c.pushed_at[i] ?? null);
-    const primary = classification?.category[i] ?? null;
-    const category = taxonomy && primary != null ? taxonomy.path(primary) : [];
-    const relatedPaths = taxonomy ? (classification?.related[i] ?? []).map((n) => taxonomy.path(n)) : [];
-    const paths = category.length ? [category, ...relatedPaths] : [];
-    const related = classification?.related[i] ?? [];
-    const forms = taxonomy ? (classification?.form[i] ?? []).map((f) => taxonomy.formLabel(f)) : [];
+    const searchBase = [fullName, description ?? '', topics.join(' '), language].join('\n').toLowerCase();
     return {
       index: i,
       rank: c.rank[i] ?? 0,
@@ -140,14 +136,50 @@ export function buildRepos(c: RepoColumns, now: number, classification: Classifi
       hasReadme: c.has_readme[i] ?? false,
       ageDays: Math.max(0, (now - createdAt) / DAY),
       pushedDaysAgo: pushedAt == null ? null : Math.max(0, (now - pushedAt) / DAY),
-      category,
-      relatedPaths,
-      categoryNodes: taxonomy && primary != null ? taxonomy.pathNodes(primary) : [],
-      relatedNodes: taxonomy ? unique(related.flatMap((n) => taxonomy.pathNodes(n))) : [],
-      forms,
-      haystack: [fullName, description ?? '', topics.join(' '), language, ...paths.flat(), ...forms]
-        .join('\n')
-        .toLowerCase(),
+      category: [],
+      relatedPaths: [],
+      categoryNodes: [],
+      relatedNodes: [],
+      forms: [],
+      searchBase,
+      haystack: searchBase,
     };
   });
+}
+
+/** 某个项目在一个分类体系里的位置。 */
+export interface Placement {
+  category: string[];
+  relatedPaths: string[][];
+  categoryNodes: number[];
+  relatedNodes: number[];
+  forms: string[];
+  /** 项目直接挂在哪些节点上（主分类在前，不含父节点），用来查这些分类的说明。 */
+  leaves: number[];
+}
+
+/** 项目（数据文件中的第 i 行）在体系里的位置；没有标注时各项为空。 */
+export function placement(file: SchemeFile, taxonomy: Taxonomy, i: number): Placement {
+  const primary = file.category[i] ?? null;
+  const related = file.related[i] ?? [];
+  return {
+    category: primary != null ? taxonomy.path(primary) : [],
+    relatedPaths: related.map((n) => taxonomy.path(n)),
+    categoryNodes: primary != null ? taxonomy.pathNodes(primary) : [],
+    relatedNodes: unique(related.flatMap((n) => taxonomy.pathNodes(n))),
+    forms: (file.form[i] ?? []).map((f) => taxonomy.formLabel(f)),
+    leaves: [...(primary != null ? [primary] : []), ...related],
+  };
+}
+
+/** 把一个分类体系应用到全部项目（原地修改分类相关的字段和搜索文本）；`null` 表示不使用任何体系。 */
+export function applyScheme(repos: readonly Repo[], scheme: { file: SchemeFile; taxonomy: Taxonomy } | null): void {
+  for (const repo of repos) {
+    const { leaves: _leaves, ...p } = scheme
+      ? placement(scheme.file, scheme.taxonomy, repo.index)
+      : { category: [], relatedPaths: [], categoryNodes: [], relatedNodes: [], forms: [], leaves: [] };
+    Object.assign(repo, p);
+    const paths = [...(p.category.length ? [p.category] : []), ...p.relatedPaths];
+    repo.haystack = [repo.searchBase, ...paths.flat(), ...p.forms].join('\n').toLowerCase();
+  }
 }

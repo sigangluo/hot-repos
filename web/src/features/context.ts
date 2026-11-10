@@ -1,13 +1,14 @@
 import type { Repo } from '../data/model';
 import type { Taxonomy } from '../data/taxonomy';
-import type { Meta, WeeksColumns } from '../data/types';
+import type { Meta, SchemeInfo, WeeksColumns } from '../data/types';
 import type { Store } from '../state/store';
 
-/** 各功能模块共享的只读上下文。`weeks` 在首屏之后才加载，加载前为 null。 */
+/** 各功能模块共享的上下文。`weeks` 在首屏之后才加载，加载前为 null；`scheme` 与 `taxonomy` 在切换分类体系时更新。 */
 export interface Ctx {
   meta: Meta;
   repos: readonly Repo[];
-  /** 分类目录；没有分类数据（或加载失败）时为 null。 */
+  /** 当前使用的分类体系的简介与目录；没有分类数据（或加载失败）时为 null。切换体系时原地更新。 */
+  scheme: SchemeInfo | null;
   taxonomy: Taxonomy | null;
   /** 数据的参照时间（毫秒）。 */
   now: number;

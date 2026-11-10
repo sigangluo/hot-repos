@@ -58,14 +58,21 @@ describe('Store', () => {
 
 describe('loadPrefs', () => {
   it('没有保存过时使用默认值', () => {
-    expect(loadPrefs()).toEqual({ theme: 'auto', pageSize: 10, columns: null });
+    expect(loadPrefs()).toEqual({ theme: 'auto', pageSize: 10, columns: null, scheme: null });
   });
 
   it('忽略不合法的值和已经不存在的列', () => {
     savePref('theme', 'purple');
     savePref('pageSize', 7);
     savePref('columns', ['rank', 'removed-column', 'stars']);
-    expect(loadPrefs()).toEqual({ theme: 'auto', pageSize: 10, columns: ['rank', 'stars'] });
+    expect(loadPrefs()).toEqual({ theme: 'auto', pageSize: 10, columns: ['rank', 'stars'], scheme: null });
+  });
+
+  it('记住选择的分类体系，不是字符串的值忽略', () => {
+    new Store().set({ scheme: 'borges' });
+    expect(loadPrefs().scheme).toBe('borges');
+    savePref('scheme', 5);
+    expect(loadPrefs().scheme).toBeNull();
   });
 
   it('保存的内容损坏时不报错', () => {

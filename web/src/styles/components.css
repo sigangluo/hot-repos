@@ -481,6 +481,8 @@ tbody tr:hover td {
 
 .tree.root {
   padding-left: 0;
+  max-height: 26rem; /* 合集类体系的分类很多，限制高度后在面板内滚动 */
+  overflow-y: auto;
 }
 
 .tree-row {
@@ -994,4 +996,14 @@ td.clip {
   .trend-rank {
     display: none;
   }
+}
+
+/* 分类体系选择：筛选面板最上方 */
+.scheme-pick {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.scheme-cards {
+  display: contents; /* 里面的卡片直接参与抽屉的纵向排布 */
 }

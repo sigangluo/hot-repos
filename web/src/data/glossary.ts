@@ -1,3 +1,5 @@
+import type { SchemeInfo } from './types';
+
 // 页面上名词与口径的定义。
 // 筛选分组的定义跟着分组声明放在 state/query.ts，表格列的定义放在 features/columns.ts，
 // 许可证类别的定义在 data/model.ts；这里放其余的，各处和“名词与口径说明”共用，避免说法不一致。
@@ -48,6 +50,21 @@ export const RANGE_DEFINITIONS = {
   contributors: '含匿名贡献者。GitHub 对超大仓库不提供这个数，设置范围后这些项目不会出现。',
 } as const;
 
-/** 分类筛选的含义（分类树上方显示）。 */
-export const CATEGORY_DEFINITION =
-  '按项目服务的领域归类，不按它用到的技术手段；每个项目有一个主分类，可有关联分类。点分类右侧的 ⓘ 查看它收什么、不收什么。';
+/** 分类筛选的含义（分类树上方显示），随当前体系有无主分类而不同。 */
+export function categoryDefinition(primary: boolean): string {
+  const how = primary
+    ? '每个项目有一个主分类，可有关联分类；“仅主分类”只看主分类，“含关联分类”连关联分类一起看。'
+    : '一个项目可以同时属于多个分类。';
+  return `当前分类体系里的分类：勾选一个分类即包含它下面的全部子分类。${how}点分类右侧的 ⓘ 查看它的说明（体系有写的话）。`;
+}
+
+/** 分类体系的标注方式：名称与含义，页面据此提示可信度。 */
+export const METHODS: Record<SchemeInfo['method'], readonly [string, string]> = {
+  model: ['语言模型判断', '由语言模型依据项目名称、描述、话题判断，没有经过人工验证，可能有错。'],
+  manual: ['研究者人工标注', '研究者逐个项目人工判断并公开了结果。标注发生在数据发布的当时，之后项目可能已经变化。'],
+  curated: ['来源方人工策展', '来源方（社区或机构）自己挑选项目放进各分类。收录有取舍：没被收录，不代表项目不属于该类。'],
+};
+
+/** 切换分类体系时，对“没被收录的项目”的说明。 */
+export const UNCLASSIFIED_NOTE =
+  '每个体系只收录一部分项目；没被收录的项目在该体系下没有分类，也不会出现在按分类筛选的结果里。';
