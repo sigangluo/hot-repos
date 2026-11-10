@@ -70,7 +70,7 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
             store.set({ filters: { ...store.state.filters } }); // 只为触发重绘
           },
         }, isOpen ? '▾' : '▸')
-      : h('span', { class: 'tree-toggle' });
+      : taxonomy.flat ? null : h('span', { class: 'tree-toggle' }); // 没有层级时不留展开按钮的空位
     const { includes, excludes } = taxonomy.definition(node);
     const defOpen = shownDefs.has(node);
     const info =

@@ -124,6 +124,7 @@
 /* ───────── 筛选面板 ───────── */
 .filters {
   display: grid;
+  grid-template-columns: minmax(0, 1fr); /* 单列也允许收缩，否则下拉框里的长文字会把整列撑出面板 */
   gap: var(--space-3);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1001,7 +1002,13 @@ td.clip {
 /* 分类体系选择：筛选面板最上方 */
 .scheme-pick {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2);
+}
+
+.scheme-pick select {
+  min-width: 0;
+  text-overflow: ellipsis;
 }
 
 .scheme-cards {
