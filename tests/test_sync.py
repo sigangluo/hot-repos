@@ -35,7 +35,7 @@ def fake_source(monkeypatch):
             raise state["result"]
         return state["result"]
 
-    monkeypatch.setattr(sync, "registry", lambda: {"fake": collect})
+    monkeypatch.setattr(sync, "registry", lambda _board=None: {"fake": collect})
     return state
 
 

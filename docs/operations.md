@@ -45,7 +45,7 @@ uv run hot-repos trending
 
 ```bash
 uv run hot-repos schemes sync            # 同步全部外部体系
-uv run hot-repos schemes sync borges cncf  # 只同步指定的
+uv run hot-repos schemes sync borges cncf  # 只同步指定的（编号见 schemes.md）
 ```
 
 `schemes sync` 从各公开来源取别人已经做好的分类，把今天总榜里的项目对上去，写入 `data/schemes/<编号>/`；只保存“哪个项目属于来源里的哪个类”，不重新标注。某个来源取不到或格式变了，只有它失败（该体系已有数据保持原样），命令以非零状态退出。GitHub 接口用 `GITHUB_TOKEN` / `gh auth token`（没有也能跑，但额度只有每小时 60 次）。**总榜更新（`fetch`）后建议同步一次**：新进总榜的项目才会出现在外部体系里。

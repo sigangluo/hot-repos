@@ -102,7 +102,7 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
     store.set({ filters: { ...store.state.filters, categoryScope } });
 
   const primary = ctx.scheme?.primary ?? true;
-  const roots = taxonomy.flat
+  const roots = taxonomy.flat || !primary
     ? [...taxonomy.roots].sort((a, b) => (counts.get(b) ?? 0) - (counts.get(a) ?? 0) || taxonomy.label(a).localeCompare(taxonomy.label(b)))
     : taxonomy.roots;
   const details = h('details', { class: 'group', open: open.has('category') || categories.size > 0 },

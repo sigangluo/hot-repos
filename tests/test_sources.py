@@ -7,7 +7,16 @@ import httpx
 import pytest
 
 from hot_repos import sync
-from hot_repos.sources import Fetcher, SourceError, borges, explore, landscape, ossinsight, registry
+from hot_repos.sources import (
+    Fetcher,
+    SourceError,
+    awesome,
+    borges,
+    explore,
+    landscape,
+    ossinsight,
+    registry,
+)
 from hot_repos.validate import check_scheme_meta
 
 BORGES_CSV = (
@@ -378,7 +387,7 @@ def test_collect_landscape_without_github_projects():
 
 
 def test_registry_has_all_sources():
-    assert list(registry()) == ["explore", "ossinsight", "borges", "cncf", "lfai"]
+    assert list(registry()) == ["explore", "awesome", "ossinsight", "borges", "cncf", "lfai"]
 
 
 def test_sync_apply_borges_end_to_end():
@@ -422,3 +431,161 @@ def test_sync_apply_without_any_match():
     collected = borges.parse_borges(BORGES_CSV)
     with pytest.raises(SourceError, match="对得上"):
         sync.apply(collected, ["nobody/home"], {}, date(2026, 5, 1))
+
+
+# ---------- awesome ----------
+
+README = """# Awesome Demo [![Awesome](https://awesome.re/badge.svg)](https://github.com/sindresorhus/awesome)
+
+> 简介里提到 [x/intro](https://github.com/x/intro)，不算收录。
+
+## Contents
+- [Web](#web)
+- [Data](#data)
+
+## Web
+
+- [a/one](https://github.com/a/one) - 一个
+- [b/two](https://github.com/b/two/) - 两个，同一章节重复 [b/two](https://github.com/b/two)
+- 自己：[me/awesome-demo](https://github.com/me/awesome-demo)
+
+### Sub heading
+
+- [c/three](https://github.com/c/three.git)
+
+## Data
+
+```
+https://github.com/in/code
+```
+
+- [d/four](https://github.com/d/four/tree/main/docs)
+- [e/five](https://github.com/topics/web)
+- [f/six](https://github.com/f/six)
+
+## Contributing
+
+- [z/skipped](https://github.com/z/skipped)
+"""
+
+
+def test_parse_awesome_sections_and_links():
+    sections = awesome.parse_awesome(README, "me/awesome-demo")
+    assert sections == {"Web": ["a/one", "b/two", "c/three"], "Data": ["d/four", "f/six"]}
+
+
+def test_parse_awesome_picks_the_level_with_the_categories():
+    text = (
+        "# Title\n## Projects\n"
+        + "".join(
+            f"### Cat{i}\n"
+            + "".join(f"- [o{i}/r{j}](https://github.com/o{i}/r{j})\n" for j in range(3))
+            for i in range(3)
+        )
+        + "## Contributing\n- [z/y](https://github.com/z/y)\n"
+    )
+    sections = awesome.parse_awesome(text, "me/list")
+    assert list(sections) == ["Cat0", "Cat1", "Cat2"]
+
+
+def test_parse_awesome_skips_children_of_filtered_sections():
+    text = (
+        "## Tools\n- [a/a](https://github.com/a/a)\n- [a/b](https://github.com/a/b)\n- [a/c](https://github.com/a/c)\n"
+        "## Related\n### Other\n- [z/z](https://github.com/z/z)\n"
+        "## Libs\n- [l/a](https://github.com/l/a)\n- [l/b](https://github.com/l/b)\n- [l/c](https://github.com/l/c)\n"
+    )
+    assert awesome.parse_awesome(text, "me/list") == {
+        "Tools": ["a/a", "a/b", "a/c"],
+        "Libs": ["l/a", "l/b", "l/c"],
+    }
+
+
+def test_parse_awesome_without_headings_is_one_flat_list():
+    text = "[a/a](https://github.com/a/a) [b/b](https://github.com/b/b) https://github.com/c/c"
+    assert awesome.parse_awesome(text, "me/list") == {None: ["a/a", "b/b", "c/c"]}
+
+
+def test_clean_heading():
+    assert (
+        awesome.clean_heading("🚀 [Web](#web) **Frameworks** ![x](y.svg) :fire:")
+        == "🚀 Web Frameworks"
+    )
+
+
+def row(name, rank, **changes):
+    return {
+        "full_name": name,
+        "rank": rank,
+        "default_branch": "main",
+        "readme_path": "README.md",
+        "topics": [],
+        "description": "一个清单",
+        "license": "CC0-1.0",
+    } | changes
+
+
+def test_is_awesome_list():
+    assert awesome.is_awesome_list(row("o/awesome-x", 1))
+    assert awesome.is_awesome_list(row("o/free-for-dev", 1, topics=["Awesome-List"]))
+    assert not awesome.is_awesome_list(row("o/tool", 1))
+    assert not awesome.is_awesome_list(row("o/awesome-x", 1, readme_path=None))
+
+
+def test_build_keeps_lists_with_enough_board_members():
+    readmes = {
+        "me/awesome-demo": README,
+        "me/awesome-tiny": "## A\n- [a/one](https://github.com/a/one)\n",
+    }
+    lists = [row("me/awesome-demo", 1), row("me/awesome-tiny", 2)]
+    board = {"a/one", "b/two", "c/three", "d/four", "f/six"}
+    collected = awesome.build(lists, readmes, board)
+    nodes = [n["id"] for n in collected.meta["nodes"]]
+    assert nodes == ["me-awesome-demo", "me-awesome-demo.web", "me-awesome-demo.data"]
+    assert collected.meta["nodes"][0]["label"] == "me/awesome-demo"
+    assert "CC0-1.0" in collected.meta["nodes"][0]["guidance"]["includes"]
+    assert collected.members["a/one"] == ["me-awesome-demo.web"]
+    assert collected.members["d/four"] == ["me-awesome-demo.data"]
+    assert collected.meta["primary"] is False
+
+
+def test_collect_fetches_readmes_from_the_board_rows():
+    seen = []
+
+    def handler(request):
+        seen.append(str(request.url))
+        if "bad" in str(request.url):
+            return httpx.Response(404)
+        return httpx.Response(200, text=README)
+
+    fetcher = Fetcher(client=httpx.Client(transport=httpx.MockTransport(handler)), pause=0)
+    board = [
+        row("me/awesome-demo", 1),
+        row("a/one", 2, readme_path=None),
+        row("b/two", 3),
+        row("c/three", 4),
+        row("d/four", 5),
+    ]
+    collected = awesome.collect(fetcher, board)
+    assert seen == ["https://raw.githubusercontent.com/me/awesome-demo/main/README.md"]
+    assert collected.members["a/one"] == ["me-awesome-demo.web"]
+
+
+def test_collect_tolerates_a_few_failures_but_not_many():
+    def handler(request):
+        return httpx.Response(404 if "bad" in str(request.url) else 200, text=README)
+
+    fetcher = Fetcher(client=httpx.Client(transport=httpx.MockTransport(handler)), pause=0)
+    board = [row(f"me/awesome-{i}", i) for i in range(1, 7)] + [
+        row("a/one", 7),
+        row("b/two", 8),
+        row("c/three", 9),
+    ]
+    assert awesome.collect(fetcher, board).meta["nodes"]  # 6 个清单都取到
+    many_bad = board[:2] + [row("me/awesome-bad1", 10), row("me/awesome-bad2", 11)] + board[6:]
+    with pytest.raises(SourceError, match="取不到 README"):
+        awesome.collect(fetcher, many_bad)
+
+
+def test_collect_without_any_list():
+    with pytest.raises(SourceError, match="没有找到 Awesome 清单"):
+        awesome.collect(Fetcher(), [row("o/tool", 1)])

@@ -71,14 +71,15 @@ def run(
     data_dir: Path, ids: list[str], fetcher: Fetcher, *, today: date | None = None
 ) -> dict[str, str]:
     """同步指定的来源（空列表表示全部），返回 {体系编号: 结果说明}；失败的体系其说明以“失败”开头。"""
-    sources = registry()
+    board = store.read_rows(data_dir, "repos")
+    sources = registry(board)
     unknown = [i for i in ids if i not in sources]
     if unknown:
         raise SourceError(f"没有这个来源：{'、'.join(unknown)}（可选：{'、'.join(sources)}）")
     manifest = store.read_manifest(data_dir)
     if manifest is None:
         raise SourceError("data/ 里还没有总榜，请先运行 hot-repos fetch")
-    names = [r["full_name"] for r in store.read_rows(data_dir, "repos")]
+    names = [r["full_name"] for r in board]
     today = today or date.today()
     results: dict[str, str] = {}
     for scheme_id in ids or list(sources):

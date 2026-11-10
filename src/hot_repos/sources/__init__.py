@@ -7,9 +7,10 @@
 
 import logging
 import time
-from collections.abc import Callable
+from collections.abc import Callable, Mapping, Sequence
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+from functools import partial
 from typing import Any
 from urllib.parse import urlparse
 
@@ -89,12 +90,13 @@ class Fetcher:
 Collector = Callable[[Fetcher], Collected]
 
 
-def registry() -> dict[str, Collector]:
-    """全部来源，键就是体系编号。"""
-    from . import borges, explore, landscape, ossinsight
+def registry(board: Sequence[Mapping[str, Any]] | None = None) -> dict[str, Collector]:
+    """全部来源，键就是体系编号。`board` 是总榜的项目行，需要它的来源（如 awesome）才能工作。"""
+    from . import awesome, borges, explore, landscape, ossinsight
 
     return {
         "explore": explore.collect,
+        "awesome": partial(awesome.collect, board_rows=board or []),
         "ossinsight": ossinsight.collect,
         "borges": borges.collect,
         "cncf": landscape.collect_cncf,
