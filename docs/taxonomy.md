@@ -1,6 +1,6 @@
 # 项目分类目录
 
-`data/taxonomy.json` 是项目分类的目录：15 个一级领域、74 个二级分类（另有每个领域一个「其他」扩展位），外加一组「形态」。本文说明它为什么这样设计、怎样归类、怎样扩展，以及它经过怎样的检验。文件格式见 [data-model.md](data-model.md#taxonomyjson)，分类结果怎样放入见 [operations.md](operations.md#项目分类)。
+`data/schemes/site/scheme.json` 是本站分类（体系编号 `site`）的目录：15 个一级领域、74 个二级分类（另有每个领域一个「其他」扩展位），外加一组「形态」。本文说明它为什么这样设计、怎样归类、怎样扩展，以及它经过怎样的检验。文件格式见 [data-model.md](data-model.md)，分类结果怎样放入见 [operations.md](operations.md#分类体系)；页面上还可以切换到别人做好的公开分类，见 [schemes.md](schemes.md)。
 
 ## 设计原则
 
@@ -30,7 +30,7 @@
 | `learn` | 学习与教育 | 智能辅导与学习应用、课程与教程 |
 | `resource` | 资源与指南 | 综合资源清单、经验与指南 |
 
-每个节点的收录范围和排除范围（`guidance.includes` / `excludes`）写在 `taxonomy.json` 里，是分类时判断边界的依据。
+每个节点的收录范围和排除范围（`guidance.includes` / `excludes`）写在 `scheme.json` 里，是分类时判断边界的依据。
 
 ## 归类规则
 

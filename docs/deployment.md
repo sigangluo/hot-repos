@@ -2,7 +2,7 @@
 
 部署由 `.github/workflows/pages.yml` 完成：推送到 `main` 后，从已提交的 `data/` 现场导出页面数据、构建，并发布到 GitHub Pages。页面数据不入库。
 
-> 已发布：<https://sigangluo.github.io/hot-repos/>。`pages.yml` 与 `trending.yml` 都已在 GitHub 上手动运行成功；`trending.yml` 的定时触发尚待观察。
+> 已发布：<https://sigangluo.github.io/hot-repos/>。`pages.yml` 与 `trending.yml` 都已在 GitHub 上手动运行成功，`trending.yml` 的定时触发也已确认；`schemes.yml` 尚未在 GitHub 上运行过。
 
 ## 第一次发布
 
@@ -47,6 +47,10 @@ git push
 - **历史只能从第一次运行起积累**：页面不保留过去的榜单，所以越早启用越好。
 - **仓库体积**：每天约 50 KB，一年约 18 MB，比总榜数据更新的增长慢得多。
 - **自动部署**：用 `GITHUB_TOKEN` 推送的提交不会触发其他工作流，所以 `trending.yml` 在推送后用 `gh workflow run pages.yml` 显式触发 Pages 部署（工作流已声明 `actions: write`）。没有新快照时不推送，也不会部署。
+
+## 外部分类体系的定时同步
+
+`.github/workflows/schemes.yml` 每月 1 日（UTC）运行 `hot-repos schemes sync` 和 `hot-repos validate`，有变化时用 `github-actions[bot]` 提交并推送到 `data/schemes/`，并显式触发 Pages 部署（同上，`GITHUB_TOKEN` 推送不会自动触发）；也可以在 Actions 页面手动触发。同步对的是仓库里已提交的总榜（`data/repos.parquet`），总榜本身仍需手动更新。某个来源失败时，它已有的数据保持原样，其余来源照常提交，任务最后显示失败。权限与分支保护的要求同 Trending。**这个工作流推送到 GitHub 后才会生效，首次建议手动触发一次确认。**
 - **定时任务可能延后**，长期没有仓库活动时 GitHub 可能停用定时任务；首次启用后的几天要确认它确实在运行。
 
 ## 持续集成

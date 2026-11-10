@@ -39,13 +39,20 @@ uv run hot-repos trending
 
 每天约增加 50 KB（一年约 18 MB）。每日定时任务见 [deployment.md](deployment.md)。
 
-## 项目分类
+## 分类体系
 
-分类是可选数据：`data/taxonomy.json`（目录）与 `data/classification.parquet`（结果），字段与口径见 [data-model.md](data-model.md)，目录的设计与扩展办法见 [taxonomy.md](taxonomy.md)。**当前有目录，也有 361 个项目（总榜中创建不足一年的）的分类结果**，由语言模型判断、未经人工验证，其余项目没有分类；更新结果文件并通过 `validate` 后，重新导出即生效。仓库里没有生成分类的命令，分类可以来自任何来源，来源与可信度写在目录的 `note` 里，页面会原样展示。
+分类体系是可选数据，每个体系一个目录 `data/schemes/<编号>/`（`scheme.json` 定义，`labels.parquet` 标注），字段与口径见 [data-model.md](data-model.md)，各体系的来源、许可和接入办法见 [schemes.md](schemes.md)，本站分类目录的设计见 [taxonomy.md](taxonomy.md)。
 
-- **写入**：用 `hot_repos.classification` 的 `write_taxonomy` / `write_rows`（按 schema 校验、行按项目名排序），或直接写出符合 `schema.CLASSIFICATION` 的 Parquet；之后运行 `validate`。节点编号必须稳定，新增分类先改目录。
-- **`fetch` 会维护对齐**：改名的项目换成当前名称，已不在总榜里的项目其分类结果被丢弃，日志里列出改名数和被丢弃的名称；这些结果和总榜一起先写入暂存目录、校验通过后才发布。新进总榜的项目没有分类。
-- **移除**：删除结果文件（连同目录也可以）即可，导出时会一并清除旧的 `classification.json`。
+```bash
+uv run hot-repos schemes sync            # 同步全部外部体系
+uv run hot-repos schemes sync borges cncf  # 只同步指定的
+```
+
+`schemes sync` 从各公开来源取别人已经做好的分类，把今天总榜里的项目对上去，写入 `data/schemes/<编号>/`；只保存“哪个项目属于来源里的哪个类”，不重新标注。某个来源取不到或格式变了，只有它失败（该体系已有数据保持原样），命令以非零状态退出。GitHub 接口用 `GITHUB_TOKEN` / `gh auth token`（没有也能跑，但额度只有每小时 60 次）。**总榜更新（`fetch`）后建议同步一次**：新进总榜的项目才会出现在外部体系里。
+
+- **本站分类（`site`）**：由语言模型判断，目前覆盖总榜中创建不足一年的 361 个项目，未经人工验证。仓库里没有生成它的命令，更新 `labels.parquet` 用 `hot_repos.schemes` 的 `write_meta` / `write_rows`（按 schema 校验、行按项目名排序），之后运行 `validate`。节点编号必须稳定，新增分类先改 `scheme.json`。
+- **`fetch` 会维护对齐**：对每个体系，改名的项目换成当前名称，已不在总榜里的项目其标注被丢弃，日志里列出改名数；这些标注和总榜一起先写入暂存目录、校验通过后才发布。
+- **移除某个体系**：删除它的目录即可，导出时会一并清除旧的 `scheme-<编号>.json`。
 
 ## 断点续跑与限流
 
@@ -83,7 +90,7 @@ uv run hot-repos trending
 uv run hot-repos validate
 ```
 
-同时检查总榜数据、项目分类和 `data/trending/` 下的全部快照，检查项见 [data-model.md](data-model.md#完整性约束)。提交 `data/` 前必须通过；测试中也包含对已提交数据的校验。
+同时检查总榜数据、各分类体系和 `data/trending/` 下的全部快照，检查项见 [data-model.md](data-model.md#完整性约束)。提交 `data/` 前必须通过；测试中也包含对已提交数据的校验。
 
 ## 导出页面数据
 
@@ -91,7 +98,7 @@ uv run hot-repos validate
 uv run hot-repos export
 ```
 
-先校验 `data/`，通过后在 `web/public/data/` 生成 `meta.json`、`repos.json`、`details.json`、`weeks.json`，有 Trending 快照时再生成 `trending.json`（最新一天），有分类数据时再生成 `classification.json`。这些是生成物，不提交；本地开发和 Pages 构建时重新生成。文件内容见 [architecture.md](architecture.md) 的第 7 条设计决定与 `export_web.py` 的模块说明。
+先校验 `data/`，通过后在 `web/public/data/` 生成 `meta.json`、`repos.json`、`details.json`、`weeks.json`，有 Trending 快照时再生成 `trending.json`（最新一天），有分类体系时每个体系再生成一个 `scheme-<编号>.json`。这些是生成物，不提交；本地开发和 Pages 构建时重新生成。文件内容见 [architecture.md](architecture.md) 的第 7 条设计决定与 `export_web.py` 的模块说明。
 
 ## 页面开发与构建
 

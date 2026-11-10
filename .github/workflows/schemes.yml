@@ -1,0 +1,51 @@
+name: Schemes
+
+on:
+  schedule:
+    - cron: "0 3 1 * *" # 每月 1 日 03:00 UTC；来源（合集、Landscape）更新不频繁
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write # 提交后触发 Pages 部署
+
+concurrency:
+  group: schemes
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+      - run: uv sync --locked
+      # 某个来源失败时，它已有的数据保持原样，其余来源照常同步并提交；最后一步再让任务显示失败
+      - name: 同步外部分类体系
+        id: sync
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: uv run hot-repos schemes sync
+      - run: uv run hot-repos validate
+      - name: 提交并触发部署
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/schemes
+          if git diff --cached --quiet; then
+            echo "没有变化"
+            exit 0
+          fi
+          git commit -m "data: 同步外部分类体系 $(date -u +%F)"
+          git pull --rebase
+          git push
+          # 用 GITHUB_TOKEN 推送的提交不会触发其他工作流，这里显式触发页面部署
+          gh workflow run pages.yml
+      - name: 有来源同步失败时标记任务失败
+        if: steps.sync.outcome == 'failure'
+        run: |
+          echo "有来源同步失败，详见「同步外部分类体系」一步的日志"
+          exit 1
