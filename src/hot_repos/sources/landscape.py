@@ -15,7 +15,7 @@ from typing import Any
 
 import yaml
 
-from . import Collected, Fetcher, SourceError
+from . import Collected, Fetcher, SourceError, dated
 from .explore import load_yaml, repo_name, slugify, unique_label, unique_slug
 
 log = logging.getLogger(__name__)
@@ -85,8 +85,10 @@ def parse_landscape(text: str, meta: dict[str, Any]) -> Collected:
     return Collected(meta=meta | {"nodes": nodes}, members=members)
 
 
-def _collect(fetcher: Fetcher, url: str, meta: dict[str, Any], label: str) -> Collected:
-    collected = parse_landscape(fetcher.text(url), meta)
+def _collect(fetcher: Fetcher, url: str, meta: dict[str, Any], label: str, repo: str) -> Collected:
+    collected = dated(
+        parse_landscape(fetcher.text(url), meta), *fetcher.github_dates(repo, "landscape.yml")
+    )
     if not collected.members:
         raise SourceError(f"{label} 里没有解析出任何 GitHub 项目（文件格式可能变了）")
     log.info(
@@ -130,8 +132,8 @@ def lfai_meta() -> dict[str, Any]:
 
 
 def collect_cncf(fetcher: Fetcher) -> Collected:
-    return _collect(fetcher, CNCF_URL, cncf_meta(), "cncf")
+    return _collect(fetcher, CNCF_URL, cncf_meta(), "cncf", "cncf/landscape")
 
 
 def collect_lfai(fetcher: Fetcher) -> Collected:
-    return _collect(fetcher, LFAI_URL, lfai_meta(), "lfai")
+    return _collect(fetcher, LFAI_URL, lfai_meta(), "lfai", "lfai/lfai-landscape")

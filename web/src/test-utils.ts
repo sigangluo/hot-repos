@@ -37,7 +37,8 @@ export function makeRepos(rows: RowOverrides[], file: SchemeFile | null = null):
 /** 一个分类体系的简介。 */
 export function schemeInfo(changes: Partial<SchemeInfo> = {}): SchemeInfo {
   return {
-    id: 'site', name: '测试体系', summary: '用于测试的体系', method: 'model', source: null, as_of: null,
+    id: 'site', name: '测试体系', summary: '用于测试的体系', method: 'model', source: null,
+    created: '2026-01-01', updated: '2026-01-09', as_of: null,
     note: null, primary: true, classified: 2, ...changes,
   };
 }

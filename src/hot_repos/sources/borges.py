@@ -10,10 +10,11 @@ import io
 import logging
 from typing import Any
 
-from . import Collected, Fetcher, SourceError
+from . import Collected, Fetcher, SourceError, dated
 
 log = logging.getLogger(__name__)
 
+RECORD_URL = "https://zenodo.org/api/records/804474"
 CSV_URL = (
     "https://zenodo.org/api/records/804474/files/"
     "Domains%20of%205,000%20GitHub%20Repositories%20-%20Public%20-%20Domains.csv/content"
@@ -99,8 +100,17 @@ def parse_borges(text: str) -> Collected:
     return Collected(meta=meta, members=members)
 
 
+def _record_dates(fetcher: Fetcher) -> tuple[str, str]:
+    """（数据集发布日期，Zenodo 记录最近更新日期）。"""
+    record = fetcher.json(RECORD_URL)
+    try:
+        return str(record["metadata"]["publication_date"])[:10], str(record["updated"])[:10]
+    except (KeyError, TypeError) as e:
+        raise SourceError("Zenodo 记录里没有发布与更新日期（接口的返回变了？）") from e
+
+
 def collect(fetcher: Fetcher) -> Collected:
-    collected = parse_borges(fetcher.text(CSV_URL))
+    collected = dated(parse_borges(fetcher.text(CSV_URL)), *_record_dates(fetcher))
     if not collected.members:
         raise SourceError("Borges 数据集里一行有效数据都没有（文件格式可能变了）")
     log.info("borges：%d 个项目", len(collected.members))

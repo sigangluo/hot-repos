@@ -141,6 +141,8 @@ def test_web_types_match_exported_columns():
         "summary",
         "method",
         "source",
+        "created",
+        "updated",
         "as_of",
         "note",
         "primary",

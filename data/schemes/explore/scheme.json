@@ -15,7 +15,6 @@
   {
    "id": "ai-agents",
    "label": "AI Agents",
-   "parent": null,
    "guidance": {
     "includes": "Frameworks, toolkits, and skill libraries for building autonomous AI agents. These projects help developers create agents that can plan, reason, use tools, and execute multi-step workflows powered by large language models."
    }
@@ -23,7 +22,6 @@
   {
    "id": "ai-model-zoos",
    "label": "Model Zoos of machine and deep learning technologies",
-   "parent": null,
    "guidance": {
     "includes": "Model Zoo is a common way that open source frameworks and companies organize their machine learning and deep learning models."
    }
@@ -31,7 +29,6 @@
   {
    "id": "algorithms-and-data-structures",
    "label": "Algorithms & Data Structures",
-   "parent": null,
    "guidance": {
     "includes": "A curated collection of open-source algorithms, data structures, and implementation guides to help developers master computational problem-solving and technical interviews."
    }
@@ -39,7 +36,6 @@
   {
    "id": "cheatsheets",
    "label": "Useful cheatsheets",
-   "parent": null,
    "guidance": {
     "includes": "A list of useful cheat sheets for various programming languages and commands."
    }
@@ -47,7 +43,6 @@
   {
    "id": "choosing-projects",
    "label": "How to choose (and contribute to) your first open source project",
-   "parent": null,
    "guidance": {
     "includes": "New to open source? Here’s how to find projects that need help and start making impactful contributions."
    }
@@ -55,7 +50,6 @@
   {
    "id": "clean-code-linters",
    "label": "Clean code linters",
-   "parent": null,
    "guidance": {
     "includes": "Make sure your code matches your style guide with these essential code linters."
    }
@@ -63,7 +57,6 @@
   {
    "id": "clipboard-managers",
    "label": "Clipboard Managers",
-   "parent": null,
    "guidance": {
     "includes": "Leave more room in your brain with this list of awesome clipboard managers."
    }
@@ -71,7 +64,6 @@
   {
    "id": "code-quality-in-php",
    "label": "Code Quality Checker Tools For PHP Projects",
-   "parent": null,
    "guidance": {
     "includes": "A collection of code quality tools for PHP projects that you can use to analyze and fix your code in your local environments or in CI pipelines. The collection will not contain testing tools."
    }
@@ -79,7 +71,6 @@
   {
    "id": "css-frameworks",
    "label": "CSS Frameworks",
-   "parent": null,
    "guidance": {
     "includes": "A CSS framework is a set of css classes that allow you to create your website with little to no new css code."
    }
@@ -87,7 +78,6 @@
   {
    "id": "ctf-cybersec-resources",
    "label": "Capture The Flag (CTF) and Cyber Security Resources",
-   "parent": null,
    "guidance": {
     "includes": "A collections of tools, scripts, write-ups, and other essentials on GitHub that can help you improve your Cyber Security skills and ace your next CTF challenge."
    }
@@ -95,7 +85,6 @@
   {
    "id": "design-essentials",
    "label": "Design essentials",
-   "parent": null,
    "guidance": {
     "includes": "This collection of design libraries are the best on the web, and will complete your toolset for designing stunning products."
    }
@@ -103,7 +92,6 @@
   {
    "id": "devops-tools",
    "label": "DevOps tools",
-   "parent": null,
    "guidance": {
     "includes": "These tools help you manage servers and deploy happier and more often with more confidence."
    }
@@ -111,7 +99,6 @@
   {
    "id": "devsecops",
    "label": "DevSecOps",
-   "parent": null,
    "guidance": {
     "includes": "Security integration into continuous integration and delivery pipelines (CI/CD), security scanning, and dependency management. DevSecOps embeds rigorous security checks, vulnerability scanning, and compliance testing directly into the modern developer workflow to ensure robust software delivery."
    }
@@ -119,7 +106,6 @@
   {
    "id": "digital-preservation",
    "label": "Digital Preservation",
-   "parent": null,
    "guidance": {
     "includes": "Trying to look after the long-term preservation of your digital files? Get started with this collection of the digital preservation industry's most widely used open-source software, tutorials, and guides."
    }
@@ -127,7 +113,6 @@
   {
    "id": "edge-computing",
    "label": "Edge Computing & AIoT",
-   "parent": null,
    "guidance": {
     "includes": "Local data processing on edge devices, combining IoT hardware with lightweight machine learning models. This computing architecture minimizes latency and reduces network bandwidth dependency by moving vital computation and decision-making processes closer to the physical data sources."
    }
@@ -135,7 +120,6 @@
   {
    "id": "fantasy-consoles",
    "label": "Fantasy Consoles",
-   "parent": null,
    "guidance": {
     "includes": "Fantasy consoles are mini game engines or virtual machines that simulate 8-bit computers and consoles from yesteryear. They force developers to work within constraints on color palettes, sound channels, resolution, memory, etc. Very popular in the retrogaming and game jam scenes. Try one out -…"
    }
@@ -143,7 +127,6 @@
   {
    "id": "front-end-javascript-frameworks",
    "label": "Front-end JavaScript frameworks",
-   "parent": null,
    "guidance": {
     "includes": "While the number of ways to organize JavaScript is almost infinite, here are some tools that help you build single-page applications."
    }
@@ -151,7 +134,6 @@
   {
    "id": "game-engines",
    "label": "Game Engines",
-   "parent": null,
    "guidance": {
     "includes": "Frameworks for building games across multiple platforms."
    }
@@ -159,7 +141,6 @@
   {
    "id": "github-accelerator-2023-cohort",
    "label": "GitHub Accelerator Cohort 2023",
-   "parent": null,
    "guidance": {
     "includes": "GitHub Accelerator is an exploration into what sustainable open source could look like: a 10-week program where open source maintainers receive an initial sponsorship to work on their project, paired with guidance and workshops from open source leaders, with an end goal of building durable streams…"
    }
@@ -167,7 +148,6 @@
   {
    "id": "github-accelerator-2023",
    "label": "GitHub Accelerator Cohort 2023 (github-accelerator-2023)",
-   "parent": null,
    "guidance": {
     "includes": "GitHub Accelerator is an exploration into what sustainable open source could look like: a 10-week program where open source maintainers receive an initial sponsorship to work on their project, paired with guidance and workshops from open source leaders, with an end goal of building durable streams…"
    }
@@ -175,7 +155,6 @@
   {
    "id": "github-browser-extensions",
    "label": "GitHub Browser Extensions",
-   "parent": null,
    "guidance": {
     "includes": "Some useful and fun browser extensions to personalize your GitHub browser experience."
    }
@@ -183,7 +162,6 @@
   {
    "id": "github-pages-examples",
    "label": "GitHub Pages examples",
-   "parent": null,
    "guidance": {
     "includes": "Fine examples of projects using [GitHub Pages](https://pages.github.com)."
    }
@@ -191,7 +169,6 @@
   {
    "id": "government",
    "label": "Government apps",
-   "parent": null,
    "guidance": {
     "includes": "Sites, apps, and tools built by governments across the world to make government work better, together. Read more at [government.github.com](https://government.github.com)."
    }
@@ -199,7 +176,6 @@
   {
    "id": "hacking-minecraft",
    "label": "Hacking Minecraft",
-   "parent": null,
    "guidance": {
     "includes": "Minecraft is a game about building blocks, but it doesn’t end there. Take Minecraft further with some of the projects below, or dive into the code mines and hammer your own!"
    }
@@ -207,7 +183,6 @@
   {
    "id": "internal-tools",
    "label": "Low-Code / Internal Tools",
-   "parent": null,
    "guidance": {
     "includes": "Frameworks and open source platforms for rapidly building admin panels, dashboards, and internal workflows. These low-code tools help developers connect enterprise databases and APIs to intuitive drag-and-drop interfaces, allowing engineering teams to deploy mission-critical internal software…"
    }
@@ -215,7 +190,6 @@
   {
    "id": "internet-censorship-circumventions",
    "label": "Internet Censorship Circumventions",
-   "parent": null,
    "guidance": {
     "includes": "Internet censorship circumvention is the use of various methods and tools to bypass internet censorship."
    }
@@ -223,7 +197,6 @@
   {
    "id": "javascript-game-engines",
    "label": "JavaScript Game Engines",
-   "parent": null,
    "guidance": {
     "includes": "Learn or level up your 1337 gamedev skills and build amazing games together for web, desktop, or mobile using these HTML5 / JavaScript game engines."
    }
@@ -231,7 +204,6 @@
   {
    "id": "javascript-state-management",
    "label": "JavaScript State Management Tools",
-   "parent": null,
    "guidance": {
     "includes": "Framework agnostic libraries to manage state in JavaScript applications."
    }
@@ -239,7 +211,6 @@
   {
    "id": "laravel-libraries",
    "label": "Laravel Libraries",
-   "parent": null,
    "guidance": {
     "includes": "Collection of useful libraries for Laravel applications."
    }
@@ -247,7 +218,6 @@
   {
    "id": "learn-to-code",
    "label": "Learn to Code",
-   "parent": null,
    "guidance": {
     "includes": "Resources to help people learn to code"
    }
@@ -255,7 +225,6 @@
   {
    "id": "load-testing",
    "label": "Load testing",
-   "parent": null,
    "guidance": {
     "includes": "Load testing, benchmarking and stress testing tools."
    }
@@ -263,7 +232,6 @@
   {
    "id": "machine-learning",
    "label": "Getting started with machine learning",
-   "parent": null,
    "guidance": {
     "includes": "Today, machine learning—the study of algorithms that make data-based predictions—has found a new audience and a new set of possibilities."
    }
@@ -271,7 +239,6 @@
   {
    "id": "made-in-argentina",
    "label": "Made in Argentina",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Argentina :argentina:"
    }
@@ -279,7 +246,6 @@
   {
    "id": "made-in-brazil",
    "label": "Made in Brazil",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Brazil :brazil:"
    }
@@ -287,7 +253,6 @@
   {
    "id": "made-in-china",
    "label": "Made in China",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from China :cn:"
    }
@@ -295,7 +260,6 @@
   {
    "id": "made-in-colombia",
    "label": "Made in Colombia",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Colombia :colombia:"
    }
@@ -303,7 +267,6 @@
   {
    "id": "made-in-egypt",
    "label": "Made in Egypt",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Egypt 🇪🇬"
    }
@@ -311,7 +274,6 @@
   {
    "id": "made-in-france",
    "label": "Made in France",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from France :fr:"
    }
@@ -319,7 +281,6 @@
   {
    "id": "made-in-india",
    "label": "Made in India",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from India :india:"
    }
@@ -327,7 +288,6 @@
   {
    "id": "made-in-indonesia",
    "label": "Made in Indonesia",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Indonesia :indonesia:"
    }
@@ -335,7 +295,6 @@
   {
    "id": "made-in-iran",
    "label": "Made in Iran",
-   "parent": null,
    "guidance": {
     "includes": "Iranian developer's list of open source projects :iran:"
    }
@@ -343,7 +302,6 @@
   {
    "id": "made-in-israel",
    "label": "Made in Israel",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in Israel :israel:"
    }
@@ -351,7 +309,6 @@
   {
    "id": "made-in-italy",
    "label": "Made in Italy",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Italy :it:"
    }
@@ -359,7 +316,6 @@
   {
    "id": "made-in-korea",
    "label": "Made in Korea",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Korea :kr:"
    }
@@ -367,7 +323,6 @@
   {
    "id": "made-in-morocco",
    "label": "Made in Morocco",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Morocco :morocco:"
    }
@@ -375,7 +330,6 @@
   {
    "id": "made-in-pakistan",
    "label": "Made in Pakistan",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Pakistan 🇵🇰"
    }
@@ -383,7 +337,6 @@
   {
    "id": "made-in-poland",
    "label": "Made in Poland",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Poland :poland:"
    }
@@ -391,7 +344,6 @@
   {
    "id": "made-in-romania",
    "label": "Made in Romania",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Romania :romania:"
    }
@@ -399,7 +351,6 @@
   {
    "id": "made-in-russia",
    "label": "Made in Russia",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Russia 🇷🇺"
    }
@@ -407,7 +358,6 @@
   {
    "id": "made-in-spain",
    "label": "Made in Spain",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Spain :es:"
    }
@@ -415,7 +365,6 @@
   {
    "id": "made-in-taiwan",
    "label": "Made in Taiwan",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Taiwan :taiwan:"
    }
@@ -423,7 +372,6 @@
   {
    "id": "made-in-turkiye",
    "label": "Made in Türkiye",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Türkiye :tr:"
    }
@@ -431,7 +379,6 @@
   {
    "id": "made-in-ukraine",
    "label": "Made in Ukraine",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Ukraine :ukraine:"
    }
@@ -439,7 +386,6 @@
   {
    "id": "made-in-vietnam",
    "label": "Made in Vietnam",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects built in or receiving significant contributions from Vietnam :vietnam:"
    }
@@ -447,7 +393,6 @@
   {
    "id": "music",
    "label": "Music",
-   "parent": null,
    "guidance": {
     "includes": "Drop the code bass with these musically themed repositories."
    }
@@ -455,7 +400,6 @@
   {
    "id": "open-journalism",
    "label": "Open journalism",
-   "parent": null,
    "guidance": {
     "includes": "See how publications and data-driven journalists use open source to power their newsroom and ensure information is reported fairly and accurately."
    }
@@ -463,7 +407,6 @@
   {
    "id": "open-source-mlops",
    "label": "Open source MLOps",
-   "parent": null,
    "guidance": {
     "includes": "Open source projects to enhance your MLOps stack."
    }
@@ -471,7 +414,6 @@
   {
    "id": "opensource-testing",
    "label": "OpenSource Testing Frameworks & Tools",
-   "parent": null,
    "guidance": {
     "includes": "Open source testing tools and frameworks to help testers/QA teams with automating and delivering high quality software."
    }
@@ -479,7 +421,6 @@
   {
    "id": "php-frameworks",
    "label": "PHP Frameworks",
-   "parent": null,
    "guidance": {
     "includes": "While the number of ways to organize PHP is almost infinite, here are some frameworks that help you build clean applications."
    }
@@ -487,7 +428,6 @@
   {
    "id": "pixel-art-tools",
    "label": "Pixel Art Tools",
-   "parent": null,
    "guidance": {
     "includes": "Creating pixel art for fun or animated sprites for a game? The digital artist in you will love these apps and tools!"
    }
@@ -495,7 +435,6 @@
   {
    "id": "platform-engineering",
    "label": "Platform Engineering",
-   "parent": null,
    "guidance": {
     "includes": "Internal Developer Platforms (IDPs), developer portals, and infrastructure automation tooling. Platform engineering focuses on designing and building standardized toolchains and continuous workflows that drastically reduce cognitive load and enable self-service capabilities for software engineering…"
    }
@@ -503,7 +442,6 @@
   {
    "id": "productivity-tools",
    "label": "Software productivity tools",
-   "parent": null,
    "guidance": {
     "includes": "Build software faster with fewer headaches, using these tools and tricks."
    }
@@ -511,7 +449,6 @@
   {
    "id": "programming-languages",
    "label": "Programming languages",
-   "parent": null,
    "guidance": {
     "includes": "A list of actively developed programming languages that are found on GitHub."
    }
@@ -519,7 +456,6 @@
   {
    "id": "projects-that-power-github",
    "label": "Projects that power GitHub",
-   "parent": null,
    "guidance": {
     "includes": "Some of the great open source projects that GitHub uses to power its infrastructure"
    }
@@ -527,7 +463,6 @@
   {
    "id": "protect-user-data",
    "label": "Keeping user data safe",
-   "parent": null,
    "guidance": {
     "includes": "Reducing risk in your software projects doesn’t have to be a full time job. Explore some small security steps that make a big difference."
    }
@@ -535,7 +470,6 @@
   {
    "id": "react-ui",
    "label": "React UI",
-   "parent": null,
    "guidance": {
     "includes": "A React UI library or collection of React components. React is an open source JavaScript framework for designing user interfaces."
    }
@@ -543,7 +477,6 @@
   {
    "id": "release-radar-2018-12",
    "label": "Release Radar · December 2018",
-   "parent": null,
    "guidance": {
     "includes": "Welcome to [the December 2018 edition of Release Radar](https://github.blog/2019-01-20-release-radar-december-2018/), where we share new and exciting releases from world-changing technologies to weekend side projects. Most importantly, they’re all projects shipped by you."
    }
@@ -551,7 +484,6 @@
   {
    "id": "ruby-frameworks",
    "label": "Ruby Frameworks",
-   "parent": null,
    "guidance": {
     "includes": "Frameworks that are designed to support the development of web applications including web services, web resources, and web APIs"
    }
@@ -559,7 +491,6 @@
   {
    "id": "software-defined-radio",
    "label": "Software Defined Radio",
-   "parent": null,
    "guidance": {
     "includes": "Interested in Software for Wireless Communications? This is the place."
    }
@@ -567,7 +498,6 @@
   {
    "id": "software-development-tools",
    "label": "Software development tools",
-   "parent": null,
    "guidance": {
     "includes": "Build apps better, faster, stronger."
    }
@@ -575,7 +505,6 @@
   {
    "id": "software-in-science",
    "label": "Software in science",
-   "parent": null,
    "guidance": {
     "includes": "Scientists around the world are working together to solve some of the biggest questions in research."
    }
@@ -583,7 +512,6 @@
   {
    "id": "static-site-generators",
    "label": "Static Site Generators",
-   "parent": null,
    "guidance": {
     "includes": "Whether you're starting your own personal blog or creating documentation for a project with tens of thousands of stars, static site generators are the future. Forget about maintaining servers and databases — just start writing using the Markdown syntax you already know and love on GitHub, use one…"
    }
@@ -591,7 +519,6 @@
   {
    "id": "text-editors",
    "label": "Text editors",
-   "parent": null,
    "guidance": {
     "includes": "The text editor is a sacred tool for developers. Here's a showcase of some amazingly awesome open source editors."
    }
@@ -599,7 +526,6 @@
   {
    "id": "tools-for-open-source",
    "label": "Tools for Open Source",
-   "parent": null,
    "guidance": {
     "includes": "Software to make running your open source project a little bit easier."
    }
@@ -607,7 +533,6 @@
   {
    "id": "virtual-machines",
    "label": "Virtual Machines",
-   "parent": null,
    "guidance": {
     "includes": "A virtual machine (or VM) is a digitized version of a physical computer. Virtual machines can run programs and operating systems, store data, connect to networks, and do other computing functions. However, a VM uses entirely virtual resources instead of physical components."
    }
@@ -615,7 +540,6 @@
   {
    "id": "vlc-media-player",
    "label": "VLC Media Player",
-   "parent": null,
    "guidance": {
     "includes": "# Video Players and Tools"
    }
@@ -623,7 +547,6 @@
   {
    "id": "web-accessibility",
    "label": "Web accessibility",
-   "parent": null,
    "guidance": {
     "includes": "Tools to help you design and develop web projects with accessibility in mind."
    }
@@ -631,7 +554,6 @@
   {
    "id": "web-games",
    "label": "Web games",
-   "parent": null,
    "guidance": {
     "includes": "Have some fun with these open source games."
    }
@@ -639,11 +561,12 @@
   {
    "id": "web-scraping",
    "label": "Web scraping",
-   "parent": null,
    "guidance": {
     "includes": "The web is the world's largest dataset. These open source projects help developers crawl, extract, and run scrapers at scale."
    }
   }
  ],
+ "created": "2017-09-16",
+ "updated": "2026-09-25",
  "as_of": "2026-11-10"
 }

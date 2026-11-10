@@ -15,7 +15,6 @@
   {
    "id": "application-software",
    "label": "Application software",
-   "parent": null,
    "guidance": {
     "includes": "面向最终用户提供功能的系统，例如浏览器、文本编辑器（数据集示例：WordPress/WordPress、adobe/brackets）。"
    }
@@ -23,7 +22,6 @@
   {
    "id": "system-software",
    "label": "System software",
-   "parent": null,
    "guidance": {
     "includes": "为其他系统提供服务和基础设施的系统，例如操作系统、中间件、数据库（数据集示例：torvalds/linux、mongodb/mongo）。"
    }
@@ -31,7 +29,6 @@
   {
    "id": "web-libraries-and-frameworks",
    "label": "Web libraries and frameworks",
-   "parent": null,
    "guidance": {
     "includes": "用于 Web 开发的库和框架（数据集示例：twbs/bootstrap、angular/angular.js）。"
    }
@@ -39,7 +36,6 @@
   {
    "id": "non-web-libraries-and-frameworks",
    "label": "Non-web libraries and frameworks",
-   "parent": null,
    "guidance": {
     "includes": "用于 Web 以外场景的库和框架（数据集示例：google/guava、facebook/fresco）。"
    }
@@ -47,7 +43,6 @@
   {
    "id": "software-tools",
    "label": "Software tools",
-   "parent": null,
    "guidance": {
     "includes": "支持开发工作的系统，例如 IDE、包管理器、编译器（数据集示例：Homebrew/homebrew、git/git）。"
    }
@@ -55,11 +50,12 @@
   {
    "id": "documentation",
    "label": "Documentation",
-   "parent": null,
    "guidance": {
     "includes": "以文档、教程、源代码示例等为主的仓库（数据集示例：iluwatar/java-design-patterns）。"
    }
   }
  ],
+ "created": "2017-06-08",
+ "updated": "2020-01-24",
  "as_of": "2026-11-10"
 }

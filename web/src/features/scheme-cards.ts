@@ -4,6 +4,7 @@ import { getScheme, type SchemeData } from '../data/schemes';
 import type { DetailColumns, SchemeInfo } from '../data/types';
 import { h, mount } from '../lib/dom';
 import { crumbs, definitions, kv } from '../lib/widgets';
+import { schemeAge } from './scheme-picker';
 import type { Ctx } from './context';
 
 /** 一个体系对这个项目的分类：没有标注时为 null。 */
@@ -33,7 +34,7 @@ function meaning({ data, place }: Entry): Node | null {
   return entries.length ? definitions('分类与形态的含义', entries) : null;
 }
 
-function card(entry: Entry, text: { summary: string | null; review: string | null }): HTMLElement {
+function card(entry: Entry, now: number, text: { summary: string | null; review: string | null }): HTMLElement {
   const { info, place } = entry;
   const [method] = METHODS[info.method];
   return h('section', { class: 'card' },
@@ -49,6 +50,7 @@ function card(entry: Entry, text: { summary: string | null; review: string | nul
         : null),
     meaning(entry),
     text.review ? h('p', { class: 'note' }, `标记为待复核：${text.review}`) : null,
+    h('p', { class: 'note' }, `体系：${schemeAge(info, now)}`),
     info.source
       ? h('p', { class: 'note' }, '来源：',
           h('a', { href: info.source.url, target: '_blank', rel: 'noopener noreferrer' }, info.source.name),
@@ -77,7 +79,7 @@ export function schemeCards(ctx: Ctx, repo: Repo, details: Promise<DetailColumns
         return h('section', { class: 'card' }, h('h3', null, `分类 · ${entry.info.name}`), h('p', { class: 'muted' }, '这个体系没有收录该项目。'));
       }
       const text = d?.scheme_text[entry.info.id];
-      return card(entry, { summary: text?.summary[repo.index] ?? null, review: text?.review_reason[repo.index] ?? null });
+      return card(entry, ctx.now, { summary: text?.summary[repo.index] ?? null, review: text?.review_reason[repo.index] ?? null });
     }));
   });
   return host;

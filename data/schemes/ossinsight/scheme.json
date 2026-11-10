@@ -14,669 +14,538 @@
  "nodes": [
   {
    "id": "static-site-generator",
-   "label": "Static Site Generator",
-   "parent": null
+   "label": "Static Site Generator"
   },
   {
    "id": "open-source-database",
-   "label": "Open Source Database",
-   "parent": null
+   "label": "Open Source Database"
   },
   {
    "id": "css-framework",
-   "label": "CSS Framework",
-   "parent": null
+   "label": "CSS Framework"
   },
   {
    "id": "google-analytics-alternative",
-   "label": "Google Analytics Alternative",
-   "parent": null
+   "label": "Google Analytics Alternative"
   },
   {
    "id": "low-code-development-tool",
-   "label": "Low Code Development Tool",
-   "parent": null
+   "label": "Low Code Development Tool"
   },
   {
    "id": "web-framework",
-   "label": "Web Framework",
-   "parent": null
+   "label": "Web Framework"
   },
   {
    "id": "javascript-framework",
-   "label": "Javascript Framework",
-   "parent": null
+   "label": "Javascript Framework"
   },
   {
    "id": "business-intelligence",
-   "label": "Business Intelligence",
-   "parent": null
+   "label": "Business Intelligence"
   },
   {
    "id": "time-series-database",
-   "label": "Time Series Database",
-   "parent": null
+   "label": "Time Series Database"
   },
   {
    "id": "graph-database",
-   "label": "Graph Database",
-   "parent": null
+   "label": "Graph Database"
   },
   {
    "id": "github-alternative",
-   "label": "Github Alternative",
-   "parent": null
+   "label": "Github Alternative"
   },
   {
    "id": "artificial-intelligence",
-   "label": "Artificial Intelligence",
-   "parent": null
+   "label": "Artificial Intelligence"
   },
   {
    "id": "artificial-intelligence-of-china",
-   "label": "Artificial Intelligence of China",
-   "parent": null
+   "label": "Artificial Intelligence of China"
   },
   {
    "id": "headless-cms",
-   "label": "Headless CMS",
-   "parent": null
+   "label": "Headless CMS"
   },
   {
    "id": "game-engine",
-   "label": "Game Engine",
-   "parent": null
+   "label": "Game Engine"
   },
   {
    "id": "javascript-game-engine",
-   "label": "Javascript Game Engine",
-   "parent": null
+   "label": "Javascript Game Engine"
   },
   {
    "id": "text-editor",
-   "label": "Text Editor",
-   "parent": null
+   "label": "Text Editor"
   },
   {
    "id": "search-engine",
-   "label": "Search Engine",
-   "parent": null
+   "label": "Search Engine"
   },
   {
    "id": "chaos-engineering",
-   "label": "Chaos Engineering",
-   "parent": null
+   "label": "Chaos Engineering"
   },
   {
    "id": "apm-tool",
-   "label": "APM Tool",
-   "parent": null
+   "label": "APM Tool"
   },
   {
    "id": "react-framework",
-   "label": "React Framework",
-   "parent": null
+   "label": "React Framework"
   },
   {
    "id": "cicd",
-   "label": "CICD",
-   "parent": null
+   "label": "CICD"
   },
   {
    "id": "javascript-charting",
-   "label": "Javascript Charting",
-   "parent": null
+   "label": "Javascript Charting"
   },
   {
    "id": "programming-language",
-   "label": "Programming Language",
-   "parent": null
+   "label": "Programming Language"
   },
   {
    "id": "distributed-file-storage",
-   "label": "Distributed File Storage",
-   "parent": null
+   "label": "Distributed File Storage"
   },
   {
    "id": "webassembly-runtime",
-   "label": "WebAssembly Runtime",
-   "parent": null
+   "label": "WebAssembly Runtime"
   },
   {
    "id": "testing-tool",
-   "label": "Testing Tools",
-   "parent": null
+   "label": "Testing Tools"
   },
   {
    "id": "remote-desktop-tool",
-   "label": "Remote Desktop Tool",
-   "parent": null
+   "label": "Remote Desktop Tool"
   },
   {
    "id": "cross-platform-gui-tool",
-   "label": "Cross Platform GUI Tool",
-   "parent": null
+   "label": "Cross Platform GUI Tool"
   },
   {
    "id": "finance",
-   "label": "Finance",
-   "parent": null
+   "label": "Finance"
   },
   {
    "id": "web3",
-   "label": "Web3",
-   "parent": null
+   "label": "Web3"
   },
   {
    "id": "message-and-streaming",
-   "label": "Message and Streaming",
-   "parent": null
+   "label": "Message and Streaming"
   },
   {
    "id": "identity-server",
-   "label": "Identity Server",
-   "parent": null
+   "label": "Identity Server"
   },
   {
    "id": "diagram-as-code",
-   "label": "Diagram as Code",
-   "parent": null
+   "label": "Diagram as Code"
   },
   {
    "id": "paas",
-   "label": "PaaS",
-   "parent": null
+   "label": "PaaS"
   },
   {
    "id": "wysiwyg-editor",
-   "label": "WYSIWYG Editor",
-   "parent": null
+   "label": "WYSIWYG Editor"
   },
   {
    "id": "hyperledger",
-   "label": "Hyperledger Foundation",
-   "parent": null
+   "label": "Hyperledger Foundation"
   },
   {
    "id": "hyperledger-fabric",
-   "label": "Hyperledger Fabric",
-   "parent": null
+   "label": "Hyperledger Fabric"
   },
   {
    "id": "api-tool-for-developer",
-   "label": "API tool for developer",
-   "parent": null
+   "label": "API tool for developer"
   },
   {
    "id": "segment-alternative",
-   "label": "Segment Alternative",
-   "parent": null
+   "label": "Segment Alternative"
   },
   {
    "id": "rust-database",
-   "label": "Rust Database",
-   "parent": null
+   "label": "Rust Database"
   },
   {
    "id": "go-database",
-   "label": "Go Database",
-   "parent": null
+   "label": "Go Database"
   },
   {
    "id": "modern-data-stack",
-   "label": "Modern Data Stack",
-   "parent": null
+   "label": "Modern Data Stack"
   },
   {
    "id": "tui-framework",
-   "label": "TUI Framework",
-   "parent": null
+   "label": "TUI Framework"
   },
   {
    "id": "terminal",
-   "label": "Terminal",
-   "parent": null
+   "label": "Terminal"
   },
   {
    "id": "ui-framework-and-uikit",
-   "label": "UI Framework and UIkit",
-   "parent": null
+   "label": "UI Framework and UIkit"
   },
   {
    "id": "computer-science-courses",
-   "label": "Computer Science Courses",
-   "parent": null
+   "label": "Computer Science Courses"
   },
   {
    "id": "open-source-forum-software",
-   "label": "Open Source Forum Software",
-   "parent": null
+   "label": "Open Source Forum Software"
   },
   {
    "id": "security-tool",
-   "label": "Security Tool",
-   "parent": null
+   "label": "Security Tool"
   },
   {
    "id": "golang-orm",
-   "label": "Golang ORM",
-   "parent": null
+   "label": "Golang ORM"
   },
   {
    "id": "configuration-management-tools",
-   "label": "Configuration Management Tools",
-   "parent": null
+   "label": "Configuration Management Tools"
   },
   {
    "id": "monitoring-tool",
-   "label": "Monitoring Tool",
-   "parent": null
+   "label": "Monitoring Tool"
   },
   {
    "id": "password-manager",
-   "label": "Password Manager",
-   "parent": null
+   "label": "Password Manager"
   },
   {
    "id": "data-integration",
-   "label": "Data Integration",
-   "parent": null
+   "label": "Data Integration"
   },
   {
    "id": "workflow-scheduler",
-   "label": "Workflow Scheduler",
-   "parent": null
+   "label": "Workflow Scheduler"
   },
   {
    "id": "mlops-tools",
-   "label": "MLOps Tools",
-   "parent": null
+   "label": "MLOps Tools"
   },
   {
    "id": "key-value-database",
-   "label": "Key Value Database",
-   "parent": null
+   "label": "Key Value Database"
   },
   {
    "id": "ios-framework",
-   "label": "iOS Framework",
-   "parent": null
+   "label": "iOS Framework"
   },
   {
    "id": "slack-alternative",
-   "label": "Slack Alternative",
-   "parent": null
+   "label": "Slack Alternative"
   },
   {
    "id": "serverless-framework",
-   "label": "Serverless Framework",
-   "parent": null
+   "label": "Serverless Framework"
   },
   {
    "id": "kubernetes-tooling",
-   "label": "Kubernetes Tooling",
-   "parent": null
+   "label": "Kubernetes Tooling"
   },
   {
    "id": "javascript-build-tool",
-   "label": "Javascript Build Tool",
-   "parent": null
+   "label": "Javascript Build Tool"
   },
   {
    "id": "javascript-orm",
-   "label": "javascript ORM",
-   "parent": null
+   "label": "javascript ORM"
   },
   {
    "id": "virtual-reality",
-   "label": "Virtual Reality",
-   "parent": null
+   "label": "Virtual Reality"
   },
   {
    "id": "robotics",
-   "label": "Robotics",
-   "parent": null
+   "label": "Robotics"
   },
   {
    "id": "x-as-code",
-   "label": "X as Code",
-   "parent": null
+   "label": "X as Code"
   },
   {
    "id": "optimization-solvers",
-   "label": "Optimization Solvers",
-   "parent": null
+   "label": "Optimization Solvers"
   },
   {
    "id": "approximate-nearest-neighbor-library",
-   "label": "Approximate Nearest Neighbor Library",
-   "parent": null
+   "label": "Approximate Nearest Neighbor Library"
   },
   {
    "id": "business-management",
-   "label": "Business Management",
-   "parent": null
+   "label": "Business Management"
   },
   {
    "id": "zapier-alternatives",
-   "label": "Zapier Alternatives",
-   "parent": null
+   "label": "Zapier Alternatives"
   },
   {
    "id": "chatgpt-alternatives",
-   "label": "ChatGPT Alternatives",
-   "parent": null
+   "label": "ChatGPT Alternatives"
   },
   {
    "id": "llm-tools",
-   "label": "LLM Tools",
-   "parent": null
+   "label": "LLM Tools"
   },
   {
    "id": "vector-search-engine",
-   "label": "Vector Search Engine",
-   "parent": null
+   "label": "Vector Search Engine"
   },
   {
    "id": "chatgpt-apps",
-   "label": "ChatGPT Apps",
-   "parent": null
+   "label": "ChatGPT Apps"
   },
   {
    "id": "stable-diffusion-ecosystem",
-   "label": "Stable Diffusion Ecosystem",
-   "parent": null
+   "label": "Stable Diffusion Ecosystem"
   },
   {
    "id": "networking-for-games",
-   "label": "Networking for Games",
-   "parent": null
+   "label": "Networking for Games"
   },
   {
    "id": "finops",
-   "label": "Cloud Financial Management and Resource Optimization",
-   "parent": null
+   "label": "Cloud Financial Management and Resource Optimization"
   },
   {
    "id": "web-scanner",
-   "label": "Web Scanner",
-   "parent": null
+   "label": "Web Scanner"
   },
   {
    "id": "programming-language-of-china",
-   "label": "Programming Language of China",
-   "parent": null
+   "label": "Programming Language of China"
   },
   {
    "id": "ml-in-rust",
-   "label": "ML in Rust",
-   "parent": null
+   "label": "ML in Rust"
   },
   {
    "id": "open-source-data-catalogs",
-   "label": "Open Source Data Catalogs",
-   "parent": null
+   "label": "Open Source Data Catalogs"
   },
   {
    "id": "reactive-monolith-frameworks",
-   "label": "Reactive Monolith Frameworks",
-   "parent": null
+   "label": "Reactive Monolith Frameworks"
   },
   {
    "id": "llm-devtools",
-   "label": "LLM DevTools",
-   "parent": null
+   "label": "LLM DevTools"
   },
   {
    "id": "webrtc",
-   "label": "WebRTC",
-   "parent": null
+   "label": "WebRTC"
   },
   {
    "id": "relational-database",
-   "label": "Relational Database",
-   "parent": null
+   "label": "Relational Database"
   },
   {
    "id": "go-web-frameworks",
-   "label": "Go Web Frameworks",
-   "parent": null
+   "label": "Go Web Frameworks"
   },
   {
    "id": "go-logging-libraries",
-   "label": "Go Logging Libraries",
-   "parent": null
+   "label": "Go Logging Libraries"
   },
   {
    "id": "browser-extension-frameworks",
-   "label": "Browser Extension Frameworks",
-   "parent": null
+   "label": "Browser Extension Frameworks"
   },
   {
    "id": "3d-physics-engines",
-   "label": "3D Physics Engines",
-   "parent": null
+   "label": "3D Physics Engines"
   },
   {
    "id": "vector-database",
-   "label": "Vector Database & Vector Store",
-   "parent": null
+   "label": "Vector Database & Vector Store"
   },
   {
    "id": "graphrag",
-   "label": "GraphRAG - Knowledge Graph based RAG",
-   "parent": null
+   "label": "GraphRAG - Knowledge Graph based RAG"
   },
   {
    "id": "project-management",
-   "label": "Project Management",
-   "parent": null
+   "label": "Project Management"
   },
   {
    "id": "ai-training-tracking",
-   "label": "AI Training Observability",
-   "parent": null
+   "label": "AI Training Observability"
   },
   {
    "id": "ai-agent-frameworks",
-   "label": "AI Agent Frameworks",
-   "parent": null
+   "label": "AI Agent Frameworks"
   },
   {
    "id": "mcp-client",
-   "label": "Model Context Protocol (MCP) Client",
-   "parent": null
+   "label": "Model Context Protocol (MCP) Client"
   },
   {
    "id": "baas",
-   "label": "BaaS",
-   "parent": null
+   "label": "BaaS"
   },
   {
    "id": "anomaly-detection",
-   "label": "Anomaly Detection Software",
-   "parent": null
+   "label": "Anomaly Detection Software"
   },
   {
    "id": "documentation-generator",
-   "label": "Documentation Generator",
-   "parent": null
+   "label": "Documentation Generator"
   },
   {
    "id": "mocking-stubbing-tools",
-   "label": "Mocking and Stubbing tools",
-   "parent": null
+   "label": "Mocking and Stubbing tools"
   },
   {
    "id": "ai-gateways",
-   "label": "AI Gateways",
-   "parent": null
+   "label": "AI Gateways"
   },
   {
    "id": "mcp-servers",
-   "label": "MCP Servers",
-   "parent": null
+   "label": "MCP Servers"
   },
   {
    "id": "coding-agents",
-   "label": "Coding Agents",
-   "parent": null
+   "label": "Coding Agents"
   },
   {
    "id": "vibe-coding-tools",
-   "label": "Vibe Coding Tools",
-   "parent": null
+   "label": "Vibe Coding Tools"
   },
   {
    "id": "rag-frameworks",
-   "label": "RAG Frameworks",
-   "parent": null
+   "label": "RAG Frameworks"
   },
   {
    "id": "llm-inference-engines",
-   "label": "LLM Inference Engines",
-   "parent": null
+   "label": "LLM Inference Engines"
   },
   {
    "id": "llm-finetuning",
-   "label": "LLM Fine-Tuning Tools",
-   "parent": null
+   "label": "LLM Fine-Tuning Tools"
   },
   {
    "id": "ai-image-generation",
-   "label": "AI Image Generation",
-   "parent": null
+   "label": "AI Image Generation"
   },
   {
    "id": "ai-coding-assistants",
-   "label": "AI Coding Assistants",
-   "parent": null
+   "label": "AI Coding Assistants"
   },
   {
    "id": "ai-browser-agents",
-   "label": "AI Browser Agents",
-   "parent": null
+   "label": "AI Browser Agents"
   },
   {
    "id": "ai-agent-memory",
-   "label": "AI Agent Memory",
-   "parent": null
+   "label": "AI Agent Memory"
   },
   {
    "id": "ai-safety-alignment",
-   "label": "AI Safety & Alignment",
-   "parent": null
+   "label": "AI Safety & Alignment"
   },
   {
    "id": "vector-databases",
-   "label": "Vector Databases",
-   "parent": null
+   "label": "Vector Databases"
   },
   {
    "id": "multimodal-ai",
-   "label": "Multimodal AI",
-   "parent": null
+   "label": "Multimodal AI"
   },
   {
    "id": "ai-evaluation-testing",
-   "label": "AI Evaluation & Testing",
-   "parent": null
+   "label": "AI Evaluation & Testing"
   },
   {
    "id": "model-compression",
-   "label": "Model Compression",
-   "parent": null
+   "label": "Model Compression"
   },
   {
    "id": "ai-video-generation",
-   "label": "AI Video Generation",
-   "parent": null
+   "label": "AI Video Generation"
   },
   {
    "id": "ai-workflow-orchestration",
-   "label": "AI Workflow Orchestration",
-   "parent": null
+   "label": "AI Workflow Orchestration"
   },
   {
    "id": "agent-skills",
-   "label": "Agent Skills & AGENTS.md",
-   "parent": null
+   "label": "Agent Skills & AGENTS.md"
   },
   {
    "id": "ai-infrastructure",
-   "label": "AI Infrastructure",
-   "parent": null
+   "label": "AI Infrastructure"
   },
   {
    "id": "edge-ai",
-   "label": "Edge AI",
-   "parent": null
+   "label": "Edge AI"
   },
   {
    "id": "ai-governance",
-   "label": "AI Governance",
-   "parent": null
+   "label": "AI Governance"
   },
   {
    "id": "google-adk",
-   "label": "Google ADK",
-   "parent": null
+   "label": "Google ADK"
   },
   {
    "id": "ai-finops",
-   "label": "AI FinOps",
-   "parent": null
+   "label": "AI FinOps"
   },
   {
    "id": "ai-quantitative-finance",
-   "label": "AI Quantitative Finance",
-   "parent": null
+   "label": "AI Quantitative Finance"
   },
   {
    "id": "ai-agent-marketplace",
-   "label": "AI Agent Marketplace",
-   "parent": null
+   "label": "AI Agent Marketplace"
   },
   {
    "id": "knowledge-graphs-for-ai",
-   "label": "Knowledge Graphs for AI",
-   "parent": null
+   "label": "Knowledge Graphs for AI"
   },
   {
    "id": "ai-observability",
-   "label": "AI Observability",
-   "parent": null
+   "label": "AI Observability"
   },
   {
    "id": "ai-code-review",
-   "label": "AI Code Review",
-   "parent": null
+   "label": "AI Code Review"
   },
   {
    "id": "agent-sandboxing",
-   "label": "Agent Sandboxing",
-   "parent": null
+   "label": "Agent Sandboxing"
   },
   {
    "id": "ai-red-teaming",
-   "label": "AI Red Teaming",
-   "parent": null
+   "label": "AI Red Teaming"
   },
   {
    "id": "a2a-protocol",
-   "label": "A2A Protocol",
-   "parent": null
+   "label": "A2A Protocol"
   },
   {
    "id": "google-adk-python",
-   "label": "Google ADK Python",
-   "parent": null
+   "label": "Google ADK Python"
   },
   {
    "id": "agent-harness",
-   "label": "Agent Harness",
-   "parent": null
+   "label": "Agent Harness"
   }
  ],
+ "created": "2022-01-19",
+ "updated": "2026-05-07",
  "as_of": "2026-11-10"
 }

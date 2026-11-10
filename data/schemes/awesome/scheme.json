@@ -16,7 +16,7 @@
    "id": "codecrafters-io-build-your-own-x",
    "label": "codecrafters-io/build-your-own-x",
    "guidance": {
-    "includes": "Master programming by recreating your favorite technologies from scratch.（清单没有声明许可）"
+    "includes": "Master programming by recreating your favorite technologies from scratch.（清单仓库创建于 2018-05-09，最近推送 2026-11-08；清单没有声明许可）"
    }
   },
   {
@@ -53,7 +53,7 @@
    "id": "sindresorhus-awesome",
    "label": "sindresorhus/awesome",
    "guidance": {
-    "includes": "😎 Awesome lists about all kinds of interesting topics [NOTE: Pull requests are temporarily disabled until I have a chance to catch up with the existing ones]（清单许可：CC0-1.0）"
+    "includes": "😎 Awesome lists about all kinds of interesting topics [NOTE: Pull requests are temporarily disabled until I have a chance to catch up with the existing ones]（清单仓库创建于 2014-07-11，最近推送 2026-09-02；清单许可：CC0-1.0）"
    }
   },
   {
@@ -145,7 +145,7 @@
    "id": "awesome-selfhosted-awesome-selfhosted",
    "label": "awesome-selfhosted/awesome-selfhosted",
    "guidance": {
-    "includes": "A list of Free Software network services and web applications which can be hosted on your own servers（清单许可：NOASSERTION）"
+    "includes": "A list of Free Software network services and web applications which can be hosted on your own servers（清单仓库创建于 2015-06-01，最近推送 2026-11-07；清单许可：NOASSERTION）"
    }
   },
   {
@@ -492,7 +492,7 @@
    "id": "vinta-awesome-python",
    "label": "vinta/awesome-python",
    "guidance": {
-    "includes": "The definitive list that answers \"I want to do X in Python, which tool should I use?\"（清单许可：NOASSERTION）"
+    "includes": "The definitive list that answers \"I want to do X in Python, which tool should I use?\"（清单仓库创建于 2014-06-27，最近推送 2026-11-08；清单许可：NOASSERTION）"
    }
   },
   {
@@ -749,7 +749,7 @@
    "id": "trimstray-the-book-of-secret-knowledge",
    "label": "trimstray/the-book-of-secret-knowledge",
    "guidance": {
-    "includes": "A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and more.（清单许可：MIT）"
+    "includes": "A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and more.（清单仓库创建于 2018-06-23，最近推送 2024-11-19；清单许可：MIT）"
    }
   },
   {
@@ -931,7 +931,7 @@
    "id": "avelino-awesome-go",
    "label": "avelino/awesome-go",
    "guidance": {
-    "includes": "A curated list of awesome Go frameworks, libraries and software（清单许可：MIT）"
+    "includes": "A curated list of awesome Go frameworks, libraries and software（清单仓库创建于 2014-07-06，最近推送 2026-11-06；清单许可：MIT）"
    }
   },
   {
@@ -953,14 +953,14 @@
    "id": "ripienaar-free-for-dev",
    "label": "ripienaar/free-for-dev",
    "guidance": {
-    "includes": "A list of SaaS, PaaS and IaaS offerings that have free tiers of interest to devops and infradev（清单没有声明许可）"
+    "includes": "A list of SaaS, PaaS and IaaS offerings that have free tiers of interest to devops and infradev（清单仓库创建于 2015-03-18，最近推送 2026-11-08；清单没有声明许可）"
    }
   },
   {
    "id": "hack-with-github-awesome-hacking",
    "label": "Hack-with-Github/Awesome-Hacking",
    "guidance": {
-    "includes": "A collection of various awesome lists for hackers, pentesters and security researchers（清单许可：CC0-1.0）"
+    "includes": "A collection of various awesome lists for hackers, pentesters and security researchers（清单仓库创建于 2016-03-30，最近推送 2026-10-27；清单许可：CC0-1.0）"
    }
   },
   {
@@ -972,7 +972,7 @@
    "id": "jaywcjlove-awesome-mac",
    "label": "jaywcjlove/awesome-mac",
    "guidance": {
-    "includes": " This project is dedicated to collecting high-quality macOS software and organizing them systematically by different categories for easy search and use.（清单许可：CC0-1.0）"
+    "includes": " This project is dedicated to collecting high-quality macOS software and organizing them systematically by different categories for easy search and use.（清单仓库创建于 2016-07-17，最近推送 2026-11-09；清单许可：CC0-1.0）"
    }
   },
   {
@@ -1194,7 +1194,7 @@
    "id": "punkpeye-awesome-mcp-servers",
    "label": "punkpeye/awesome-mcp-servers",
    "guidance": {
-    "includes": "A collection of MCP servers.（清单许可：MIT）"
+    "includes": "A collection of MCP servers.（清单仓库创建于 2024-11-30，最近推送 2026-11-06；清单许可：MIT）"
    }
   },
   {
@@ -1266,7 +1266,7 @@
    "id": "mungell-awesome-for-beginners",
    "label": "MunGell/awesome-for-beginners",
    "guidance": {
-    "includes": "A list of awesome beginners-friendly projects.（清单没有声明许可）"
+    "includes": "A list of awesome beginners-friendly projects.（清单仓库创建于 2015-10-24，最近推送 2026-10-01；清单没有声明许可）"
    }
   },
   {
@@ -1358,7 +1358,7 @@
    "id": "dopplerhq-awesome-interview-questions",
    "label": "DopplerHQ/awesome-interview-questions",
    "guidance": {
-    "includes": ":octocat: A curated awesome list of lists of interview questions. Feel free to contribute! :mortar_board:（清单没有声明许可）"
+    "includes": ":octocat: A curated awesome list of lists of interview questions. Feel free to contribute! :mortar_board:（清单仓库创建于 2015-11-28，最近推送 2024-07-29；清单没有声明许可）"
    }
   },
   {
@@ -1390,7 +1390,7 @@
    "id": "composiohq-awesome-claude-skills",
    "label": "ComposioHQ/awesome-claude-skills",
    "guidance": {
-    "includes": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows（清单没有声明许可）"
+    "includes": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows（清单仓库创建于 2025-10-17，最近推送 2026-09-18；清单没有声明许可）"
    }
   },
   {
@@ -1427,7 +1427,7 @@
    "id": "enaqx-awesome-react",
    "label": "enaqx/awesome-react",
    "guidance": {
-    "includes": "A collection of awesome things regarding React ecosystem（清单没有声明许可）"
+    "includes": "A collection of awesome things regarding React ecosystem（清单仓库创建于 2014-08-06，最近推送 2026-09-04；清单没有声明许可）"
    }
   },
   {
@@ -1544,7 +1544,7 @@
    "id": "josephmisiti-awesome-machine-learning",
    "label": "josephmisiti/awesome-machine-learning",
    "guidance": {
-    "includes": "A curated list of awesome Machine Learning frameworks, libraries and software.（清单许可：NOASSERTION）"
+    "includes": "A curated list of awesome Machine Learning frameworks, libraries and software.（清单仓库创建于 2014-07-15，最近推送 2026-11-01；清单许可：NOASSERTION）"
    }
   },
   {
@@ -1611,7 +1611,7 @@
    "id": "fffaraz-awesome-cpp",
    "label": "fffaraz/awesome-cpp",
    "guidance": {
-    "includes": "A curated list of awesome C++ (or C) frameworks, libraries, resources, and shiny things. Inspired by awesome-... stuff.（清单许可：MIT）"
+    "includes": "A curated list of awesome C++ (or C) frameworks, libraries, resources, and shiny things. Inspired by awesome-... stuff.（清单仓库创建于 2014-07-17，最近推送 2026-11-06；清单许可：MIT）"
    }
   },
   {
@@ -1643,7 +1643,7 @@
    "id": "vuejs-awesome-vue",
    "label": "vuejs/awesome-vue",
    "guidance": {
-    "includes": "🎉 A curated list of awesome things related to Vue.js（清单许可：MIT）"
+    "includes": "🎉 A curated list of awesome things related to Vue.js（清单仓库创建于 2015-10-20，最近推送 2026-11-03；清单许可：MIT）"
    }
   },
   {
@@ -1745,7 +1745,7 @@
    "id": "sindresorhus-awesome-nodejs",
    "label": "sindresorhus/awesome-nodejs",
    "guidance": {
-    "includes": ":zap: Delightful Node.js packages and resources [BECAUSE OF TOO MUCH SPAM AND LOW-QUALITY SUBMISSIONS, SUBMISSIONS ARE PAUSED TEMPORARILY]（清单许可：CC0-1.0）"
+    "includes": ":zap: Delightful Node.js packages and resources [BECAUSE OF TOO MUCH SPAM AND LOW-QUALITY SUBMISSIONS, SUBMISSIONS ARE PAUSED TEMPORARILY]（清单仓库创建于 2014-07-11，最近推送 2026-09-02；清单许可：CC0-1.0）"
    }
   },
   {
@@ -1947,7 +1947,7 @@
    "id": "solido-awesome-flutter",
    "label": "Solido/awesome-flutter",
    "guidance": {
-    "includes": "An awesome list that curates the best Flutter libraries, tools, tutorials, articles and more.（清单没有声明许可）"
+    "includes": "An awesome list that curates the best Flutter libraries, tools, tutorials, articles and more.（清单仓库创建于 2017-05-07，最近推送 2026-09-03；清单没有声明许可）"
    }
   },
   {
@@ -1974,7 +1974,7 @@
    "id": "xingshaocheng-architect-awesome",
    "label": "xingshaocheng/architect-awesome",
    "guidance": {
-    "includes": "后端架构师技术图谱（清单没有声明许可）"
+    "includes": "后端架构师技术图谱（清单仓库创建于 2018-04-06，最近推送 2024-04-11；清单没有声明许可）"
    }
   },
   {
@@ -2001,7 +2001,7 @@
    "id": "rust-unofficial-awesome-rust",
    "label": "rust-unofficial/awesome-rust",
    "guidance": {
-    "includes": "A curated list of Rust code and resources.（清单许可：CC0-1.0）"
+    "includes": "A curated list of Rust code and resources.（清单仓库创建于 2014-07-17，最近推送 2026-11-09；清单许可：CC0-1.0）"
    }
   },
   {
@@ -2228,7 +2228,7 @@
    "id": "tiimgreen-github-cheat-sheet",
    "label": "tiimgreen/github-cheat-sheet",
    "guidance": {
-    "includes": "A list of cool features of Git and GitHub.（清单许可：MIT）"
+    "includes": "A list of cool features of Git and GitHub.（清单仓库创建于 2014-04-12，最近推送 2024-04-15；清单许可：MIT）"
    }
   },
   {
@@ -2245,21 +2245,21 @@
    "id": "wasabeef-awesome-android-ui",
    "label": "wasabeef/awesome-android-ui",
    "guidance": {
-    "includes": "A curated list of awesome Android UI/UX libraries（清单许可：MIT）"
+    "includes": "A curated list of awesome Android UI/UX libraries（清单仓库创建于 2014-12-24，最近推送 2026-06-05；清单许可：MIT）"
    }
   },
   {
    "id": "hesreallyhim-awesome-claude-code",
    "label": "hesreallyhim/awesome-claude-code",
    "guidance": {
-    "includes": "A hand-picked collection of the finest of resources for the most awesome of agents, Claude Code, the undisputed champion of coding companions, from the unstoppable team at Anthropic PBC (no…（清单许可：NOASSERTION）"
+    "includes": "A hand-picked collection of the finest of resources for the most awesome of agents, Claude Code, the undisputed champion of coding companions, from the unstoppable team at Anthropic PBC (no…（清单仓库创建于 2025-04-19，最近推送 2026-11-09；清单许可：NOASSERTION）"
    }
   },
   {
    "id": "vsouza-awesome-ios",
    "label": "vsouza/awesome-ios",
    "guidance": {
-    "includes": "A curated list of awesome iOS ecosystem, including Objective-C and Swift Projects（清单许可：MIT）"
+    "includes": "A curated list of awesome iOS ecosystem, including Objective-C and Swift Projects（清单仓库创建于 2014-07-10，最近推送 2026-08-27；清单许可：MIT）"
    }
   },
   {
@@ -2401,7 +2401,7 @@
    "id": "dkhamsing-open-source-ios-apps",
    "label": "dkhamsing/open-source-ios-apps",
    "guidance": {
-    "includes": ":iphone: Collaborative List of Open-Source iOS Apps（清单许可：CC0-1.0）"
+    "includes": ":iphone: Collaborative List of Open-Source iOS Apps（清单仓库创建于 2015-01-26，最近推送 2026-11-08；清单许可：CC0-1.0）"
    }
   },
   {
@@ -2523,7 +2523,7 @@
    "id": "serhii-londar-open-source-mac-os-apps",
    "label": "serhii-londar/open-source-mac-os-apps",
    "guidance": {
-    "includes": "🚀 Awesome list of open source applications for macOS. https://t.me/s/opensourcemacosapps（清单许可：CC0-1.0）"
+    "includes": "🚀 Awesome list of open source applications for macOS. https://t.me/s/opensourcemacosapps（清单仓库创建于 2017-11-03，最近推送 2026-10-31；清单许可：CC0-1.0）"
    }
   },
   {
@@ -2690,7 +2690,7 @@
    "id": "lukasz-madon-awesome-remote-job",
    "label": "lukasz-madon/awesome-remote-job",
    "guidance": {
-    "includes": "A curated list of awesome remote jobs and resources. Inspired by https://github.com/vinta/awesome-python（清单没有声明许可）"
+    "includes": "A curated list of awesome remote jobs and resources. Inspired by https://github.com/vinta/awesome-python（清单仓库创建于 2015-01-02，最近推送 2026-09-21；清单没有声明许可）"
    }
   },
   {
@@ -2712,7 +2712,7 @@
    "id": "dovamir-awesome-design-patterns",
    "label": "DovAmir/awesome-design-patterns",
    "guidance": {
-    "includes": "A curated list of software and architecture related design patterns.（清单没有声明许可）"
+    "includes": "A curated list of software and architecture related design patterns.（清单仓库创建于 2018-06-04，最近推送 2024-10-25；清单没有声明许可）"
    }
   },
   {
@@ -2734,7 +2734,7 @@
    "id": "akullpp-awesome-java",
    "label": "akullpp/awesome-java",
    "guidance": {
-    "includes": "A curated list of awesome frameworks, libraries and software for the Java programming language.（清单许可：CC-BY-SA-4.0）"
+    "includes": "A curated list of awesome frameworks, libraries and software for the Java programming language.（清单仓库创建于 2014-07-09，最近推送 2026-09-23；清单许可：CC-BY-SA-4.0）"
    }
   },
   {
@@ -2776,14 +2776,14 @@
    "id": "sickn33-agentic-awesome-skills",
    "label": "sickn33/agentic-awesome-skills",
    "guidance": {
-    "includes": "2,926+ reusable AI agent skills for Claude Code, Codex, Cursor and Gemini CLI. AAS Core adds local catalog discovery, agent-owned selection and plan preview. CLI, MCP and plugins.（清单许可：MIT）"
+    "includes": "2,926+ reusable AI agent skills for Claude Code, Codex, Cursor and Gemini CLI. AAS Core adds local catalog discovery, agent-owned selection and plan preview. CLI, MCP and plugins.（清单仓库创建于 2026-01-14，最近推送 2026-11-09；清单许可：MIT）"
    }
   },
   {
    "id": "brillout-awesome-react-components",
    "label": "brillout/awesome-react-components",
    "guidance": {
-    "includes": "Curated List of React Components & Libraries.（清单许可：CC0-1.0）"
+    "includes": "Curated List of React Components & Libraries.（清单仓库创建于 2016-06-24，最近推送 2026-01-26；清单许可：CC0-1.0）"
    }
   },
   {
@@ -2910,14 +2910,14 @@
    "id": "goabstract-awesome-design-tools",
    "label": "goabstract/Awesome-Design-Tools",
    "guidance": {
-    "includes": "The best design tools and plugins for everything 👉（清单许可：MIT）"
+    "includes": "The best design tools and plugins for everything 👉（清单仓库创建于 2019-02-12，最近推送 2024-07-28；清单许可：MIT）"
    }
   },
   {
    "id": "deepseek-ai-awesome-deepseek-integration",
    "label": "deepseek-ai/awesome-deepseek-integration",
    "guidance": {
-    "includes": "Integrate the DeepSeek API into popular software（清单许可：CC0-1.0）"
+    "includes": "Integrate the DeepSeek API into popular software（清单仓库创建于 2024-01-11，最近推送 2026-02-23；清单许可：CC0-1.0）"
    }
   },
   {
@@ -2954,14 +2954,14 @@
    "id": "alebcay-awesome-shell",
    "label": "alebcay/awesome-shell",
    "guidance": {
-    "includes": "A curated list of awesome command-line frameworks, toolkits, guides and gizmos. Inspired by awesome-php.（清单许可：CC0-1.0）"
+    "includes": "A curated list of awesome command-line frameworks, toolkits, guides and gizmos. Inspired by awesome-php.（清单仓库创建于 2014-07-07，最近推送 2025-08-28；清单许可：CC0-1.0）"
    }
   },
   {
    "id": "ashishpatel26-500-ai-machine-learning-deep-learning-computer-vision-nlp-projects-with-code",
    "label": "ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
    "guidance": {
-    "includes": "500 AI Machine learning Deep learning Computer vision NLP Projects with code（清单没有声明许可）"
+    "includes": "500 AI Machine learning Deep learning Computer vision NLP Projects with code（清单仓库创建于 2021-01-02，最近推送 2026-09-26；清单没有声明许可）"
    }
   },
   {
@@ -2973,7 +2973,7 @@
    "id": "veggiemonk-awesome-docker",
    "label": "veggiemonk/awesome-docker",
    "guidance": {
-    "includes": ":whale: A curated list of Docker resources and projects（清单许可：Apache-2.0）"
+    "includes": ":whale: A curated list of Docker resources and projects（清单仓库创建于 2014-09-21，最近推送 2026-11-04；清单许可：Apache-2.0）"
    }
   },
   {
@@ -3065,14 +3065,14 @@
    "id": "voltagent-awesome-agent-skills",
    "label": "VoltAgent/awesome-agent-skills",
    "guidance": {
-    "includes": "A curated collection of 1000+ agent skills from official dev teams and the community, compatible with Claude Code, Codex, Gemini CLI, Cursor, and more.（清单许可：MIT）"
+    "includes": "A curated collection of 1000+ agent skills from official dev teams and the community, compatible with Claude Code, Codex, Gemini CLI, Cursor, and more.（清单仓库创建于 2025-10-28，最近推送 2026-11-05；清单许可：MIT）"
    }
   },
   {
    "id": "kuchin-awesome-cto",
    "label": "kuchin/awesome-cto",
    "guidance": {
-    "includes": "A curated and opinionated list of resources for Chief Technology Officers, with the emphasis on startups（清单许可：CC0-1.0）"
+    "includes": "A curated and opinionated list of resources for Chief Technology Officers, with the emphasis on startups（清单仓库创建于 2016-12-16，最近推送 2026-03-02；清单许可：CC0-1.0）"
    }
   },
   {
@@ -3114,7 +3114,7 @@
    "id": "jondot-awesome-react-native",
    "label": "jondot/awesome-react-native",
    "guidance": {
-    "includes": "Awesome React Native components, news, tools, and learning material!（清单没有声明许可）"
+    "includes": "Awesome React Native components, news, tools, and learning material!（清单仓库创建于 2015-03-26，最近推送 2026-08-26；清单没有声明许可）"
    }
   },
   {
@@ -3211,7 +3211,7 @@
    "id": "awesome-foss-awesome-sysadmin",
    "label": "awesome-foss/awesome-sysadmin",
    "guidance": {
-    "includes": "A curated list of amazingly awesome open-source sysadmin resources.（清单许可：NOASSERTION）"
+    "includes": "A curated list of amazingly awesome open-source sysadmin resources.（清单仓库创建于 2014-12-23，最近推送 2026-10-22；清单许可：NOASSERTION）"
    }
   },
   {
@@ -3353,7 +3353,7 @@
    "id": "sorrycc-awesome-javascript",
    "label": "sorrycc/awesome-javascript",
    "guidance": {
-    "includes": "🐢 A collection of awesome browser-side JavaScript libraries, resources and shiny things.（清单没有声明许可）"
+    "includes": "🐢 A collection of awesome browser-side JavaScript libraries, resources and shiny things.（清单仓库创建于 2014-07-01，最近推送 2026-10-25；清单没有声明许可）"
    }
   },
   {
@@ -3570,14 +3570,14 @@
    "id": "bayandin-awesome-awesomeness",
    "label": "bayandin/awesome-awesomeness",
    "guidance": {
-    "includes": "A curated list of awesome awesomeness（清单没有声明许可）"
+    "includes": "A curated list of awesome awesomeness（清单仓库创建于 2014-07-08，最近推送 2024-06-02；清单没有声明许可）"
    }
   },
   {
    "id": "abhisheknaiidu-awesome-github-profile-readme",
    "label": "abhisheknaiidu/awesome-github-profile-readme",
    "guidance": {
-    "includes": "😎 A curated list of awesome GitHub Profile which updates in real time（清单许可：CC0-1.0）"
+    "includes": "😎 A curated list of awesome GitHub Profile which updates in real time（清单仓库创建于 2020-07-12，最近推送 2026-09-11；清单许可：CC0-1.0）"
    }
   },
   {
@@ -3589,7 +3589,7 @@
    "id": "jivoi-awesome-osint",
    "label": "jivoi/awesome-osint",
    "guidance": {
-    "includes": ":scream: A curated list of amazingly awesome OSINT（清单许可：NOASSERTION）"
+    "includes": ":scream: A curated list of amazingly awesome OSINT（清单仓库创建于 2016-11-30，最近推送 2026-11-08；清单许可：NOASSERTION）"
    }
   },
   {
@@ -3641,7 +3641,7 @@
    "id": "e2b-dev-awesome-ai-agents",
    "label": "e2b-dev/awesome-ai-agents",
    "guidance": {
-    "includes": "A list of AI autonomous agents（清单许可：NOASSERTION）"
+    "includes": "A list of AI autonomous agents（清单仓库创建于 2023-06-19，最近推送 2026-08-21；清单许可：NOASSERTION）"
    }
   },
   {
@@ -3653,7 +3653,7 @@
    "id": "jobbole-awesome-python-cn",
    "label": "jobbole/awesome-python-cn",
    "guidance": {
-    "includes": "Python资源大全中文版，包括：Web框架、网络爬虫、模板引擎、数据库、数据可视化、图片处理等，由「开源前哨」和「Python开发者」微信公号团队维护更新。（清单许可：NOASSERTION）"
+    "includes": "Python资源大全中文版，包括：Web框架、网络爬虫、模板引擎、数据库、数据可视化、图片处理等，由「开源前哨」和「Python开发者」微信公号团队维护更新。（清单仓库创建于 2015-11-03，最近推送 2022-08-29；清单许可：NOASSERTION）"
    }
   },
   {
@@ -3850,7 +3850,7 @@
    "id": "wilsonfreitas-awesome-quant",
    "label": "wilsonfreitas/awesome-quant",
    "guidance": {
-    "includes": "A curated list of insanely awesome libraries, packages and resources for Quants (Quantitative Finance)（清单没有声明许可）"
+    "includes": "A curated list of insanely awesome libraries, packages and resources for Quants (Quantitative Finance)（清单仓库创建于 2015-09-30，最近推送 2026-11-09；清单没有声明许可）"
    }
   },
   {
@@ -3902,7 +3902,7 @@
    "id": "academic-awesome-datascience",
    "label": "academic/awesome-datascience",
    "guidance": {
-    "includes": ":memo: An awesome Data Science repository to learn and apply for real world problems.（清单许可：MIT）"
+    "includes": ":memo: An awesome Data Science repository to learn and apply for real world problems.（清单仓库创建于 2014-07-05，最近推送 2026-11-04；清单许可：MIT）"
    }
   },
   {
@@ -3939,7 +3939,7 @@
    "id": "viatsko-awesome-vscode",
    "label": "viatsko/awesome-vscode",
    "guidance": {
-    "includes": "🎨 A curated list of delightful VS Code packages and resources.（清单许可：CC0-1.0）"
+    "includes": "🎨 A curated list of delightful VS Code packages and resources.（清单仓库创建于 2016-02-07，最近推送 2026-06-21；清单许可：CC0-1.0）"
    }
   },
   {
@@ -3956,7 +3956,7 @@
    "id": "christoschristofidis-awesome-deep-learning",
    "label": "ChristosChristofidis/awesome-deep-learning",
    "guidance": {
-    "includes": "A curated list of awesome Deep Learning tutorials, projects and communities.（清单没有声明许可）"
+    "includes": "A curated list of awesome Deep Learning tutorials, projects and communities.（清单仓库创建于 2015-01-02，最近推送 2025-05-26；清单没有声明许可）"
    }
   },
   {
@@ -3983,7 +3983,7 @@
    "id": "sdras-awesome-actions",
    "label": "sdras/awesome-actions",
    "guidance": {
-    "includes": "A curated list of awesome actions to use on GitHub（清单许可：CC0-1.0）"
+    "includes": "A curated list of awesome actions to use on GitHub（清单仓库创建于 2018-10-17，最近推送 2024-09-01；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4005,7 +4005,7 @@
    "id": "enaqx-awesome-pentest",
    "label": "enaqx/awesome-pentest",
    "guidance": {
-    "includes": "A collection of awesome penetration testing resources and tools（清单没有声明许可）"
+    "includes": "A collection of awesome penetration testing resources and tools（清单仓库创建于 2014-08-03，最近推送 2026-07-25；清单没有声明许可）"
    }
   },
   {
@@ -4062,7 +4062,7 @@
    "id": "hannibal046-awesome-llm",
    "label": "Hannibal046/Awesome-LLM",
    "guidance": {
-    "includes": "Awesome-LLM: a curated list of Large Language Model（清单许可：CC0-1.0）"
+    "includes": "Awesome-LLM: a curated list of Large Language Model（清单仓库创建于 2023-02-17，最近推送 2025-07-31；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4104,7 +4104,7 @@
    "id": "sindresorhus-awesome-electron",
    "label": "sindresorhus/awesome-electron",
    "guidance": {
-    "includes": "Useful resources for creating apps with Electron [SUBMISSIONS ARE TEMPORARILY PAUSED BECAUSE I'M TIRED OF REVIEWING LOW-QUALITY STUFF]（清单许可：CC0-1.0）"
+    "includes": "Useful resources for creating apps with Electron [SUBMISSIONS ARE TEMPORARILY PAUSED BECAUSE I'M TIRED OF REVIEWING LOW-QUALITY STUFF]（清单仓库创建于 2015-04-23，最近推送 2026-05-03；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4121,7 +4121,7 @@
    "id": "lissy93-dashy",
    "label": "lissy93/dashy",
    "guidance": {
-    "includes": "🚀 A self-hostable personal dashboard built for you. Includes status-checking, widgets, themes, icon packs, a UI editor and tons more!（清单许可：MIT）"
+    "includes": "🚀 A self-hostable personal dashboard built for you. Includes status-checking, widgets, themes, icon packs, a UI editor and tons more!（清单仓库创建于 2021-02-28，最近推送 2026-11-07；清单许可：MIT）"
    }
   },
   {
@@ -4143,7 +4143,7 @@
    "id": "igglybuff-awesome-piracy",
    "label": "Igglybuff/awesome-piracy",
    "guidance": {
-    "includes": "A curated list of awesome warez and piracy links（清单许可：CC0-1.0）"
+    "includes": "A curated list of awesome warez and piracy links（清单仓库创建于 2018-10-09，最近推送 2023-06-18；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4200,7 +4200,7 @@
    "id": "matteocrippa-awesome-swift",
    "label": "matteocrippa/awesome-swift",
    "guidance": {
-    "includes": "A collaborative list of awesome Swift libraries and resources. Feel free to contribute!（清单许可：CC0-1.0）"
+    "includes": "A collaborative list of awesome Swift libraries and resources. Feel free to contribute!（清单仓库创建于 2014-07-10，最近推送 2026-10-25；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4292,7 +4292,7 @@
    "id": "alexpate-awesome-design-systems",
    "label": "alexpate/awesome-design-systems",
    "guidance": {
-    "includes": "💅🏻 ⚒ A collection of awesome design systems（清单许可：Unlicense）"
+    "includes": "💅🏻 ⚒ A collection of awesome design systems（清单仓库创建于 2017-06-06，最近推送 2026-10-06；清单许可：Unlicense）"
    }
   },
   {
@@ -4304,7 +4304,7 @@
    "id": "luong-komorebi-awesome-linux-software",
    "label": "luong-komorebi/Awesome-Linux-Software",
    "guidance": {
-    "includes": "🐧 A list of awesome Linux softwares（清单没有声明许可）"
+    "includes": "🐧 A list of awesome Linux softwares（清单仓库创建于 2016-08-06，最近推送 2026-05-03；清单没有声明许可）"
    }
   },
   {
@@ -4571,7 +4571,7 @@
    "id": "djsime1-awesome-flipperzero",
    "label": "djsime1/awesome-flipperzero",
    "guidance": {
-    "includes": "🐬 A collection of awesome resources for the Flipper Zero device.（清单许可：CC0-1.0）"
+    "includes": "🐬 A collection of awesome resources for the Flipper Zero device.（清单仓库创建于 2022-03-14，最近推送 2024-09-27；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4618,14 +4618,14 @@
    "id": "kahun-awesome-sysadmin",
    "label": "kahun/awesome-sysadmin",
    "guidance": {
-    "includes": "A curated list of amazingly awesome open source sysadmin resources inspired by Awesome PHP.（清单许可：NOASSERTION）"
+    "includes": "A curated list of amazingly awesome open source sysadmin resources inspired by Awesome PHP.（清单仓库创建于 2014-02-09，最近推送 2024-03-26；清单许可：NOASSERTION）"
    }
   },
   {
    "id": "awesome-dsh-plugin-awesome-dsh-plugin",
    "label": "awesome-dsh-plugin/awesome-dsh-plugin",
    "guidance": {
-    "includes": "A curated list of plugins for DeepSeek Harness (dsh) · DeepSeek Harness 插件精选列表（清单许可：CC0-1.0）"
+    "includes": "A curated list of plugins for DeepSeek Harness (dsh) · DeepSeek Harness 插件精选列表（清单仓库创建于 2026-08-13，最近推送 2026-11-09；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4667,7 +4667,7 @@
    "id": "jbhuang0604-awesome-computer-vision",
    "label": "jbhuang0604/awesome-computer-vision",
    "guidance": {
-    "includes": "A curated list of awesome computer vision resources（清单没有声明许可）"
+    "includes": "A curated list of awesome computer vision resources（清单仓库创建于 2015-01-16，最近推送 2024-05-17；清单没有声明许可）"
    }
   },
   {
@@ -4689,7 +4689,7 @@
    "id": "mikeroyal-self-hosting-guide",
    "label": "mikeroyal/Self-Hosting-Guide",
    "guidance": {
-    "includes": "Self-Hosting Guide. Learn all about locally hosting (on premises & private web servers) and managing software applications by yourself or your organization. Including Cloud, LLMs, WireGuard…（清单没有声明许可）"
+    "includes": "Self-Hosting Guide. Learn all about locally hosting (on premises & private web servers) and managing software applications by yourself or your organization. Including Cloud, LLMs, WireGuard…（清单仓库创建于 2022-02-06，最近推送 2025-06-27；清单没有声明许可）"
    }
   },
   {
@@ -4761,14 +4761,14 @@
    "id": "aihubcn-awesome-chinese-llm",
    "label": "AiHubCN/Awesome-Chinese-LLM",
    "guidance": {
-    "includes": "整理开源的中文大语言模型，以规模较小、可私有化部署、训练成本较低的模型为主，包括底座模型，垂直领域微调及应用，数据集与教程等。（清单没有声明许可）"
+    "includes": "整理开源的中文大语言模型，以规模较小、可私有化部署、训练成本较低的模型为主，包括底座模型，垂直领域微调及应用，数据集与教程等。（清单仓库创建于 2023-05-22，最近推送 2026-05-10；清单没有声明许可）"
    }
   },
   {
    "id": "dipakkr-awesome-ai-engineering",
    "label": "dipakkr/awesome-ai-engineering",
    "guidance": {
-    "includes": "🚀 A curated collection of AI engineering resources, roadmaps, tools, and projects covering LLMs, RAG, AI Agents, MCP, fine-tuning, evaluations, and production AI systems.（清单许可：MIT）"
+    "includes": "🚀 A curated collection of AI engineering resources, roadmaps, tools, and projects covering LLMs, RAG, AI Agents, MCP, fine-tuning, evaluations, and production AI systems.（清单仓库创建于 2018-09-17，最近推送 2026-10-21；清单许可：MIT）"
    }
   },
   {
@@ -4820,7 +4820,7 @@
    "id": "anderspitman-awesome-tunneling",
    "label": "anderspitman/awesome-tunneling",
    "guidance": {
-    "includes": "List of ngrok, Cloudflare Tunnel, Tailscale, and ZeroTier alternatives and other tunneling software and services. Focus on self-hosting.（清单没有声明许可）"
+    "includes": "List of ngrok, Cloudflare Tunnel, Tailscale, and ZeroTier alternatives and other tunneling software and services. Focus on self-hosting.（清单仓库创建于 2020-09-16，最近推送 2026-11-02；清单没有声明许可）"
    }
   },
   {
@@ -4842,7 +4842,7 @@
    "id": "jbee37142-interview-question-for-beginner",
    "label": "jbee37142/Interview_Question_for_Beginner",
    "guidance": {
-    "includes": ":boy: :girl: Technical-Interview guidelines written for those who started studying programming. I wish you all the best. :space_invader:（清单许可：MIT）"
+    "includes": ":boy: :girl: Technical-Interview guidelines written for those who started studying programming. I wish you all the best. :space_invader:（清单仓库创建于 2017-06-04，最近推送 2024-08-09；清单许可：MIT）"
    }
   },
   {
@@ -4854,7 +4854,7 @@
    "id": "quozd-awesome-dotnet",
    "label": "quozd/awesome-dotnet",
    "guidance": {
-    "includes": "A collection of awesome .NET libraries, tools, frameworks and software（清单许可：CC0-1.0）"
+    "includes": "A collection of awesome .NET libraries, tools, frameworks and software（清单仓库创建于 2014-07-16，最近推送 2026-03-26；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4866,7 +4866,7 @@
    "id": "matiassingers-awesome-readme",
    "label": "matiassingers/awesome-readme",
    "guidance": {
-    "includes": "A curated list of awesome READMEs（清单没有声明许可）"
+    "includes": "A curated list of awesome READMEs（清单仓库创建于 2015-01-19，最近推送 2026-10-23；清单没有声明许可）"
    }
   },
   {
@@ -4888,7 +4888,7 @@
    "id": "rockerboo-awesome-neovim",
    "label": "rockerBOO/awesome-neovim",
    "guidance": {
-    "includes": "Collections of awesome neovim plugins.（清单许可：CC0-1.0）"
+    "includes": "Collections of awesome neovim plugins.（清单仓库创建于 2020-09-18，最近推送 2026-11-09；清单许可：CC0-1.0）"
    }
   },
   {
@@ -4950,7 +4950,7 @@
    "id": "thangchung-awesome-dotnet-core",
    "label": "thangchung/awesome-dotnet-core",
    "guidance": {
-    "includes": ":honeybee: A collection of awesome .NET core libraries, tools, frameworks and software（清单没有声明许可）"
+    "includes": ":honeybee: A collection of awesome .NET core libraries, tools, frameworks and software（清单仓库创建于 2016-03-17，最近推送 2026-02-27；清单没有声明许可）"
    }
   },
   {
@@ -5032,7 +5032,7 @@
    "id": "lilittlecat-awesome-free-chatgpt",
    "label": "LiLittleCat/awesome-free-chatgpt",
    "guidance": {
-    "includes": "🆓免费的 ChatGPT 镜像网站列表，持续更新。List of free ChatGPT mirror sites, continuously updated.（清单许可：MIT）"
+    "includes": "🆓免费的 ChatGPT 镜像网站列表，持续更新。List of free ChatGPT mirror sites, continuously updated.（清单仓库创建于 2023-03-09，最近推送 2025-06-23；清单许可：MIT）"
    }
   },
   {
@@ -5049,7 +5049,7 @@
    "id": "ethicalml-awesome-production-machine-learning",
    "label": "EthicalML/awesome-production-machine-learning",
    "guidance": {
-    "includes": "A curated list of awesome open source libraries to deploy, monitor, version and scale your machine learning（清单许可：MIT）"
+    "includes": "A curated list of awesome open source libraries to deploy, monitor, version and scale your machine learning（清单仓库创建于 2018-08-15，最近推送 2026-11-08；清单许可：MIT）"
    }
   },
   {
@@ -5166,14 +5166,14 @@
    "id": "rothgar-awesome-tuis",
    "label": "rothgar/awesome-tuis",
    "guidance": {
-    "includes": "List of projects that provide terminal user interfaces（清单没有声明许可）"
+    "includes": "List of projects that provide terminal user interfaces（清单仓库创建于 2019-03-31，最近推送 2026-11-03；清单没有声明许可）"
    }
   },
   {
    "id": "birobirobiro-awesome-shadcn-ui",
    "label": "birobirobiro/awesome-shadcn-ui",
    "guidance": {
-    "includes": "A curated list of awesome things related to shadcn/ui.（清单许可：MIT）"
+    "includes": "A curated list of awesome things related to shadcn/ui.（清单仓库创建于 2024-02-05，最近推送 2026-11-09；清单许可：MIT）"
    }
   },
   {
@@ -5190,7 +5190,7 @@
    "id": "agarrharr-awesome-cli-apps",
    "label": "agarrharr/awesome-cli-apps",
    "guidance": {
-    "includes": "🖥 📊 🕹 🛠 A curated list of command line apps（清单没有声明许可）"
+    "includes": "🖥 📊 🕹 🛠 A curated list of command line apps（清单仓库创建于 2015-07-09，最近推送 2026-10-12；清单没有声明许可）"
    }
   },
   {
@@ -5362,7 +5362,7 @@
    "id": "pluja-awesome-privacy",
    "label": "pluja/awesome-privacy",
    "guidance": {
-    "includes": "Awesome Privacy - A curated list of services and alternatives that respect your privacy because PRIVACY MATTERS.（清单许可：CC0-1.0）"
+    "includes": "Awesome Privacy - A curated list of services and alternatives that respect your privacy because PRIVACY MATTERS.（清单仓库创建于 2020-12-07，最近推送 2026-11-05；清单许可：CC0-1.0）"
    }
   },
   {
@@ -5439,7 +5439,7 @@
    "id": "runacapital-awesome-oss-alternatives",
    "label": "RunaCapital/awesome-oss-alternatives",
    "guidance": {
-    "includes": "Awesome list of open-source startup alternatives to well-known SaaS products 🚀（清单许可：MIT）"
+    "includes": "Awesome list of open-source startup alternatives to well-known SaaS products 🚀（清单仓库创建于 2021-11-15，最近推送 2025-09-03；清单许可：MIT）"
    }
   },
   {
@@ -5451,7 +5451,7 @@
    "id": "ichait-awesome-macos",
    "label": "iCHAIT/awesome-macOS",
    "guidance": {
-    "includes": " A curated list of awesome applications, softwares, tools and shiny things for macOS.（清单没有声明许可）"
+    "includes": " A curated list of awesome applications, softwares, tools and shiny things for macOS.（清单仓库创建于 2015-05-25，最近推送 2026-10-21；清单没有声明许可）"
    }
   },
   {
@@ -5528,7 +5528,7 @@
    "id": "keon-awesome-nlp",
    "label": "keon/awesome-nlp",
    "guidance": {
-    "includes": ":book: A curated list of resources dedicated to Natural Language Processing (NLP)（清单许可：CC0-1.0）"
+    "includes": ":book: A curated list of resources dedicated to Natural Language Processing (NLP)（清单仓库创建于 2015-12-01，最近推送 2026-10-12；清单许可：CC0-1.0）"
    }
   },
   {
@@ -5605,7 +5605,7 @@
    "id": "chaozh-awesome-blockchain-cn",
    "label": "chaozh/awesome-blockchain-cn",
    "guidance": {
-    "includes": "收集所有区块链(BlockChain)技术开发相关资料，包括Fabric和Ethereum开发资料（清单许可：Apache-2.0）"
+    "includes": "收集所有区块链(BlockChain)技术开发相关资料，包括Fabric和Ethereum开发资料（清单仓库创建于 2017-03-12，最近推送 2024-02-29；清单许可：Apache-2.0）"
    }
   },
   {
@@ -5637,7 +5637,7 @@
    "id": "hemanth-functional-programming-jargon",
    "label": "hemanth/functional-programming-jargon",
    "guidance": {
-    "includes": "Jargon from the functional programming world in simple terms!（清单许可：MIT）"
+    "includes": "Jargon from the functional programming world in simple terms!（清单仓库创建于 2015-02-22，最近推送 2026-10-04；清单许可：MIT）"
    }
   },
   {
@@ -5654,7 +5654,7 @@
    "id": "ujjwalkarn-machine-learning-tutorials",
    "label": "ujjwalkarn/Machine-Learning-Tutorials",
    "guidance": {
-    "includes": "machine learning and deep learning tutorials, articles and other resources（清单许可：CC0-1.0）"
+    "includes": "machine learning and deep learning tutorials, articles and other resources（清单仓库创建于 2015-09-12，最近推送 2024-06-12；清单许可：CC0-1.0）"
    }
   },
   {
@@ -5686,7 +5686,7 @@
    "id": "mahmoud-awesome-python-applications",
    "label": "mahmoud/awesome-python-applications",
    "guidance": {
-    "includes": "💿 Free software that works great, and also happens to be open-source Python.（清单没有声明许可）"
+    "includes": "💿 Free software that works great, and also happens to be open-source Python.（清单仓库创建于 2018-11-14，最近推送 2026-10-18；清单没有声明许可）"
    }
   },
   {
@@ -5793,7 +5793,7 @@
    "id": "unixorn-awesome-zsh-plugins",
    "label": "unixorn/awesome-zsh-plugins",
    "guidance": {
-    "includes": "A collection of ZSH frameworks, plugins, themes and tutorials.（清单许可：BSD-3-Clause）"
+    "includes": "A collection of ZSH frameworks, plugins, themes and tutorials.（清单仓库创建于 2014-10-07，最近推送 2026-11-08；清单许可：BSD-3-Clause）"
    }
   },
   {
@@ -5840,14 +5840,14 @@
    "id": "bradyfu-awesome-multimodal-large-language-models",
    "label": "BradyFU/Awesome-Multimodal-Large-Language-Models",
    "guidance": {
-    "includes": ":sparkles::sparkles:Latest Advances on Multimodal Large Language Models（清单没有声明许可）"
+    "includes": ":sparkles::sparkles:Latest Advances on Multimodal Large Language Models（清单仓库创建于 2023-05-19，最近推送 2026-10-29；清单没有声明许可）"
    }
   },
   {
    "id": "mhinz-vim-galore",
    "label": "mhinz/vim-galore",
    "guidance": {
-    "includes": ":mortar_board: All things Vim!（清单许可：CC-BY-SA-4.0）"
+    "includes": ":mortar_board: All things Vim!（清单仓库创建于 2016-01-04，最近推送 2023-12-22；清单许可：CC-BY-SA-4.0）"
    }
   },
   {
@@ -5874,7 +5874,7 @@
    "id": "bobeff-open-source-games",
    "label": "bobeff/open-source-games",
    "guidance": {
-    "includes": "A list of open source games.（清单许可：CC0-1.0）"
+    "includes": "A list of open source games.（清单仓库创建于 2021-09-15，最近推送 2026-02-25；清单许可：CC0-1.0）"
    }
   },
   {
@@ -5926,7 +5926,7 @@
    "id": "dexteryy-spellbook-of-modern-webdev",
    "label": "dexteryy/spellbook-of-modern-webdev",
    "guidance": {
-    "includes": "A Big Picture, Thesaurus, and Taxonomy of Modern JavaScript Web Development（清单没有声明许可）"
+    "includes": "A Big Picture, Thesaurus, and Taxonomy of Modern JavaScript Web Development（清单仓库创建于 2017-06-10，最近推送 2023-12-18；清单没有声明许可）"
    }
   },
   {
@@ -6018,7 +6018,7 @@
    "id": "ellisonleao-magictools",
    "label": "ellisonleao/magictools",
    "guidance": {
-    "includes": ":video_game: :pencil: A list of Game Development resources to make magic happen.（清单许可：MIT）"
+    "includes": ":video_game: :pencil: A list of Game Development resources to make magic happen.（清单仓库创建于 2014-07-17，最近推送 2026-11-05；清单许可：MIT）"
    }
   },
   {
@@ -6045,14 +6045,14 @@
    "id": "vitalysim-awesome-hacking-resources",
    "label": "vitalysim/Awesome-Hacking-Resources",
    "guidance": {
-    "includes": "A collection of hacking / penetration testing resources to make you better!（清单许可：GPL-3.0）"
+    "includes": "A collection of hacking / penetration testing resources to make you better!（清单仓库创建于 2017-10-10，最近推送 2026-05-21；清单许可：GPL-3.0）"
    }
   },
   {
    "id": "jtoy-awesome-tensorflow",
    "label": "jtoy/awesome-tensorflow",
    "guidance": {
-    "includes": "TensorFlow - A curated list of dedicated resources http://tensorflow.org（清单许可：CC0-1.0）"
+    "includes": "TensorFlow - A curated list of dedicated resources http://tensorflow.org（清单仓库创建于 2016-02-27，最近推送 2026-02-08；清单许可：CC0-1.0）"
    }
   },
   {
@@ -6084,7 +6084,7 @@
    "id": "carpedm20-awesome-hacking",
    "label": "carpedm20/awesome-hacking",
    "guidance": {
-    "includes": "A curated list of awesome Hacking tutorials, tools and resources（清单许可：MIT）"
+    "includes": "A curated list of awesome Hacking tutorials, tools and resources（清单仓库创建于 2014-12-16，最近推送 2024-06-02；清单许可：MIT）"
    }
   },
   {
@@ -6136,7 +6136,7 @@
    "id": "wechat-gggithub-awesome-github-repo",
    "label": "Wechat-ggGitHub/Awesome-GitHub-Repo",
    "guidance": {
-    "includes": "收集整理 GitHub 上高质量、有趣的开源项目。（清单许可：CC0-1.0）"
+    "includes": "收集整理 GitHub 上高质量、有趣的开源项目。（清单仓库创建于 2021-12-27，最近推送 2026-06-10；清单许可：CC0-1.0）"
    }
   },
   {
@@ -6308,7 +6308,7 @@
    "id": "vitejs-awesome-vite",
    "label": "vitejs/awesome-vite",
    "guidance": {
-    "includes": "⚡️ A curated list of awesome things related to Vite.js（清单许可：MIT）"
+    "includes": "⚡️ A curated list of awesome things related to Vite.js（清单仓库创建于 2020-08-21，最近推送 2026-02-04；清单许可：MIT）"
    }
   },
   {
@@ -6340,7 +6340,7 @@
    "id": "owainlewis-awesome-artificial-intelligence",
    "label": "owainlewis/awesome-artificial-intelligence",
    "guidance": {
-    "includes": "A curated list of Artificial Intelligence (AI) courses, books, video lectures and papers.（清单许可：MIT）"
+    "includes": "A curated list of Artificial Intelligence (AI) courses, books, video lectures and papers.（清单仓库创建于 2015-01-27，最近推送 2026-08-15；清单许可：MIT）"
    }
   },
   {
@@ -6357,7 +6357,7 @@
    "id": "bharathgs-awesome-pytorch-list",
    "label": "bharathgs/Awesome-pytorch-list",
    "guidance": {
-    "includes": "A comprehensive list of pytorch related content on github,such as different models,implementations,helper libraries,tutorials etc.（清单没有声明许可）"
+    "includes": "A comprehensive list of pytorch related content on github,such as different models,implementations,helper libraries,tutorials etc.（清单仓库创建于 2017-03-01，最近推送 2026-09-22；清单没有声明许可）"
    }
   },
   {
@@ -6394,7 +6394,7 @@
    "id": "travisvn-awesome-claude-skills",
    "label": "travisvn/awesome-claude-skills",
    "guidance": {
-    "includes": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows — particularly Claude Code（清单没有声明许可）"
+    "includes": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows — particularly Claude Code（清单仓库创建于 2025-10-16，最近推送 2026-04-28；清单没有声明许可）"
    }
   },
   {
@@ -6456,21 +6456,21 @@
    "id": "jobbole-awesome-java-cn",
    "label": "jobbole/awesome-java-cn",
    "guidance": {
-    "includes": "Java资源大全中文版，包括开发库、开发工具、网站、博客、微信、微博等，由伯乐在线持续更新。（清单没有声明许可）"
+    "includes": "Java资源大全中文版，包括开发库、开发工具、网站、博客、微信、微博等，由伯乐在线持续更新。（清单仓库创建于 2015-10-01，最近推送 2024-01-31；清单没有声明许可）"
    }
   },
   {
    "id": "terkelg-awesome-creative-coding",
    "label": "terkelg/awesome-creative-coding",
    "guidance": {
-    "includes": "Creative Coding: Generative Art, Data visualization, Interaction Design, Resources.（清单没有声明许可）"
+    "includes": "Creative Coding: Generative Art, Data visualization, Interaction Design, Resources.（清单仓库创建于 2016-11-01，最近推送 2026-07-21；清单没有声明许可）"
    }
   },
   {
    "id": "paperswithbacktest-awesome-systematic-trading",
    "label": "paperswithbacktest/awesome-systematic-trading",
    "guidance": {
-    "includes": "A curated list of awesome libraries, packages, strategies, books, blogs, tutorials for systematic trading.（清单没有声明许可）"
+    "includes": "A curated list of awesome libraries, packages, strategies, books, blogs, tutorials for systematic trading.（清单仓库创建于 2022-02-05，最近推送 2026-09-28；清单没有声明许可）"
    }
   },
   {
@@ -6522,7 +6522,7 @@
    "id": "chentsulin-awesome-graphql",
    "label": "chentsulin/awesome-graphql",
    "guidance": {
-    "includes": "Awesome list of GraphQL（清单许可：CC0-1.0）"
+    "includes": "Awesome list of GraphQL（清单仓库创建于 2015-07-12，最近推送 2026-11-02；清单许可：CC0-1.0）"
    }
   },
   {
@@ -6574,7 +6574,7 @@
    "id": "sbilly-awesome-security",
    "label": "sbilly/awesome-security",
    "guidance": {
-    "includes": "A collection of awesome software, libraries, documents, books, resources and cools stuffs about security.（清单许可：MIT）"
+    "includes": "A collection of awesome software, libraries, documents, books, resources and cools stuffs about security.（清单仓库创建于 2014-08-22，最近推送 2026-01-11；清单许可：MIT）"
    }
   },
   {
@@ -6636,7 +6636,7 @@
    "id": "laoma528-awesome-zhuiju-free",
    "label": "laoma528/awesome-zhuiju-free",
    "guidance": {
-    "includes": "免费无广告的追剧资源指南，人工精选资源、每天检测资源有效性。收录在线影视、影视APP、网盘搜索、磁力BT、字幕、TVBox / 影视仓空壳软件/配置地址、IPTV直播源、会员拼团、影视相关开源项目。开源，社区共同维护。（清单许可：CC-BY-4.0）"
+    "includes": "免费无广告的追剧资源指南，人工精选资源、每天检测资源有效性。收录在线影视、影视APP、网盘搜索、磁力BT、字幕、TVBox / 影视仓空壳软件/配置地址、IPTV直播源、会员拼团、影视相关开源项目。开源，社区共同维护。（清单仓库创建于 2026-06-05，最近推送 2026-11-09；清单许可：CC-BY-4.0）"
    }
   },
   {
@@ -6648,7 +6648,7 @@
    "id": "analysis-tools-dev-static-analysis",
    "label": "analysis-tools-dev/static-analysis",
    "guidance": {
-    "includes": "⚙️ A curated list of static analysis (SAST) tools and linters for all programming languages, config files, build tools, and more. The focus is on tools which improve code quality.（清单许可：MIT）"
+    "includes": "⚙️ A curated list of static analysis (SAST) tools and linters for all programming languages, config files, build tools, and more. The focus is on tools which improve code quality.（清单仓库创建于 2015-12-18，最近推送 2026-11-09；清单许可：MIT）"
    }
   },
   {
@@ -6670,7 +6670,7 @@
    "id": "taowen-awesome-lowcode",
    "label": "taowen/awesome-lowcode",
    "guidance": {
-    "includes": "国内低代码平台从业者交流（清单许可：CC0-1.0）"
+    "includes": "国内低代码平台从业者交流（清单仓库创建于 2020-07-22，最近推送 2024-11-07；清单许可：CC0-1.0）"
    }
   },
   {
@@ -6682,14 +6682,14 @@
    "id": "oxnr-awesome-bigdata",
    "label": "oxnr/awesome-bigdata",
    "guidance": {
-    "includes": "A curated list of awesome big data frameworks, ressources and other awesomeness.（清单许可：MIT）"
+    "includes": "A curated list of awesome big data frameworks, ressources and other awesomeness.（清单仓库创建于 2014-07-04，最近推送 2026-11-06；清单许可：MIT）"
    }
   },
   {
    "id": "mfornos-awesome-microservices",
    "label": "mfornos/awesome-microservices",
    "guidance": {
-    "includes": "A curated list of Microservice Architecture related principles and technologies.（清单许可：CC0-1.0）"
+    "includes": "A curated list of Microservice Architecture related principles and technologies.（清单仓库创建于 2015-05-03，最近推送 2026-08-20；清单许可：CC0-1.0）"
    }
   },
   {
@@ -6786,7 +6786,7 @@
    "id": "visenger-awesome-mlops",
    "label": "visenger/awesome-mlops",
    "guidance": {
-    "includes": "A curated list of references for MLOps（清单没有声明许可）"
+    "includes": "A curated list of references for MLOps（清单仓库创建于 2020-03-03，最近推送 2024-11-21；清单没有声明许可）"
    }
   },
   {
@@ -6823,7 +6823,7 @@
    "id": "donnemartin-awesome-aws",
    "label": "donnemartin/awesome-aws",
    "guidance": {
-    "includes": "A curated list of awesome Amazon Web Services (AWS) libraries, open source repos, guides, blogs, and other resources. Featuring the Fiery Meter of AWSome.（清单许可：NOASSERTION）"
+    "includes": "A curated list of awesome Amazon Web Services (AWS) libraries, open source repos, guides, blogs, and other resources. Featuring the Fiery Meter of AWSome.（清单仓库创建于 2015-10-12，最近推送 2024-03-12；清单许可：NOASSERTION）"
    }
   },
   {
@@ -6890,7 +6890,7 @@
    "id": "markets-awesome-ruby",
    "label": "markets/awesome-ruby",
    "guidance": {
-    "includes": "💎 A collection of awesome Ruby libraries, tools, frameworks and software（清单没有声明许可）"
+    "includes": "💎 A collection of awesome Ruby libraries, tools, frameworks and software（清单仓库创建于 2014-07-03，最近推送 2026-10-05；清单没有声明许可）"
    }
   },
   {
@@ -6997,7 +6997,7 @@
    "id": "qazbnm456-awesome-web-security",
    "label": "qazbnm456/awesome-web-security",
    "guidance": {
-    "includes": "🐶 A curated list of Web Security materials and resources.（清单没有声明许可）"
+    "includes": "🐶 A curated list of Web Security materials and resources.（清单仓库创建于 2017-01-29，最近推送 2026-11-02；清单没有声明许可）"
    }
   },
   {
@@ -7104,7 +7104,7 @@
    "id": "nestjs-awesome-nestjs",
    "label": "nestjs/awesome-nestjs",
    "guidance": {
-    "includes": "A curated list of awesome things related to NestJS 😎（清单没有声明许可）"
+    "includes": "A curated list of awesome things related to NestJS 😎（清单仓库创建于 2017-09-27，最近推送 2026-11-07；清单没有声明许可）"
    }
   },
   {
@@ -7136,7 +7136,7 @@
    "id": "k4m4-terminals-are-sexy",
    "label": "k4m4/terminals-are-sexy",
    "guidance": {
-    "includes": "💥 A curated list of Terminal frameworks, plugins & resources for CLI lovers.（清单许可：CC0-1.0）"
+    "includes": "💥 A curated list of Terminal frameworks, plugins & resources for CLI lovers.（清单仓库创建于 2017-02-01，最近推送 2024-07-26；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7168,7 +7168,7 @@
    "id": "chiraggude-awesome-laravel",
    "label": "chiraggude/awesome-laravel",
    "guidance": {
-    "includes": "A curated list of bookmarks, packages, tutorials, videos and other cool resources from the Laravel ecosystem（清单没有声明许可）"
+    "includes": "A curated list of bookmarks, packages, tutorials, videos and other cool resources from the Laravel ecosystem（清单仓库创建于 2014-07-30，最近推送 2024-07-03；清单没有声明许可）"
    }
   },
   {
@@ -7210,7 +7210,7 @@
    "id": "steven2358-awesome-generative-ai",
    "label": "steven2358/awesome-generative-ai",
    "guidance": {
-    "includes": "A curated list of modern Generative Artificial Intelligence projects and services（清单许可：CC0-1.0）"
+    "includes": "A curated list of modern Generative Artificial Intelligence projects and services（清单仓库创建于 2022-10-20，最近推送 2026-10-30；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7257,7 +7257,7 @@
    "id": "humiaozuzu-awesome-flask",
    "label": "humiaozuzu/awesome-flask",
    "guidance": {
-    "includes": "A curated list of awesome Flask resources and plugins（清单许可：CC0-1.0）"
+    "includes": "A curated list of awesome Flask resources and plugins（清单仓库创建于 2014-03-08，最近推送 2026-08-17；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7279,7 +7279,7 @@
    "id": "opendigg-awesome-github-vue",
    "label": "opendigg/awesome-github-vue",
    "guidance": {
-    "includes": "Vue相关开源项目库汇总（清单没有声明许可）"
+    "includes": "Vue相关开源项目库汇总（清单仓库创建于 2017-03-06，最近推送 2023-07-22；清单没有声明许可）"
    }
   },
   {
@@ -7311,7 +7311,7 @@
    "id": "madd86-awesome-system-design",
    "label": "madd86/awesome-system-design",
    "guidance": {
-    "includes": "A curated list of awesome System Design (A.K.A. Distributed Systems) resources.（清单许可：CC0-1.0）"
+    "includes": "A curated list of awesome System Design (A.K.A. Distributed Systems) resources.（清单仓库创建于 2020-07-10，最近推送 2026-02-27；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7338,7 +7338,7 @@
    "id": "jstumpp-awesome-android",
    "label": "JStumpp/awesome-android",
    "guidance": {
-    "includes": "A curated list of awesome Android packages and resources.（清单许可：CC0-1.0）"
+    "includes": "A curated list of awesome Android packages and resources.（清单仓库创建于 2014-07-13，最近推送 2026-11-08；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7410,7 +7410,7 @@
    "id": "diff-usion-awesome-diffusion-models",
    "label": "diff-usion/Awesome-Diffusion-Models",
    "guidance": {
-    "includes": "A collection of resources and papers on Diffusion Models（清单许可：MIT）"
+    "includes": "A collection of resources and papers on Diffusion Models（清单仓库创建于 2021-09-18，最近推送 2024-08-01；清单许可：MIT）"
    }
   },
   {
@@ -7437,7 +7437,7 @@
    "id": "xgrommx-awesome-redux",
    "label": "xgrommx/awesome-redux",
    "guidance": {
-    "includes": "Awesome list of Redux examples and middlewares（清单没有声明许可）"
+    "includes": "Awesome list of Redux examples and middlewares（清单仓库创建于 2015-07-05，最近推送 2022-10-04；清单没有声明许可）"
    }
   },
   {
@@ -7459,7 +7459,7 @@
    "id": "k4m4-movies-for-hackers",
    "label": "k4m4/movies-for-hackers",
    "guidance": {
-    "includes": "🎬 A curated list of movies every hacker & cyberpunk must watch.（清单许可：CC0-1.0）"
+    "includes": "🎬 A curated list of movies every hacker & cyberpunk must watch.（清单仓库创建于 2017-02-19，最近推送 2024-08-01；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7471,7 +7471,7 @@
    "id": "apsdehal-awesome-ctf",
    "label": "apsdehal/awesome-ctf",
    "guidance": {
-    "includes": "A curated list of CTF frameworks, libraries, resources and softwares（清单许可：CC0-1.0）"
+    "includes": "A curated list of CTF frameworks, libraries, resources and softwares（清单仓库创建于 2015-02-28，最近推送 2024-07-22；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7503,14 +7503,14 @@
    "id": "mezod-awesome-indie",
    "label": "mezod/awesome-indie",
    "guidance": {
-    "includes": "Resources for independent developers to make money（清单许可：NOASSERTION）"
+    "includes": "Resources for independent developers to make money（清单仓库创建于 2017-05-03，最近推送 2024-06-12；清单许可：NOASSERTION）"
    }
   },
   {
    "id": "mjhea0-awesome-fastapi",
    "label": "mjhea0/awesome-fastapi",
    "guidance": {
-    "includes": "A curated list of awesome things related to FastAPI（清单许可：CC0-1.0）"
+    "includes": "A curated list of awesome things related to FastAPI（清单仓库创建于 2020-05-03，最近推送 2026-08-24；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7542,7 +7542,7 @@
    "id": "oz123-awesome-c",
    "label": "oz123/awesome-c",
    "guidance": {
-    "includes": "A curated list of awesome C frameworks, libraries, resources and other shiny things. Inspired by all the other awesome-... projects out there.（清单许可：CC-BY-SA-4.0）"
+    "includes": "A curated list of awesome C frameworks, libraries, resources and other shiny things. Inspired by all the other awesome-... projects out there.（清单仓库创建于 2014-12-14，最近推送 2026-09-19；清单许可：CC-BY-SA-4.0）"
    }
   },
   {
@@ -7554,7 +7554,7 @@
    "id": "jnv-lists",
    "label": "jnv/lists",
    "guidance": {
-    "includes": "The definitive list of lists (of lists) curated on GitHub and elsewhere（清单许可：CC0-1.0）"
+    "includes": "The definitive list of lists (of lists) curated on GitHub and elsewhere（清单仓库创建于 2013-11-14，最近推送 2026-11-05；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7576,7 +7576,7 @@
    "id": "hackstoic-golang-open-source-projects",
    "label": "hackstoic/golang-open-source-projects",
    "guidance": {
-    "includes": "为互联网IT人打造的中文版awesome-go（清单没有声明许可）"
+    "includes": "为互联网IT人打造的中文版awesome-go（清单仓库创建于 2016-07-24，最近推送 2026-05-31；清单没有声明许可）"
    }
   },
   {
@@ -7628,7 +7628,7 @@
    "id": "wsvincent-awesome-django",
    "label": "wsvincent/awesome-django",
    "guidance": {
-    "includes": "A curated list of awesome things related to Django（清单许可：CC0-1.0）"
+    "includes": "A curated list of awesome things related to Django（清单仓库创建于 2018-04-11，最近推送 2026-10-26；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7690,7 +7690,7 @@
    "id": "kristories-awesome-guidelines",
    "label": "Kristories/awesome-guidelines",
    "guidance": {
-    "includes": "Programming style, best practices, and coding conventions.（清单许可：CC0-1.0）"
+    "includes": "Programming style, best practices, and coding conventions.（清单仓库创建于 2017-07-12，最近推送 2026-09-28；清单许可：CC0-1.0）"
    }
   },
   {
@@ -7717,14 +7717,14 @@
    "id": "cjwirth-awesome-ios-ui",
    "label": "cjwirth/awesome-ios-ui",
    "guidance": {
-    "includes": "A curated list of awesome iOS UI/UX libraries（清单没有声明许可）"
+    "includes": "A curated list of awesome iOS UI/UX libraries（清单仓库创建于 2015-04-07，最近推送 2018-03-08；清单没有声明许可）"
    }
   },
   {
    "id": "jobbole-awesome-cpp-cn",
    "label": "jobbole/awesome-cpp-cn",
    "guidance": {
-    "includes": "C++ 资源大全中文版，标准库、Web应用框架、人工智能、数据库、图片处理、机器学习、日志、代码分析等。由「开源前哨」和「CPP开发者」微信公号团队维护更新。（清单没有声明许可）"
+    "includes": "C++ 资源大全中文版，标准库、Web应用框架、人工智能、数据库、图片处理、机器学习、日志、代码分析等。由「开源前哨」和「CPP开发者」微信公号团队维护更新。（清单仓库创建于 2015-11-03，最近推送 2023-12-28；清单没有声明许可）"
    }
   },
   {
@@ -7856,7 +7856,7 @@
    "id": "kjw0612-awesome-deep-vision",
    "label": "kjw0612/awesome-deep-vision",
    "guidance": {
-    "includes": "A curated list of deep learning resources for computer vision（清单没有声明许可）"
+    "includes": "A curated list of deep learning resources for computer vision（清单仓库创建于 2015-05-18，最近推送 2023-08-15；清单没有声明许可）"
    }
   },
   {
@@ -7875,5 +7875,7 @@
    "parent": "kjw0612-awesome-deep-vision"
   }
  ],
+ "created": "2013-11-14",
+ "updated": "2026-11-09",
  "as_of": "2026-11-10"
 }

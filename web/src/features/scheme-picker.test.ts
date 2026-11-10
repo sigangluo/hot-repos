@@ -5,7 +5,7 @@ import type { Meta } from '../data/types';
 import { Store } from '../state/store';
 import { NOW, classification, makeRepos, schemeInfo } from '../test-utils';
 import type { Ctx } from './context';
-import { renderSchemePicker, schemeFacts } from './scheme-picker';
+import { dayWithAge, renderSchemePicker, schemeAge, schemeFacts } from './scheme-picker';
 
 const switchScheme = vi.fn(() => Promise.resolve());
 vi.mock('./schemes', () => ({ switchScheme: (...args: unknown[]) => switchScheme(...(args as [])) }));
@@ -27,15 +27,35 @@ function ctxOf(current: typeof SITE | null, schemes = META.schemes): Ctx {
 
 beforeEach(() => switchScheme.mockClear());
 
+describe('体系的新旧', () => {
+  const day = (iso: string) => Date.parse(iso);
+
+  it('日期后面跟距今多久', () => {
+    expect(dayWithAge('2026-01-10', day('2026-01-10'))).toBe('2026-01-10（今天）');
+    expect(dayWithAge('2026-01-03', day('2026-01-10'))).toBe('2026-01-03（7 天前）');
+    expect(dayWithAge('2017-06-08', day('2026-11-10'))).toBe('2017-06-08（9.4 年前）');
+  });
+
+  it('一行文字给出创建、最近更新；超过 1 年没更新时明说', () => {
+    const fresh = schemeInfo({ created: '2025-01-01', updated: '2026-01-03' });
+    expect(schemeAge(fresh, day('2026-01-10'))).toBe('创建 2025-01-01（12 个月前） · 最近更新 2026-01-03（7 天前）');
+    const old = schemeInfo({ created: '2017-06-08', updated: '2020-01-24' });
+    expect(schemeAge(old, day('2026-01-10'))).toContain('已超过 1 年没有更新');
+  });
+});
+
 describe('schemeFacts', () => {
-  it('本站自己的体系：标注方式和覆盖范围，没有来源', () => {
-    const labels = schemeFacts(SITE, 5000).map(([label]) => label);
-    expect(labels).toEqual(['标注方式', '覆盖范围']);
-    expect(schemeFacts(SITE, 5000)[1]?.[1]).toContain('361 / 5,000');
+  const NOW_MS = NOW;
+
+  it('本站自己的体系：标注方式、时间和覆盖范围，没有来源', () => {
+    const facts = schemeFacts(SITE, 5000, NOW_MS);
+    expect(facts.map(([label]) => label)).toEqual(['标注方式', '创建', '最近更新', '覆盖范围']);
+    expect(facts[3]?.[1]).toContain('361 / 5,000');
+    expect(String(facts[2]?.[1])).toContain('2026-01-09');
   });
 
   it('外部体系：来源链接、许可、取得日期、署名和注意事项', () => {
-    const facts = new Map(schemeFacts(BORGES, 5000));
+    const facts = new Map(schemeFacts(BORGES, 5000, NOW_MS));
     const source = facts.get('来源') as HTMLElement;
     expect(source.querySelector('a')?.getAttribute('href')).toBe('https://example.com/data');
     expect(source.textContent).toContain('CC-BY-4.0');
@@ -57,6 +77,12 @@ describe('分类体系选择', () => {
     expect(options).toEqual(['测试体系（361 个项目）', 'Borges 人工分类（987 个项目）']);
     expect(root.querySelector('select')?.value).toBe('site');
     expect(root.querySelector('.def')?.textContent).toBe('用于测试的体系');
+  });
+
+  it('下拉框下面一行显示创建与最近更新', () => {
+    const root = renderSchemePicker(ctxOf(SITE))!;
+    expect(root.querySelector('.scheme-age')?.textContent).toContain('创建 2026-01-01');
+    expect(root.querySelector('.scheme-age')?.textContent).toContain('最近更新 2026-01-09');
   });
 
   it('选另一个体系时切换', () => {

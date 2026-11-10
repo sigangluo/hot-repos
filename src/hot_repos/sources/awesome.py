@@ -82,6 +82,11 @@ def is_awesome_list(row: Mapping[str, Any]) -> bool:
     return "awesome" in name or any(t.lower() in AWESOME_TOPICS for t in row.get("topics") or [])
 
 
+def _day(value: Any) -> str | None:
+    """日期或时间（datetime 或 ISO 字符串）转成 YYYY-MM-DD；没有值为 None。"""
+    return str(value)[:10] if value else None
+
+
 def clean_heading(text: str) -> str:
     """去掉标题里的链接、HTML、emoji 短码和格式符号，只留文字。"""
     text = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", text)  # 图片（徽章）整个去掉
@@ -201,6 +206,8 @@ def build(
     nodes: list[dict[str, Any]] = []
     members: dict[str, list[str]] = {}
     used_ids: set[str] = set()
+    created_days: list[str] = []
+    updated_days: list[str] = []
     for row in lists:
         name = row["full_name"]
         if name not in readmes:
@@ -215,14 +222,24 @@ def build(
         list_id = unique_slug(slugify(name), used_ids)
         license_text = f"清单许可：{row['license']}" if row.get("license") else "清单没有声明许可"
         description = first_paragraph(row.get("description") or "", 200)
+        created, pushed = _day(row.get("created_at")), _day(row.get("pushed_at"))
+        created_days += [created] if created else []
+        updated_days += [pushed] if pushed else []
+        when = "，".join(
+            part
+            for part in (
+                f"清单仓库创建于 {created}" if created else "",
+                f"最近推送 {pushed}" if pushed else "",
+            )
+            if part
+        )
+        details = "；".join(part for part in (when, license_text) if part)
         nodes.append(
             {
                 "id": list_id,
                 "label": name,
                 "parent": None,
-                "guidance": {
-                    "includes": f"{description}（{license_text}）" if description else license_text
-                },
+                "guidance": {"includes": f"{description}（{details}）" if description else details},
             }
         )
         used_labels: set[str] = set()
@@ -261,6 +278,10 @@ def build(
         },
         "nodes": nodes,
     }
+    if (
+        created_days
+    ):  # 体系的创建日期取最早的清单，最近更新取最近一次推送的清单；每个清单自己的日期在分类说明里
+        meta |= {"created": min(created_days), "updated": max(updated_days or created_days)}
     return Collected(meta=meta, members=members)
 
 

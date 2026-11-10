@@ -139,12 +139,14 @@
 | `order` | 整数 | 可选。页面列出体系的顺序，小的在前，默认 100；同值按编号 |
 | `primary` | 布尔 | 每个被标注的项目是否都有一个主分类。`false` 表示体系里一个项目只有若干并列的分类（如各种合集） |
 | `source` | 对象 | 外部来源的出处：`name`、`url`（http 开头）、`license`（SPDX 标识）、可选的 `attribution`（署名）；本站自己的体系没有此字段 |
-| `as_of` | 字符串 | 取得来源数据的日期（`YYYY-MM-DD`）；有 `source` 的体系必须有，没有 `source` 的不应有 |
+| `created` | 字符串 | 体系的创建日期（`YYYY-MM-DD`）：来源仓库的创建日期，或数据集的发布日期；本站自己的体系是首次生成的日期。必填，页面据此判断体系的新旧 |
+| `updated` | 字符串 | 体系内容最近一次变化的日期（`YYYY-MM-DD`）：来源里相关文件最近一次提交，或数据集最近一次更新；本站自己的体系是最近一次更新。必填，不早于 `created`，页面据此判断体系有没有在维护 |
+| `as_of` | 字符串 | 取得来源数据的日期（`YYYY-MM-DD`），不是来源更新的日期；有 `source` 的体系必须有，没有 `source` 的不应有 |
 | `note` | 字符串 | 可选。使用时需要知道的说明，如数据的年代、可信度、覆盖范围，页面在“关于这个体系”里原样展示；没有说明时省略该字段 |
 | `forms` | 对象 | 可选。项目形态：键为编号（如 `library`），值是 `{label, definition}`——显示名（如 `库`）和一句话定义，两者都不能为空；只有会判断形态的体系才有，页面在筛选和详情里显示定义 |
 | `nodes` | 列表<对象> | 体系的节点（分类），按“父节点在前、子节点在后”的顺序排列 |
 
-节点的字段：`id`（编号，全体系唯一）、`label`（名称，同一父节点下不重复；外部体系沿用来源的原文）、`parent`（父节点编号，一级节点没有此字段）、可选的 `guidance`（`includes` / `excludes`，说明该分类收什么、不收什么，来源没有说明的就不写）。编号用「.」连接各级，子节点编号以父节点编号加「.」开头，如 `dev.ai-coding.skills`，一级节点编号不含「.」。编号一旦发布就保持稳定，改名只改 `label`。
+节点的字段：`id`（编号，全体系唯一）、`label`（名称，同一父节点下不重复；外部体系沿用来源的原文）、`parent`（父节点编号，一级节点没有此字段）、可选的 `guidance`（`includes` / `excludes`，说明该分类收什么、不收什么，来源没有说明的就不写；每个分类自己有来源日期的体系，如 Awesome 清单，把日期写在这里）。编号用「.」连接各级，子节点编号以父节点编号加「.」开头，如 `dev.ai-coding.skills`，一级节点编号不含「.」。编号一旦发布就保持稳定，改名只改 `label`。
 
 ### schemes/<编号>/labels.parquet
 
@@ -184,7 +186,7 @@
 - `rank_history`：每个快照内名次唯一、名称唯一，名次与 Star 数降序对应，`captured_at` 一致。
 - `star_weeks`：主键唯一，周起点为周日，同一项目的周连续（间隔 7 天），`days` 长度 7 且之和等于 `stars`，项目存在于 `repos`；有周数据的项目 `star_weeks_*` 必须有值，周数不超过已抓页数能容纳的上限。
 - 跨文件：`manifest.snapshot_date` 等于最新快照；最新快照与 `repos` 的名次和名称一一对应；`board_size` 不小于项目数；`aliases` 的键存在于 `repos` 且包含当前名称；`missing` 与 `repos` 不重叠。
-- `schemes/`（每个体系）：有标注就必须有定义，只有定义是允许的；体系编号合法；`name`、`summary` 非空，`method` 是已知取值，`primary` 是布尔值，有 `source` 的体系来源信息完整且有 `as_of`；`forms`（若有）与 `nodes` 齐全，节点编号唯一、父节点存在且排在前面、编号以父节点编号开头、同一父节点下名称不重复；标注的表结构与 `schema.py` 一致，`full_name` 唯一且与 `repos.parquet` 完全一致，`category`、`related` 的编号都在体系中，有主分类的体系每行都有 `category`、没有主分类的体系 `category` 为 NULL 且 `related` 不为空，`related` 无重复、不含 `category`，`forms` 无重复且都在体系中，`summary` 与 `review_reason` 为 NULL 或非空。
+- `schemes/`（每个体系）：有标注就必须有定义，只有定义是允许的；体系编号合法；`name`、`summary` 非空，`method` 是已知取值，`primary` 是布尔值，`created`、`updated` 是日期且 `created` 不晚于 `updated`，有 `source` 的体系来源信息完整且有 `as_of`；`forms`（若有）与 `nodes` 齐全，节点编号唯一、父节点存在且排在前面、编号以父节点编号开头、同一父节点下名称不重复；标注的表结构与 `schema.py` 一致，`full_name` 唯一且与 `repos.parquet` 完全一致，`category`、`related` 的编号都在体系中，有主分类的体系每行都有 `category`、没有主分类的体系 `category` 为 NULL 且 `related` 不为空，`related` 无重复、不含 `category`，`forms` 无重复且都在体系中，`summary` 与 `review_reason` 为 NULL 或非空。
 - `trending`：文件名是合法日期且等于 `snapshot_date`；`captured_at` 一致且其日期（UTC）等于文件名；每个（时间段，语言）榜单内 `rank` 从 1 起连续、`full_name` 唯一；"全部语言"三个时间段齐全；计数非负。写入前先按同样规则检查，不通过则不写入。
 
 ## 示例查询（DuckDB）

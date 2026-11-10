@@ -14,8 +14,7 @@
  "nodes": [
   {
    "id": "provisioning",
-   "label": "Provisioning",
-   "parent": null
+   "label": "Provisioning"
   },
   {
    "id": "provisioning.automation-configuration",
@@ -39,8 +38,7 @@
   },
   {
    "id": "runtime",
-   "label": "Runtime",
-   "parent": null
+   "label": "Runtime"
   },
   {
    "id": "runtime.cloud-native-storage",
@@ -59,8 +57,7 @@
   },
   {
    "id": "orchestration-management",
-   "label": "Orchestration & Management",
-   "parent": null
+   "label": "Orchestration & Management"
   },
   {
    "id": "orchestration-management.scheduling-orchestration",
@@ -94,8 +91,7 @@
   },
   {
    "id": "app-definition-and-development",
-   "label": "App Definition and Development",
-   "parent": null
+   "label": "App Definition and Development"
   },
   {
    "id": "app-definition-and-development.database",
@@ -119,8 +115,7 @@
   },
   {
    "id": "platform",
-   "label": "Platform",
-   "parent": null
+   "label": "Platform"
   },
   {
    "id": "platform.certified-kubernetes-distribution",
@@ -139,8 +134,7 @@
   },
   {
    "id": "serverless",
-   "label": "Serverless",
-   "parent": null
+   "label": "Serverless"
   },
   {
    "id": "serverless.tools",
@@ -159,8 +153,7 @@
   },
   {
    "id": "observability-and-analysis",
-   "label": "Observability and Analysis",
-   "parent": null
+   "label": "Observability and Analysis"
   },
   {
    "id": "observability-and-analysis.feature-flagging",
@@ -179,8 +172,7 @@
   },
   {
    "id": "wasm",
-   "label": "Wasm",
-   "parent": null
+   "label": "Wasm"
   },
   {
    "id": "wasm.languages",
@@ -219,8 +211,7 @@
   },
   {
    "id": "ai-agent",
-   "label": "AI Agent",
-   "parent": null
+   "label": "AI Agent"
   },
   {
    "id": "ai-agent.agent-framework",
@@ -269,8 +260,7 @@
   },
   {
    "id": "inference",
-   "label": "Inference",
-   "parent": null
+   "label": "Inference"
   },
   {
    "id": "inference.runtime",
@@ -279,8 +269,7 @@
   },
   {
    "id": "data",
-   "label": "Data",
-   "parent": null
+   "label": "Data"
   },
   {
    "id": "data.data-architecture",
@@ -294,8 +283,7 @@
   },
   {
    "id": "training",
-   "label": "Training",
-   "parent": null
+   "label": "Training"
   },
   {
    "id": "training.distributed-training",
@@ -314,8 +302,7 @@
   },
   {
    "id": "ai-native-infra",
-   "label": "AI Native Infra",
-   "parent": null
+   "label": "AI Native Infra"
   },
   {
    "id": "ai-native-infra.workload-runtime",
@@ -338,5 +325,7 @@
    "parent": "ai-native-infra"
   }
  ],
+ "created": "2016-11-04",
+ "updated": "2026-11-10",
  "as_of": "2026-11-10"
 }

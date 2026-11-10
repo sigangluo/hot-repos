@@ -1,4 +1,4 @@
-import { categoryDefinition, DATA_TIMES, FACTS, RANGE_DEFINITIONS, TRENDING_TERMS } from '../data/glossary';
+import { categoryDefinition, DATA_TIMES, FACTS, RANGE_DEFINITIONS, SCHEME_TIME_TERMS, TRENDING_TERMS } from '../data/glossary';
 import { h, mount } from '../lib/dom';
 import { GROUPS } from '../state/query';
 import { COLUMNS, type Column } from './columns';
@@ -40,7 +40,7 @@ export function renderGlossary(ctx: Ctx): HTMLElement {
     const schemes = meta.schemes.map((s): [string, Node] => [
       s.name,
       h('div', null, s.summary,
-        h('ul', null, schemeFacts(s, meta.repos).map(([term, text]) => h('li', null, h('b', null, `${term}：`), text)))),
+        h('ul', null, schemeFacts(s, meta.repos, ctx.now).map(([term, text]) => h('li', null, h('b', null, `${term}：`), text)))),
     ]);
     const domains = (taxonomy?.roots ?? [])
       .map((n): [string, string] => [taxonomy!.label(n), taxonomy!.definition(n).includes ?? ''])
@@ -48,7 +48,7 @@ export function renderGlossary(ctx: Ctx): HTMLElement {
 
     return [
       section('数据时点', DATA_TIMES),
-      section('分类体系', schemes),
+      meta.schemes.length ? section('分类体系', [...SCHEME_TIME_TERMS, ...schemes]) : null,
       section('筛选', filters),
       section('表格列', (COLUMNS as readonly Column[]).filter((c) => !c.needsClassification || taxonomy).map((c): [string, string] => [c.label, c.title])),
       section('项目详情', Object.entries(FACTS)),

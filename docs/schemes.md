@@ -18,10 +18,28 @@
 | `site` | 本站分类 | 语言模型判断 | 有主分类，两到三级，另有关联分类与形态 | 361 | 本项目（MIT） |
 | `explore` | [GitHub Explore 主题合集](https://github.com/github/explore) | 来源方人工策展 | 无主分类，一级，一个项目可在多个合集 | 514 | CC-BY-4.0 |
 | `awesome` | [Awesome 清单](https://github.com/sindresorhus/awesome)（总榜里的 Awesome 类仓库的 README） | 来源方人工策展 | 无主分类，两级：清单 › 章节，一个项目可在多个清单、多个章节 | 2,490 | 各清单自行声明（多为 CC0、MIT 或未声明） |
+| `wikidata` | [Wikidata 软件类型](https://www.wikidata.org/) | 来源方人工策展（社区编辑，部分由机器人导入） | 无主分类，一级，每个类型一个分类（instance of），一个条目可有多个类型 | 1,288 | CC0-1.0 |
 | `ossinsight` | [OSS Insight 开源项目合集](https://github.com/pingcap/ossinsight) | 来源方人工策展 | 无主分类，一级，一个项目可在多个合集 | 790 | Apache-2.0 |
 | `borges` | [Borges 等的人工分类（2017）](https://doi.org/10.5281/zenodo.804474) | 研究者人工标注 | 有主分类，一级，六个应用领域 | 987 | CC-BY-4.0 |
 | `cncf` | [CNCF Cloud Native Landscape](https://github.com/cncf/landscape) | 来源方人工策展 | 有主分类，类别 / 子类别两级 | 239 | Apache-2.0 |
 | `lfai` | [LF AI & Data Landscape](https://github.com/lfai/lfai-landscape) | 来源方人工策展 | 有主分类，类别 / 子类别两级 | 85 | Apache-2.0 |
+
+## 新旧与维护
+
+每个体系都有**创建**和**最近更新**两个日期（`scheme.json` 的 `created`、`updated`，含义见 [data-model.md](data-model.md)），页面在体系下拉框下面一行直接显示，并注明距今多久；超过 1 年没有更新会明说。2026-11-10 的情况：
+
+| 体系 | 创建 | 最近更新 |
+|---|---|---|
+| 本站分类 | 2026-11-10 | 2026-11-10 |
+| GitHub Explore 主题合集 | 2017-09-16 | 2026-09-25 |
+| Awesome 清单 | 2013-11-14 | 2026-11-09 |
+| Wikidata 软件类型 | 2012-10-29 | 2026-11-10 |
+| OSS Insight 开源项目合集 | 2022-01-19 | 2026-05-07 |
+| Borges 等的人工分类 | 2017-06-08 | 2020-01-24 |
+| CNCF Cloud Native Landscape | 2016-11-04 | 2026-11-10 |
+| LF AI & Data Landscape | 2018-11-26 | 2026-10-28 |
+
+“最近更新”是来源里相关内容最近一次变化，不是我们取回数据的日期（后者是 `as_of`，“关于这个体系”里的“取得于”）。Borges 的数据集 2020 年之后没有变过，页面会标出“已超过 1 年没有更新”。Awesome 清单的体系日期取各清单里最早创建的和最近推送的；每个清单自己的创建与最近推送日期写在它的分类说明里（分类右侧的 ⓘ），可以看出这个清单还有没有人维护。Wikidata 的创建日期取它上线的日期，最近更新取这批条目里最近一次被编辑的时间，几乎每天都在变。
 
 使用时要知道的：
 
@@ -51,15 +69,18 @@ uv run hot-repos schemes sync borges cncf  # 只同步指定的
 ## 新增一个外部体系
 
 1. 确认来源的许可允许这样使用（记录项目与分类的对应关系并注明出处），并记下许可标识与署名要求。
-2. 在 `src/hot_repos/sources/` 加一个模块，提供 `collect(fetcher) -> Collected`：返回体系定义（名称、简介、`method`、`primary`、`source`、`nodes`，字段见 [data-model.md](data-model.md)）和“来源里的 `owner/repo` → 节点编号列表”。解析写成不访问网络的纯函数，便于用小段样本测试。
+2. 在 `src/hot_repos/sources/` 加一个模块，提供 `collect(fetcher) -> Collected`：返回体系定义（名称、简介、`method`、`primary`、`source`、`nodes`，字段见 [data-model.md](data-model.md)；创建与最近更新日期用 `sources.dated()` 补上，GitHub 来源可用 `Fetcher.github_dates()` 取）和“来源里的 `owner/repo` → 节点编号列表”。解析写成不访问网络的纯函数，便于用小段样本测试。
 3. 在 `sources/__init__.py` 的 `registry()` 里登记，键就是体系编号；设置 `order` 决定页面里的排列。
 4. 运行 `uv run hot-repos schemes sync <编号>`，再 `validate` 和 `export`，在页面里看一遍。
 
 ## 没有接入的
 
-查证时没有发现可直接复用的项目标注，所以没有接入（不是说它们没有价值）：
+逐个查证后没有接入，原因是没有可直接复用的项目标注，或和总榜的重合太少（不是说它们没有价值）：
 
 - **Ecosyste.ms OSS Taxonomy**：有六个维度的词表，但只有词条，没有给具体项目打好的标注。
-- **GitRanking**：301 个应用领域的词表，来自 GitHub 话题；它的数据是“话题”而不是分好类的项目。
+- **GitRanking**：301 个应用领域的词表，来自 GitHub 话题。最终的领域清单没有以能直接取用的形式发布，数据集里是话题的标注（三位标注者）和排序，带项目标签的文件有 1GB 量级；它的话题本来就是仓库作者填的，已经是筛选里的“话题”分组。
 - **GitHub 话题**：仓库作者自己填的标签，已经是筛选里的“话题”分组。
+- **Apache 软件基金会项目清单**（projects.apache.org）：数据里多数项目没有 GitHub 仓库地址，与总榜只对上 10 个。
+- **LF AI 之外的 Linux Foundation 全景图**（17 个子全景图）：与总榜的重合最多 52 个、多数不到 20 个，不值得各占一个体系；总的 Linux Foundation 全景图（96 个项目）试接过，但它的分类只有一个“Projects › All”，没有分类信息，已移除。
+- **更多的 Awesome 清单**：这里只取了总榜里的 Awesome 仓库；总榜之外还有几千个清单（如 awesome.ecosyste.ms 收录的），接入要上千次请求，可以以后再做。
 - **PyPI Trove 分类、publiccode.yml**：前者只覆盖 Python 包，后者由各项目自己声明、采用面很窄。

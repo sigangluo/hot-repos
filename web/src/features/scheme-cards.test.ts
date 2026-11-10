@@ -59,6 +59,12 @@ describe('详情里的分类卡片', () => {
     expect(first.textContent).toContain('直接使用的应用'); // 形态“应用”的定义
   });
 
+  it('每张卡片说明该体系的创建与最近更新', async () => {
+    const host = render(0);
+    await settle();
+    for (const card of host.querySelectorAll('section.card')) expect(card.textContent).toContain('体系：创建 2026-01-01');
+  });
+
   it('其他体系也收录了这个项目时一并显示，没有主分类的体系列出“分类”，并注明来源与许可', async () => {
     const host = render(0);
     await settle();

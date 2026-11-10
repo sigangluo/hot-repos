@@ -14,8 +14,7 @@
  "nodes": [
   {
    "id": "machine-learning",
-   "label": "Machine Learning",
-   "parent": null
+   "label": "Machine Learning"
   },
   {
    "id": "machine-learning.framework",
@@ -34,8 +33,7 @@
   },
   {
    "id": "deep-learning",
-   "label": "Deep Learning",
-   "parent": null
+   "label": "Deep Learning"
   },
   {
    "id": "deep-learning.framework",
@@ -54,8 +52,7 @@
   },
   {
    "id": "data",
-   "label": "Data",
-   "parent": null
+   "label": "Data"
   },
   {
    "id": "data.relational-db",
@@ -94,8 +91,7 @@
   },
   {
    "id": "reinforcement-learning",
-   "label": "Reinforcement Learning",
-   "parent": null
+   "label": "Reinforcement Learning"
   },
   {
    "id": "reinforcement-learning.reinforcement-learning",
@@ -104,8 +100,7 @@
   },
   {
    "id": "generative-ai",
-   "label": "Generative AI",
-   "parent": null
+   "label": "Generative AI"
   },
   {
    "id": "generative-ai.tools",
@@ -114,8 +109,7 @@
   },
   {
    "id": "natural-language-processing",
-   "label": "Natural Language Processing",
-   "parent": null
+   "label": "Natural Language Processing"
   },
   {
    "id": "natural-language-processing.natural-language-processing",
@@ -124,8 +118,7 @@
   },
   {
    "id": "model",
-   "label": "Model",
-   "parent": null
+   "label": "Model"
   },
   {
    "id": "model.inference",
@@ -154,8 +147,7 @@
   },
   {
    "id": "programming",
-   "label": "Programming",
-   "parent": null
+   "label": "Programming"
   },
   {
    "id": "programming.programming",
@@ -164,8 +156,7 @@
   },
   {
    "id": "distributed-computing",
-   "label": "Distributed Computing",
-   "parent": null
+   "label": "Distributed Computing"
   },
   {
    "id": "distributed-computing.computing-management",
@@ -174,8 +165,7 @@
   },
   {
    "id": "trusted-responsible-ai",
-   "label": "Trusted & Responsible AI",
-   "parent": null
+   "label": "Trusted & Responsible AI"
   },
   {
    "id": "trusted-responsible-ai.explainability",
@@ -184,8 +174,7 @@
   },
   {
    "id": "notebook-environment",
-   "label": "Notebook Environment",
-   "parent": null
+   "label": "Notebook Environment"
   },
   {
    "id": "notebook-environment.notebook-environment",
@@ -194,8 +183,7 @@
   },
   {
    "id": "security-privacy",
-   "label": "Security & Privacy",
-   "parent": null
+   "label": "Security & Privacy"
   },
   {
    "id": "security-privacy.security-privacy",
@@ -203,5 +191,7 @@
    "parent": "security-privacy"
   }
  ],
+ "created": "2018-11-26",
+ "updated": "2026-10-28",
  "as_of": "2026-11-10"
 }

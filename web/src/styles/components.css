@@ -1017,6 +1017,10 @@ td.clip {
   text-overflow: ellipsis;
 }
 
+.scheme-age {
+  margin-top: calc(-1 * var(--space-1)); /* 紧挨在简介下面 */
+}
+
 .scheme-cards {
   display: contents; /* 里面的卡片直接参与抽屉的纵向排布 */
 }

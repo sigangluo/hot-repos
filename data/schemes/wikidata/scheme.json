@@ -1,0 +1,3687 @@
+{
+ "name": "Wikidata 软件类型",
+ "summary": "Wikidata（维基数据）里给软件项目标注的类型（instance of）：知识库的社区编辑者把带 GitHub 仓库的软件条目归入“Python 包”“自由软件”“JavaScript 库”等类别。",
+ "method": "curated",
+ "order": 25,
+ "primary": false,
+ "note": "Wikidata 只收录有条目的软件（多为较知名的项目），一个条目可以有多个类型，没有主分类。类型名称取英文标签，粗细不一（如“自由软件”“软件”很宽泛），部分条目由机器人批量导入，可能不完整。",
+ "source": {
+  "name": "Wikidata（P1324 源代码仓库 + P31 instance of）",
+  "url": "https://www.wikidata.org/",
+  "license": "CC0-1.0",
+  "attribution": "Wikidata 贡献者；Wikidata 的结构化数据以 CC0 发布，通过 Wikidata Query Service 取得。"
+ },
+ "nodes": [
+  {
+   "id": "q281039",
+   "label": "abandonware",
+   "guidance": {
+    "includes": "Wikidata 类别 Q281039（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7593080",
+   "label": "add-on",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7593080（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q140456475",
+   "label": "agent harness",
+   "guidance": {
+    "includes": "Wikidata 类别 Q140456475（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q132451509",
+   "label": "AI agent",
+   "guidance": {
+    "includes": "Wikidata 类别 Q132451509（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q140639670",
+   "label": "AI agent memory software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q140639670（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q134348028",
+   "label": "AI pair programming tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q134348028（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1869009",
+   "label": "allocator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1869009（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q137369895",
+   "label": "Android launcher",
+   "guidance": {
+    "includes": "Wikidata 类别 Q137369895（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q39999225",
+   "label": "Apache Software Foundation project",
+   "guidance": {
+    "includes": "Wikidata 类别 Q39999225（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q125928878",
+   "label": "API documentation browser",
+   "guidance": {
+    "includes": "Wikidata 类别 Q125928878（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q125531904",
+   "label": "API testing tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q125531904（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3814081",
+   "label": "app marketplace",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3814081（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q451816",
+   "label": "application firewall",
+   "guidance": {
+    "includes": "Wikidata 类别 Q451816（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q756637",
+   "label": "application framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q756637（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15548044",
+   "label": "application launcher",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15548044（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q165194",
+   "label": "application programming interface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q165194（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q71550",
+   "label": "application server",
+   "guidance": {
+    "includes": "Wikidata 类别 Q71550（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q166142",
+   "label": "application software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q166142（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q98400282",
+   "label": "application-level package manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q98400282（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q11660",
+   "label": "artificial intelligence",
+   "guidance": {
+    "includes": "Wikidata 类别 Q11660（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q117349473",
+   "label": "artificial intelligence model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q117349473（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15911314",
+   "label": "association",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15911314（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2293691",
+   "label": "Auto clicker",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2293691（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4826847",
+   "label": "autonomous agent",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4826847（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q117823197",
+   "label": "awesome list",
+   "guidance": {
+    "includes": "Wikidata 类别 Q117823197（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q11223899",
+   "label": "back end",
+   "guidance": {
+    "includes": "Wikidata 类别 Q11223899（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4839801",
+   "label": "backup software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4839801（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q37307899",
+   "label": "bitcoin wallet",
+   "guidance": {
+    "includes": "Wikidata 类别 Q37307899（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q21577192",
+   "label": "BitTorrent client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q21577192（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28923023",
+   "label": "block-structured programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28923023（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q20514253",
+   "label": "blockchain",
+   "guidance": {
+    "includes": "Wikidata 类别 Q20514253（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1810858",
+   "label": "blog software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1810858（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q836795",
+   "label": "bootloader",
+   "guidance": {
+    "includes": "Wikidata 类别 Q836795（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q431289",
+   "label": "brand",
+   "guidance": {
+    "includes": "Wikidata 类别 Q431289（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q373442",
+   "label": "browser engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q373442（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q874411",
+   "label": "browser extension",
+   "guidance": {
+    "includes": "Wikidata 类别 Q874411（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q956086",
+   "label": "bug tracking system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q956086（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q114900460",
+   "label": "build system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q114900460（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q114900488",
+   "label": "build tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q114900488（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4830453",
+   "label": "business",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4830453（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1391080",
+   "label": "business software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1391080（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q837330",
+   "label": "bytecode",
+   "guidance": {
+    "includes": "Wikidata 类别 Q837330（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q29642875",
+   "label": "C library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q29642875（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1022270",
+   "label": "C++ Standard Library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1022270（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q374814",
+   "label": "certification",
+   "guidance": {
+    "includes": "Wikidata 类别 Q374814（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q870780",
+   "label": "chatbot",
+   "guidance": {
+    "includes": "Wikidata 类别 Q870780（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1248874",
+   "label": "chess engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1248874（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28922858",
+   "label": "class-based programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28922858（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q528166",
+   "label": "client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q528166（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q244909",
+   "label": "clipboard",
+   "guidance": {
+    "includes": "Wikidata 类别 Q244909（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q483639",
+   "label": "cloud computing",
+   "guidance": {
+    "includes": "Wikidata 类别 Q483639（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115910931",
+   "label": "code formatter",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115910931（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q16920237",
+   "label": "code reviewing software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q16920237（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5145831",
+   "label": "collaborative development environment",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5145831（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q12313595",
+   "label": "collaborative real-time editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q12313595（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2668072",
+   "label": "collection",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2668072（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q114654291",
+   "label": "color scheme for multiple software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q114654291（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q425567",
+   "label": "column-oriented DBMS",
+   "guidance": {
+    "includes": "Wikidata 类别 Q425567（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28937412",
+   "label": "command line interface language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28937412（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q189053",
+   "label": "command-line interface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q189053（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1368899",
+   "label": "command-line interpreter",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1368899（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115214659",
+   "label": "command-line tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115214659（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4229799",
+   "label": "commercial open-source software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4229799（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q132364",
+   "label": "communication protocol",
+   "guidance": {
+    "includes": "Wikidata 类别 Q132364（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3635085",
+   "label": "communication software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3635085（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q177634",
+   "label": "community",
+   "guidance": {
+    "includes": "Wikidata 类别 Q177634（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5155040",
+   "label": "community project",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5155040（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q783794",
+   "label": "company",
+   "guidance": {
+    "includes": "Wikidata 类别 Q783794（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1720648",
+   "label": "comparison",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1720648（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q907342",
+   "label": "compatibility layer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q907342（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q651794",
+   "label": "compiled language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q651794（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q47506",
+   "label": "compiler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q47506（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1076785",
+   "label": "compiler-compiler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1076785（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2755432",
+   "label": "compression algorithm",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2755432（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q877886",
+   "label": "compression software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q877886（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q830340",
+   "label": "computer algebra system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q830340（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q55990535",
+   "label": "computer model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q55990535（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q41107945",
+   "label": "computer monitoring",
+   "guidance": {
+    "includes": "Wikidata 类别 Q41107945（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15836568",
+   "label": "computer network protocol",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15836568（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q40056",
+   "label": "computer program",
+   "guidance": {
+    "includes": "Wikidata 类别 Q40056（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q870898",
+   "label": "computer security software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q870898（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15548076",
+   "label": "computer-aided design software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15548076（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q241317",
+   "label": "computing platform",
+   "guidance": {
+    "includes": "Wikidata 类别 Q241317（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q123079143",
+   "label": "conceptual artwork",
+   "guidance": {
+    "includes": "Wikidata 类别 Q123079143（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28919943",
+   "label": "concurrent programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28919943（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q29032804",
+   "label": "configuration manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q29032804（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1461523",
+   "label": "console application",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1461523（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q118218718",
+   "label": "container orchestrator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q118218718（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7935198",
+   "label": "container runtime",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7935198（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q131093",
+   "label": "content management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q131093（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q16947796",
+   "label": "continuous integration software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q16947796（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q116961403",
+   "label": "conversational AI",
+   "guidance": {
+    "includes": "Wikidata 类别 Q116961403（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q56842894",
+   "label": "cross-platform software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q56842894（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q13479982",
+   "label": "cryptocurrency",
+   "guidance": {
+    "includes": "Wikidata 类别 Q13479982（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q40186999",
+   "label": "cryptocurrency wallet",
+   "guidance": {
+    "includes": "Wikidata 类别 Q40186999（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5014368",
+   "label": "CSS framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5014368（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q308980",
+   "label": "daemon",
+   "guidance": {
+    "includes": "Wikidata 类别 Q308980（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q91348108",
+   "label": "daemon-managing daemon",
+   "guidance": {
+    "includes": "Wikidata 类别 Q91348108（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1994744",
+   "label": "data as a service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1994744（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2493",
+   "label": "data compression",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2493（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15618637",
+   "label": "data management software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15618637（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q24451526",
+   "label": "data serialization format",
+   "guidance": {
+    "includes": "Wikidata 类别 Q24451526（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5597177",
+   "label": "data visualization software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5597177（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1172354",
+   "label": "database abstraction layer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1172354（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q138079699",
+   "label": "database administration tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q138079699（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q537993",
+   "label": "database engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q537993（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1172367",
+   "label": "database interface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1172367（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q176165",
+   "label": "database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q176165（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q193231",
+   "label": "debugger",
+   "guidance": {
+    "includes": "Wikidata 类别 Q193231（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1144882",
+   "label": "declarative programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1144882（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q913697",
+   "label": "decompiler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q913697（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q113364611",
+   "label": "deep learning model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q113364611（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1437680",
+   "label": "design language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1437680（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q11320567",
+   "label": "desktop application",
+   "guidance": {
+    "includes": "Wikidata 类别 Q11320567（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q188610",
+   "label": "desktop publishing",
+   "guidance": {
+    "includes": "Wikidata 类别 Q188610（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q29364197",
+   "label": "desktop publishing software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q29364197（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1033951",
+   "label": "device driver",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1033951（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3307487",
+   "label": "diagramming software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3307487（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q114617315",
+   "label": "diffusion model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q114617315（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q102440913",
+   "label": "digital As good",
+   "guidance": {
+    "includes": "Wikidata 类别 Q102440913（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q19307174",
+   "label": "digital distribution platform",
+   "guidance": {
+    "includes": "Wikidata 类别 Q19307174（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q128247799",
+   "label": "digital ink software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q128247799（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q279650",
+   "label": "disassembler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q279650（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3552754",
+   "label": "Disk utility",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3552754（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q989016",
+   "label": "distributed database",
+   "guidance": {
+    "includes": "Wikidata 类别 Q989016（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4822779",
+   "label": "distributed database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4822779（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1186723",
+   "label": "distributed revision control system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1186723（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5283178",
+   "label": "distributed social network",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5283178（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q831677",
+   "label": "document management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q831677（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1235236",
+   "label": "document-oriented database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1235236（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2164323",
+   "label": "documentation generator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2164323（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1073015",
+   "label": "domain name registrar",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1073015（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q170434",
+   "label": "DOS",
+   "guidance": {
+    "includes": "Wikidata 类别 Q170434（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1194970",
+   "label": "dot-com company",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1194970（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q565428",
+   "label": "download manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q565428（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q25588783",
+   "label": "driver assistance software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q25588783（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5155687",
+   "label": "e-book reader software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5155687（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q96377003",
+   "label": "education in emergencies and conflict areas",
+   "guidance": {
+    "includes": "Wikidata 类别 Q96377003（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1074158",
+   "label": "educational software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1074158（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q109337002",
+   "label": "Electron application",
+   "guidance": {
+    "includes": "Wikidata 类别 Q109337002（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q304863",
+   "label": "electronic mailing list",
+   "guidance": {
+    "includes": "Wikidata 类别 Q304863（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q63067479",
+   "label": "electronic mailing list manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q63067479（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q570871",
+   "label": "email client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q570871（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1307492",
+   "label": "embedded database",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1307492（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1139923",
+   "label": "embedded operating system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1139923（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q202871",
+   "label": "emulator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q202871（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q42586063",
+   "label": "encoder",
+   "guidance": {
+    "includes": "Wikidata 类别 Q42586063（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5375622",
+   "label": "encryption software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5375622（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q6881511",
+   "label": "enterprise",
+   "guidance": {
+    "includes": "Wikidata 类别 Q6881511（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q22908173",
+   "label": "environmental subsystem",
+   "guidance": {
+    "includes": "Wikidata 类别 Q22908173（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28057030",
+   "label": "ERP software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28057030（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q610140",
+   "label": "esoteric programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q610140（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q112144412",
+   "label": "esports discipline",
+   "guidance": {
+    "includes": "Wikidata 类别 Q112144412（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28920813",
+   "label": "event-driven programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28920813（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1065594",
+   "label": "executable compression",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1065594（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5421696",
+   "label": "expression-oriented programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5421696（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115003447",
+   "label": "external type collection",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115003447（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q124629760",
+   "label": "family of large language models",
+   "guidance": {
+    "includes": "Wikidata 类别 Q124629760（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q80261011",
+   "label": "Fediverse app",
+   "guidance": {
+    "includes": "Wikidata 类别 Q80261011（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1047113",
+   "label": "field of study",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1047113（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2267705",
+   "label": "field of study (Q2267705)",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2267705（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2990323",
+   "label": "file comparison",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2990323（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2996416",
+   "label": "file converter",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2996416（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q235557",
+   "label": "file format",
+   "guidance": {
+    "includes": "Wikidata 类别 Q235557（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q732970",
+   "label": "file manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q732970（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q25303346",
+   "label": "file synchronisation software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q25303346（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1172313",
+   "label": "file viewer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1172313（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1343205",
+   "label": "file-hosting service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1343205（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15008073",
+   "label": "Firefox add-on",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15008073（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15008061",
+   "label": "Firefox extension",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15008061（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q104851",
+   "label": "firmware",
+   "guidance": {
+    "includes": "Wikidata 类别 Q104851（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2250008",
+   "label": "font superfamily",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2250008（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3077240",
+   "label": "forge",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3077240（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q332903",
+   "label": "fork",
+   "guidance": {
+    "includes": "Wikidata 类别 Q332903（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q506883",
+   "label": "free and open-source software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q506883（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q20983788",
+   "label": "free operating system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q20983788（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q341",
+   "label": "free software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q341（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2989352",
+   "label": "free software community",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2989352（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3839507",
+   "label": "functional programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3839507（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q104636634",
+   "label": "fuzzy finder",
+   "guidance": {
+    "includes": "Wikidata 类别 Q104636634（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q11410",
+   "label": "game",
+   "guidance": {
+    "includes": "Wikidata 类别 Q11410（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5519929",
+   "label": "game creation system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5519929（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q193564",
+   "label": "game engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q193564（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q17083583",
+   "label": "game engine recreation",
+   "guidance": {
+    "includes": "Wikidata 类别 Q17083583（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q124024028",
+   "label": "game launcher",
+   "guidance": {
+    "includes": "Wikidata 类别 Q124024028（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q25104379",
+   "label": "generative adversarial network",
+   "guidance": {
+    "includes": "Wikidata 类别 Q25104379（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q117246174",
+   "label": "generative artificial intelligence",
+   "guidance": {
+    "includes": "Wikidata 类别 Q117246174（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q119018971",
+   "label": "generative artificial intelligence website",
+   "guidance": {
+    "includes": "Wikidata 类别 Q119018971（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28923026",
+   "label": "generic programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28923026（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q483130",
+   "label": "geographic information system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q483130（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q138081210",
+   "label": "Git GUI client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q138081210（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115156595",
+   "label": "Go library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115156595（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115300150",
+   "label": "Go package",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115300150（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5583816",
+   "label": "Google Chrome extension",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5583816（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2257348",
+   "label": "grammar checker",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2257348（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q595971",
+   "label": "graph database",
+   "guidance": {
+    "includes": "Wikidata 类别 Q595971（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q137916409",
+   "label": "graph database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q137916409（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q60551191",
+   "label": "Graph Query Language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q60551191（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q355134",
+   "label": "graphics engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q355134（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q337820",
+   "label": "graphics library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q337820（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q868410",
+   "label": "graphics software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q868410（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q18348827",
+   "label": "headless browser",
+   "guidance": {
+    "includes": "Wikidata 类别 Q18348827（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q48995961",
+   "label": "headless content management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q48995961（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q747948",
+   "label": "hex editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q747948（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q211496",
+   "label": "high-level programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q211496（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5874974",
+   "label": "hobbyist operating system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5874974（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q139907533",
+   "label": "Home Assistant Integration",
+   "guidance": {
+    "includes": "Wikidata 类别 Q139907533（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q848436",
+   "label": "home automation",
+   "guidance": {
+    "includes": "Wikidata 类别 Q848436（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q726761",
+   "label": "HTML editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q726761（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2979024",
+   "label": "HTTP client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2979024（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q752783",
+   "label": "human spaceflight",
+   "guidance": {
+    "includes": "Wikidata 类别 Q752783（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q372222",
+   "label": "human-readable medium",
+   "guidance": {
+    "includes": "Wikidata 类别 Q372222（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1077480",
+   "label": "hypervisor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1077480（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q65947879",
+   "label": "icon collection",
+   "guidance": {
+    "includes": "Wikidata 类别 Q65947879（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5988389",
+   "label": "identity management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5988389（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q124305192",
+   "label": "image dataset",
+   "guidance": {
+    "includes": "Wikidata 类别 Q124305192（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q860760",
+   "label": "image organizer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q860760（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15623421",
+   "label": "image processing software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15623421（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q65949919",
+   "label": "image scaling algorithm",
+   "guidance": {
+    "includes": "Wikidata 类别 Q65949919（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q860676",
+   "label": "image viewer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q860676（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q21562092",
+   "label": "imperative programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q21562092（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4117406",
+   "label": "implementation of a programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4117406（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q138081351",
+   "label": "infrastructure automation software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q138081351（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q138081337",
+   "label": "infrastructure provisioning tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q138081337（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2462003",
+   "label": "instant messaging client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2462003（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q13741",
+   "label": "integrated development environment",
+   "guidance": {
+    "includes": "Wikidata 类别 Q13741（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q93661",
+   "label": "integrated library system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q93661（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1044749",
+   "label": "interface description language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1044749（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q839180",
+   "label": "Internet censorship circumvention",
+   "guidance": {
+    "includes": "Wikidata 类别 Q839180（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q168210",
+   "label": "Internet forum",
+   "guidance": {
+    "includes": "Wikidata 类别 Q168210（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q25595203",
+   "label": "Internet forum software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q25595203（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1993334",
+   "label": "interpreted language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1993334（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q183065",
+   "label": "interpreter",
+   "guidance": {
+    "includes": "Wikidata 类别 Q183065（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q745881",
+   "label": "intrusion detection system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q745881（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q40612",
+   "label": "intrusion prevention system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q40612（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q110647054",
+   "label": "IoT framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q110647054（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1480561",
+   "label": "issue tracking system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1480561（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q741303",
+   "label": "Java Development Kit",
+   "guidance": {
+    "includes": "Wikidata 类别 Q741303（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q21127166",
+   "label": "Java software library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q21127166（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q193321",
+   "label": "Java virtual machine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q193321（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q114900710",
+   "label": "JavaScript bundler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q114900710（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q24789150",
+   "label": "JavaScript framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q24789150（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q783866",
+   "label": "JavaScript library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q783866（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q131417405",
+   "label": "JavaScript runtime",
+   "guidance": {
+    "includes": "Wikidata 类别 Q131417405（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q31302964",
+   "label": "just-in-time compiler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q31302964（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q56062429",
+   "label": "JVM language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q56062429（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q133457912",
+   "label": "key management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q133457912（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q20706915",
+   "label": "key–value database system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q20706915（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q593744",
+   "label": "knowledge base",
+   "guidance": {
+    "includes": "Wikidata 类别 Q593744（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q140518372",
+   "label": "Kubernetes distribution",
+   "guidance": {
+    "includes": "Wikidata 类别 Q140518372（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3621696",
+   "label": "language model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3621696（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115305900",
+   "label": "large language model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115305900（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q136688173",
+   "label": "large language model library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q136688173（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1806885",
+   "label": "latent variable model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1806885（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q767899",
+   "label": "level editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q767899（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q137658509",
+   "label": "libretro frontend",
+   "guidance": {
+    "includes": "Wikidata 类别 Q137658509（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q33685",
+   "label": "limited company",
+   "guidance": {
+    "includes": "Wikidata 类别 Q33685（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q523796",
+   "label": "linker",
+   "guidance": {
+    "includes": "Wikidata 类别 Q523796（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q139042004",
+   "label": "linter",
+   "guidance": {
+    "includes": "Wikidata 类别 Q139042004（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q131669",
+   "label": "Linux distribution",
+   "guidance": {
+    "includes": "Wikidata 类别 Q131669（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q39998995",
+   "label": "Linux Foundation project",
+   "guidance": {
+    "includes": "Wikidata 类别 Q39998995（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5717061",
+   "label": "load balancer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5717061（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q133730744",
+   "label": "Local AI art web interface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q133730744（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15726348",
+   "label": "long-term support release",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15726348（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q21169670",
+   "label": "machine learning framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q21169670（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115215420",
+   "label": "machine learning model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115215420（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1048236",
+   "label": "machine-readable medium",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1048236（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q37045",
+   "label": "markup language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q37045（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q24868018",
+   "label": "masked language model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q24868018（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1639024",
+   "label": "mathematical software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1639024（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q126367667",
+   "label": "Matrix client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q126367667（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q210337",
+   "label": "media player software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q210337（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1645817",
+   "label": "media server",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1645817（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2475641",
+   "label": "megaproject",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2475641（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q109536316",
+   "label": "meme coin",
+   "guidance": {
+    "includes": "Wikidata 类别 Q109536316（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q6821765",
+   "label": "message broker",
+   "guidance": {
+    "includes": "Wikidata 类别 Q6821765（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q859477",
+   "label": "message transfer agent",
+   "guidance": {
+    "includes": "Wikidata 类别 Q859477（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1092177",
+   "label": "message-oriented middleware",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1092177（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q18922759",
+   "label": "messaging app",
+   "guidance": {
+    "includes": "Wikidata 类别 Q18922759（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28922887",
+   "label": "metaprogramming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28922887（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q114106",
+   "label": "metasearch engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q114106（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q20310948",
+   "label": "microframework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q20310948（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q26430975",
+   "label": "Microsoft Windows component",
+   "guidance": {
+    "includes": "Wikidata 类别 Q26430975（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q620615",
+   "label": "mobile app",
+   "guidance": {
+    "includes": "Wikidata 类别 Q620615（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4839609",
+   "label": "mobile backend as a service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4839609（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q845620",
+   "label": "mobile browser",
+   "guidance": {
+    "includes": "Wikidata 类别 Q845620（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q6934955",
+   "label": "mobile development framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q6934955（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q21743174",
+   "label": "mobile software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q21743174（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q80592893",
+   "label": "modal text editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q80592893（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q13224353",
+   "label": "monitoring application",
+   "guidance": {
+    "includes": "Wikidata 类别 Q13224353（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q25894883",
+   "label": "monorepo",
+   "guidance": {
+    "includes": "Wikidata 类别 Q25894883（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1570349",
+   "label": "monospaced typeface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1570349（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q22907102",
+   "label": "multi-model database system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q22907102（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q12772052",
+   "label": "multi-paradigm programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q12772052（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15547961",
+   "label": "multimedia software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15547961（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1955251",
+   "label": "music software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1955251（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q141808355",
+   "label": "name server software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q141808355（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q110509708",
+   "label": "natural language processing software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q110509708（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q21129801",
+   "label": "natural language processing toolkit",
+   "guidance": {
+    "includes": "Wikidata 类别 Q21129801（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q116311961",
+   "label": "Neovim plugin",
+   "guidance": {
+    "includes": "Wikidata 类别 Q116311961（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7001229",
+   "label": "network utility",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7001229（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q498267",
+   "label": "news aggregator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q498267（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7005136",
+   "label": "NewSQL DBMS",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7005136（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q119438219",
+   "label": "non-cryptographic hash function",
+   "guidance": {
+    "includes": "Wikidata 类别 Q119438219（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q163740",
+   "label": "nonprofit organization",
+   "guidance": {
+    "includes": "Wikidata 类别 Q163740（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q82231",
+   "label": "NoSQL database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q82231（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5668585",
+   "label": "note-taking",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5668585（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5155929",
+   "label": "note-taking software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5155929（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q98047893",
+   "label": "npm package",
+   "guidance": {
+    "includes": "Wikidata 类别 Q98047893（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q74086777",
+   "label": "numerical software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q74086777（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q118171",
+   "label": "object database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q118171（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q899523",
+   "label": "object-based language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q899523（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q126000626",
+   "label": "OCR software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q126000626（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q50843083",
+   "label": "off-side rule language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q50843083（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q39827535",
+   "label": "online chess playing site",
+   "guidance": {
+    "includes": "Wikidata 类别 Q39827535（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q6576792",
+   "label": "online community",
+   "guidance": {
+    "includes": "Wikidata 类别 Q6576792（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q11900959",
+   "label": "online course",
+   "guidance": {
+    "includes": "Wikidata 类别 Q11900959（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7094076",
+   "label": "online database",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7094076（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q63563749",
+   "label": "online integrated development environment",
+   "guidance": {
+    "includes": "Wikidata 类别 Q63563749（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q262843",
+   "label": "online petition",
+   "guidance": {
+    "includes": "Wikidata 类别 Q262843（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1982918",
+   "label": "online public access catalog",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1982918（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1722504",
+   "label": "online rich-text editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1722504（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q19967801",
+   "label": "online service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q19967801（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q559856",
+   "label": "online video platform",
+   "guidance": {
+    "includes": "Wikidata 类别 Q559856（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q120667255",
+   "label": "Open Extended Detection and Response",
+   "guidance": {
+    "includes": "Wikidata 类别 Q120667255（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3644502",
+   "label": "open source",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3644502（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q39162",
+   "label": "open source (Q39162)",
+   "guidance": {
+    "includes": "Wikidata 类别 Q39162（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q124650961",
+   "label": "Open Source GIS",
+   "guidance": {
+    "includes": "Wikidata 类别 Q124650961（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7096350",
+   "label": "open-core business model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7096350（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q120785614",
+   "label": "open-source artificial intelligence",
+   "guidance": {
+    "includes": "Wikidata 类别 Q120785614（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q109860256",
+   "label": "open-source project",
+   "guidance": {
+    "includes": "Wikidata 类别 Q109860256（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1130645",
+   "label": "open-source software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1130645（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q21777259",
+   "label": "open-source typeface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q21777259（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2001385",
+   "label": "open-source Unicode typeface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2001385（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q98163019",
+   "label": "OpenStreetMap editor software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q98163019（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q9135",
+   "label": "operating system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q9135（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q18109",
+   "label": "operating system shell",
+   "guidance": {
+    "includes": "Wikidata 类别 Q18109（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1325106",
+   "label": "optimizing compiler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1325106（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q85791187",
+   "label": "ordered key-value store",
+   "guidance": {
+    "includes": "Wikidata 类别 Q85791187（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q43229",
+   "label": "organization",
+   "guidance": {
+    "includes": "Wikidata 类别 Q43229（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1531370",
+   "label": "outliner",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1531370（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q891055",
+   "label": "package manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q891055（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q26921397",
+   "label": "password cracking software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q26921397（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1281199",
+   "label": "password manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1281199（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q12014419",
+   "label": "peer-to-peer software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q12014419（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28966214",
+   "label": "peer-to-peer web hosting software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28966214（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q131461199",
+   "label": "penetration testing software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q131461199（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7170392",
+   "label": "persistence framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7170392（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1568118",
+   "label": "personal information manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1568118（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q117194007",
+   "label": "PHP library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q117194007（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q62505",
+   "label": "physics engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q62505（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q105044723",
+   "label": "pixel-art editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q105044723（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q132529059",
+   "label": "plotting library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q132529059（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q184148",
+   "label": "plug-in",
+   "guidance": {
+    "includes": "Wikidata 类别 Q184148（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q833766",
+   "label": "port scanner",
+   "guidance": {
+    "includes": "Wikidata 类别 Q833766（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q386197",
+   "label": "portable application",
+   "guidance": {
+    "includes": "Wikidata 类别 Q386197（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q918333",
+   "label": "preprocessor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q918333（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2115026",
+   "label": "presentation software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2115026（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q10929058",
+   "label": "product model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q10929058（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7247856",
+   "label": "productivity software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7247856（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q9143",
+   "label": "programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q9143（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1077784",
+   "label": "programming tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1077784（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q170584",
+   "label": "project",
+   "guidance": {
+    "includes": "Wikidata 类别 Q170584（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q167035",
+   "label": "project management software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q167035（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q106561513",
+   "label": "proof-of-work cryptocurrency",
+   "guidance": {
+    "includes": "Wikidata 类别 Q106561513（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q218616",
+   "label": "proprietary software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q218616（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q207977",
+   "label": "prototype",
+   "guidance": {
+    "includes": "Wikidata 类别 Q207977（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q11189",
+   "label": "proxy server",
+   "guidance": {
+    "includes": "Wikidata 类别 Q11189（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1037852",
+   "label": "public-domain software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1037852（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2085381",
+   "label": "publishing house",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2085381（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4202064",
+   "label": "publishing platform",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4202064（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q105395504",
+   "label": "purely functional package manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q105395504（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q29642950",
+   "label": "Python package",
+   "guidance": {
+    "includes": "Wikidata 类别 Q29642950（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q17077007",
+   "label": "Q&A software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q17077007（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q135526947",
+   "label": "Quality Assurance Software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q135526947（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q845739",
+   "label": "query language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q845739（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2351962",
+   "label": "raster graphics editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2351962（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q213666",
+   "label": "real-time operating system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q213666（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2136722",
+   "label": "reference implementation",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2136722（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1403556",
+   "label": "reference management software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1403556（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28922893",
+   "label": "reflective programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28922893（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3932296",
+   "label": "relational database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3932296（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1200186",
+   "label": "remote desktop software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1200186（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q100744571",
+   "label": "rendering software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q100744571（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115203600",
+   "label": "repository hosting service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115203600（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115217949",
+   "label": "repository web interface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115217949（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q95001953",
+   "label": "research software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q95001953（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q110994345",
+   "label": "research tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q110994345（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1192309",
+   "label": "reverse proxy",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1192309（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q725485",
+   "label": "rich web application",
+   "guidance": {
+    "includes": "Wikidata 类别 Q725485（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7353436",
+   "label": "robotics simulator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7353436（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q123046224",
+   "label": "Ruby gem",
+   "guidance": {
+    "includes": "Wikidata 类别 Q123046224（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1004415",
+   "label": "run-time system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1004415（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1444922",
+   "label": "runtime library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1444922（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115732527",
+   "label": "Rust library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115732527（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q864011",
+   "label": "sans-serif typeface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q864011（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7431119",
+   "label": "schema migration",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7431119（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q113724486",
+   "label": "screenshot software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q113724486（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q187432",
+   "label": "scripting language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q187432（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q19541",
+   "label": "search engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q19541（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4182287",
+   "label": "search engine (Q4182287)",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4182287（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q60461507",
+   "label": "search tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q60461507（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q56374834",
+   "label": "security information and event management",
+   "guidance": {
+    "includes": "Wikidata 类别 Q56374834（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q124653107",
+   "label": "semantic web software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q124653107（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1371279",
+   "label": "server software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1371279（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q557770",
+   "label": "server-side web API",
+   "guidance": {
+    "includes": "Wikidata 类别 Q557770（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q35687379",
+   "label": "serverless relational database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q35687379（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q88265704",
+   "label": "service mesh",
+   "guidance": {
+    "includes": "Wikidata 类别 Q88265704（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1668024",
+   "label": "service on Internet",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1668024（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2916479",
+   "label": "shopping cart software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2916479（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28933701",
+   "label": "single-user operating system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28933701（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q138685722",
+   "label": "site-specific search engine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q138685722（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q205961",
+   "label": "skill",
+   "guidance": {
+    "includes": "Wikidata 类别 Q205961（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q111307290",
+   "label": "SMT solver",
+   "guidance": {
+    "includes": "Wikidata 类别 Q111307290（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q22908891",
+   "label": "social media management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q22908891（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2715623",
+   "label": "Social Network Concepts",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2715623（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3220391",
+   "label": "social networking service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3220391（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7397",
+   "label": "software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7397（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2297769",
+   "label": "software agent",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2297769（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1254596",
+   "label": "software as a service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1254596（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q62651817",
+   "label": "software bundle",
+   "guidance": {
+    "includes": "Wikidata 类别 Q62651817（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7554269",
+   "label": "software calculator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7554269（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q122932337",
+   "label": "software collection",
+   "guidance": {
+    "includes": "Wikidata 类别 Q122932337（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1058914",
+   "label": "software company",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1058914（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q638608",
+   "label": "software development",
+   "guidance": {
+    "includes": "Wikidata 类别 Q638608（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q467707",
+   "label": "software development kit",
+   "guidance": {
+    "includes": "Wikidata 类别 Q467707（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1663795",
+   "label": "software extension",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1663795（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4485156",
+   "label": "software feature",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4485156（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q271680",
+   "label": "software framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q271680（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q188860",
+   "label": "software library",
+   "guidance": {
+    "includes": "Wikidata 类别 Q188860（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1995545",
+   "label": "software package",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1995545（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q63437139",
+   "label": "software project",
+   "guidance": {
+    "includes": "Wikidata 类别 Q63437139（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q131406845",
+   "label": "software series",
+   "guidance": {
+    "includes": "Wikidata 类别 Q131406845（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15618492",
+   "label": "software testing tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15618492（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q131742246",
+   "label": "software utilities",
+   "guidance": {
+    "includes": "Wikidata 类别 Q131742246（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2991685",
+   "label": "solid modeling",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2991685（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q522972",
+   "label": "source code editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q522972（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3133368",
+   "label": "source code repository",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3133368（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q56273712",
+   "label": "source-available software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q56273712（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2990416",
+   "label": "source-to-source compiler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2990416（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15079042",
+   "label": "spaced repetition software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15079042（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2101564",
+   "label": "specification",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2101564（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q93533999",
+   "label": "SQL client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q93533999（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q29558845",
+   "label": "SSH client",
+   "guidance": {
+    "includes": "Wikidata 类别 Q29558845（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28061130",
+   "label": "static program analysis tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28061130（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q77916592",
+   "label": "static site generator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q77916592（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115953246",
+   "label": "static type checker",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115953246（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28923017",
+   "label": "strict programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28923017（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q6671777",
+   "label": "structure",
+   "guidance": {
+    "includes": "Wikidata 类别 Q6671777（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1029123",
+   "label": "style sheet language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1029123（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q24021076",
+   "label": "subtitle editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q24021076（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1165574",
+   "label": "system monitor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1165574（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q676202",
+   "label": "system software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q676202（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q98400269",
+   "label": "system-level package manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q98400269（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q240795",
+   "label": "tag editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q240795（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q776688",
+   "label": "task manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q776688（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q29042678",
+   "label": "template language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q29042678（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q351507",
+   "label": "template processor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q351507（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1071233",
+   "label": "terminal emulator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1071233（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7702738",
+   "label": "terminal multiplexer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7702738（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7705752",
+   "label": "test automation framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7705752（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2406561",
+   "label": "test environment",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2406561（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q131212",
+   "label": "text editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q131212（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7708379",
+   "label": "text-based web browser",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7708379（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q113940039",
+   "label": "text-to-image model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q113940039（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115517227",
+   "label": "text-to-video model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115517227（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2092884",
+   "label": "tiling window manager",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2092884（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7805429",
+   "label": "time series database system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7805429（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7805487",
+   "label": "time tracking software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7805487（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q137216276",
+   "label": "tokenizer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q137216276（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q19778981",
+   "label": "Tor onion service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q19778981（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q85810444",
+   "label": "transformer",
+   "guidance": {
+    "includes": "Wikidata 类别 Q85810444（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q4462013",
+   "label": "translator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q4462013（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q58481926",
+   "label": "typeface family",
+   "guidance": {
+    "includes": "Wikidata 类别 Q58481926（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2467310",
+   "label": "UML tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2467310（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q14663",
+   "label": "Unix shell",
+   "guidance": {
+    "includes": "Wikidata 类别 Q14663（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q62694393",
+   "label": "URL shortener",
+   "guidance": {
+    "includes": "Wikidata 类别 Q62694393（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q312466",
+   "label": "utility software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q312466（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q118396004",
+   "label": "vector database",
+   "guidance": {
+    "includes": "Wikidata 类别 Q118396004（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q137916497",
+   "label": "vector database management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q137916497（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1155404",
+   "label": "vector graphics editor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1155404（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3257930",
+   "label": "version control system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3257930（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1373429",
+   "label": "video editing software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1373429（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7889",
+   "label": "video game",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7889（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q16070115",
+   "label": "video game compilation",
+   "guidance": {
+    "includes": "Wikidata 类别 Q16070115（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1196126",
+   "label": "video game console emulator",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1196126（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q865493",
+   "label": "video game mod",
+   "guidance": {
+    "includes": "Wikidata 类别 Q865493（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2522958",
+   "label": "video software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2522958（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q28051323",
+   "label": "video-conferencing software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q28051323（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q3467906",
+   "label": "virtual assistant",
+   "guidance": {
+    "includes": "Wikidata 类别 Q3467906（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q192726",
+   "label": "virtual machine",
+   "guidance": {
+    "includes": "Wikidata 类别 Q192726（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q137832194",
+   "label": "virtual whiteboard tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q137832194（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q122307299",
+   "label": "virtualization software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q122307299（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q124169067",
+   "label": "vision-language model",
+   "guidance": {
+    "includes": "Wikidata 类别 Q124169067（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q683111",
+   "label": "visual programming language",
+   "guidance": {
+    "includes": "Wikidata 类别 Q683111（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q139387345",
+   "label": "Visual Studio Code extension",
+   "guidance": {
+    "includes": "Wikidata 类别 Q139387345（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q7936632",
+   "label": "visualization software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q7936632（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q141089604",
+   "label": "VPN software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q141089604（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q283770",
+   "label": "vulnerability scanner",
+   "guidance": {
+    "includes": "Wikidata 类别 Q283770（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15967335",
+   "label": "Wayland compositor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15967335（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q115035207",
+   "label": "web analytics software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q115035207（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q189210",
+   "label": "web application",
+   "guidance": {
+    "includes": "Wikidata 类别 Q189210（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q6368",
+   "label": "web browser",
+   "guidance": {
+    "includes": "Wikidata 类别 Q6368（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q15477174",
+   "label": "web browser based on Firefox",
+   "guidance": {
+    "includes": "Wikidata 类别 Q15477174（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q45211",
+   "label": "web content management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q45211（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q45842",
+   "label": "web crawler",
+   "guidance": {
+    "includes": "Wikidata 类别 Q45842（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1780763",
+   "label": "web desktop",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1780763（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1330336",
+   "label": "web framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1330336（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q5892272",
+   "label": "web hosting service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q5892272（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q11288",
+   "label": "web server",
+   "guidance": {
+    "includes": "Wikidata 类别 Q11288（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q193424",
+   "label": "web service",
+   "guidance": {
+    "includes": "Wikidata 类别 Q193424（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1981057",
+   "label": "web user interface",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1981057（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q139498754",
+   "label": "web3d framework",
+   "guidance": {
+    "includes": "Wikidata 类别 Q139498754（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q138773036",
+   "label": "WebAssembly runtime",
+   "guidance": {
+    "includes": "Wikidata 类别 Q138773036（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q35127",
+   "label": "website",
+   "guidance": {
+    "includes": "Wikidata 类别 Q35127（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1625990",
+   "label": "website builder",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1625990（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1193246",
+   "label": "widget toolkit",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1193246（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q6686945",
+   "label": "wiki software",
+   "guidance": {
+    "includes": "Wikidata 类别 Q6686945（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q20726407",
+   "label": "Wikidata tool",
+   "guidance": {
+    "includes": "Wikidata 类别 Q20726407（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q1608344",
+   "label": "Windows app",
+   "guidance": {
+    "includes": "Wikidata 类别 Q1608344（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q54277",
+   "label": "word processor",
+   "guidance": {
+    "includes": "Wikidata 类别 Q54277（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q2808660",
+   "label": "workflow management system",
+   "guidance": {
+    "includes": "Wikidata 类别 Q2808660（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q47461344",
+   "label": "written work",
+   "guidance": {
+    "includes": "Wikidata 类别 Q47461344（条目的 instance of 取值）。"
+   }
+  },
+  {
+   "id": "q17558136",
+   "label": "YouTube channel",
+   "guidance": {
+    "includes": "Wikidata 类别 Q17558136（条目的 instance of 取值）。"
+   }
+  }
+ ],
+ "created": "2012-10-29",
+ "updated": "2026-11-10",
+ "as_of": "2026-11-10"
+}

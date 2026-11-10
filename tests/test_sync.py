@@ -15,6 +15,8 @@ def collected(members=None, **changes) -> Collected:
         "summary": "测试用的假来源",
         "method": "curated",
         "primary": False,
+        "created": "2020-01-01",
+        "updated": "2026-01-01",
         "source": {"name": "某来源", "url": "https://example.com", "license": "MIT"},
         "nodes": [
             {"id": "web", "label": "Web"},

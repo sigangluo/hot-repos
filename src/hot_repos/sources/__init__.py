@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from functools import partial
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 import httpx
 
@@ -39,6 +39,11 @@ class Collected:
     members: dict[str, list[str]]
 
 
+def dated(collected: Collected, created: str, updated: str) -> Collected:
+    """给体系定义补上创建日期与最近更新日期（YYYY-MM-DD）。"""
+    return Collected(collected.meta | {"created": created, "updated": updated}, collected.members)
+
+
 class Fetcher:
     """带重试的 HTTP 取数。GitHub 接口请求带上 Token（若有），其余来源不带。"""
 
@@ -55,19 +60,37 @@ class Fetcher:
         self.attempts = attempts
         self.pause = pause
 
-    def text(self, url: str) -> str:
-        return self._get(url).text
+    def text(self, url: str, headers: Mapping[str, str] | None = None) -> str:
+        return self._get(url, headers).text
 
     def json(self, url: str) -> Any:
         return self._get(url).json()
+
+    def github_dates(self, repo: str, path: str | None = None) -> tuple[str, str]:
+        """（仓库创建日期，最近更新日期），格式 YYYY-MM-DD。
+
+        给出 `path` 时，最近更新是该路径下最近一次提交的日期（来源内容真正变化的时间）；
+        否则是仓库最近一次推送的日期。
+        """
+        info = self.json(f"https://api.github.com/repos/{repo}")
+        try:
+            created = str(info["created_at"])[:10]
+            if path is None:
+                return created, str(info["pushed_at"])[:10]
+            commits = self.json(
+                f"https://api.github.com/repos/{repo}/commits?path={quote(path)}&per_page=1"
+            )
+            return created, str(commits[0]["commit"]["committer"]["date"])[:10]
+        except (KeyError, IndexError, TypeError) as e:
+            raise SourceError(f"取不到 {repo} 的创建与更新日期（GitHub 接口的返回变了？）") from e
 
     def texts(self, urls: list[str], workers: int = 8) -> list[str]:
         """并发取一批文本，结果顺序与 urls 一致。"""
         with ThreadPoolExecutor(max_workers=workers) as pool:
             return list(pool.map(self.text, urls))
 
-    def _get(self, url: str) -> httpx.Response:
-        headers = {"User-Agent": USER_AGENT}
+    def _get(self, url: str, extra: Mapping[str, str] | None = None) -> httpx.Response:
+        headers = {"User-Agent": USER_AGENT, **(extra or {})}
         if self.token and urlparse(url).hostname == "api.github.com":
             headers["Authorization"] = f"Bearer {self.token}"
         last = "未知错误"
@@ -92,12 +115,13 @@ Collector = Callable[[Fetcher], Collected]
 
 def registry(board: Sequence[Mapping[str, Any]] | None = None) -> dict[str, Collector]:
     """全部来源，键就是体系编号。`board` 是总榜的项目行，需要它的来源（如 awesome）才能工作。"""
-    from . import awesome, borges, explore, landscape, ossinsight
+    from . import awesome, borges, explore, landscape, ossinsight, wikidata
 
     return {
         "explore": explore.collect,
         "awesome": partial(awesome.collect, board_rows=board or []),
         "ossinsight": ossinsight.collect,
+        "wikidata": wikidata.collect,
         "borges": borges.collect,
         "cncf": landscape.collect_cncf,
         "lfai": landscape.collect_lfai,

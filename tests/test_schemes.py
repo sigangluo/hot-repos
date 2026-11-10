@@ -132,6 +132,9 @@ def test_meta_fields(dataset):
     check(scheme_meta(order="1"), "order 应为整数")
     check(scheme_meta(note=" "), "note 应为非空字符串")
     check(scheme_meta(as_of="2026-01-01"), "不应有 as_of")
+    check(scheme_meta(created="去年"), "created 应为日期")
+    check(scheme_meta(updated=None), "updated 应为日期")
+    check(scheme_meta(created="2026-02-01"), "created 不应晚于 updated")
 
 
 def test_note_and_forms_are_optional(dataset):
@@ -246,6 +249,8 @@ def test_export_scheme(dataset, tmp_path):
         "summary": "用于测试的体系",
         "method": "model",
         "source": None,
+        "created": "2026-01-01",
+        "updated": "2026-01-09",
         "as_of": None,
         "note": "测试说明",
         "primary": True,

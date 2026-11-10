@@ -1,6 +1,7 @@
 """外部分类来源的解析与取数测试：全部离线，用内联的小样本和 MockTransport。"""
 
 import json
+import re
 from datetime import date
 
 import httpx
@@ -12,10 +13,12 @@ from hot_repos.sources import (
     SourceError,
     awesome,
     borges,
+    dated,
     explore,
     landscape,
     ossinsight,
     registry,
+    wikidata,
 )
 from hot_repos.validate import check_scheme_meta
 
@@ -101,10 +104,20 @@ def mock_fetcher(routes: dict[str, str | dict]) -> Fetcher:
     """按 URL 返回固定内容的取数器；没登记的 URL 返回 404。"""
 
     def handler(request: httpx.Request) -> httpx.Response:
-        body = routes.get(str(request.url))
+        url = str(request.url)
+        body = routes.get(url)
+        if body is None and re.fullmatch(r"https://api\.github\.com/repos/[^/]+/[^/?]+", url):
+            body = {"created_at": "2020-01-02T03:04:05Z", "pushed_at": "2026-01-03T00:00:00Z"}
+        elif body is None and "/commits?path=" in url:
+            body = [{"commit": {"committer": {"date": "2026-01-04T05:06:07Z"}}}]  # type: ignore[assignment]
+        elif body is None and url == borges.RECORD_URL:
+            body = {
+                "metadata": {"publication_date": "2017-06-08"},
+                "updated": "2020-01-24T19:26:12Z",
+            }
         if body is None:
             return httpx.Response(404)
-        if isinstance(body, dict):
+        if isinstance(body, dict | list):
             return httpx.Response(200, json=body)
         return httpx.Response(200, text=body)
 
@@ -121,7 +134,7 @@ def tree(*paths: str, truncated: bool = False) -> dict:
 
 
 def assert_meta_valid(collected, as_of: str = "2026-01-01") -> None:
-    meta = collected.meta | {"as_of": as_of}
+    meta = {"created": "2020-01-01", "updated": "2026-01-01"} | collected.meta | {"as_of": as_of}
     assert check_scheme_meta(meta, "scheme.json") == []
     ids = {n["id"] for n in meta["nodes"]}
     assert {i for v in collected.members.values() for i in v} <= ids
@@ -197,6 +210,8 @@ def test_parse_borges_rejects_unexpected_columns():
 def test_collect_borges():
     collected = borges.collect(mock_fetcher({borges.CSV_URL: BORGES_CSV}))
     assert len(collected.members) == 3
+    assert (collected.meta["created"], collected.meta["updated"]) == ("2017-06-08", "2020-01-24")
+    assert_meta_valid(collected)
 
 
 def test_collect_borges_without_valid_rows():
@@ -258,6 +273,7 @@ def test_collect_explore():
         }
     )
     collected = explore.collect(fetcher)
+    assert (collected.meta["created"], collected.meta["updated"]) == ("2020-01-02", "2026-01-04")
     assert [n["id"] for n in collected.meta["nodes"]] == ["machine-learning"]
     assert set(collected.members) == {"apache/spark", "tensorflow/tensorflow", "pytorch/pytorch"}
 
@@ -369,6 +385,7 @@ def test_collect_cncf_and_lfai_share_parser():
     fetcher = mock_fetcher({landscape.CNCF_URL: LANDSCAPE, landscape.LFAI_URL: LANDSCAPE})
     cncf, lfai = landscape.collect_cncf(fetcher), landscape.collect_lfai(fetcher)
     assert cncf.members == lfai.members
+    assert (cncf.meta["created"], cncf.meta["updated"]) == ("2020-01-02", "2026-01-04")
     assert (cncf.meta["order"], lfai.meta["order"]) == (40, 50)
     assert cncf.meta["primary"] is True and lfai.meta["primary"] is True
     assert cncf.meta["source"]["url"] != lfai.meta["source"]["url"]
@@ -387,11 +404,19 @@ def test_collect_landscape_without_github_projects():
 
 
 def test_registry_has_all_sources():
-    assert list(registry()) == ["explore", "awesome", "ossinsight", "borges", "cncf", "lfai"]
+    assert list(registry()) == [
+        "explore",
+        "awesome",
+        "ossinsight",
+        "wikidata",
+        "borges",
+        "cncf",
+        "lfai",
+    ]
 
 
 def test_sync_apply_borges_end_to_end():
-    collected = borges.parse_borges(BORGES_CSV)
+    collected = dated(borges.parse_borges(BORGES_CSV), "2017-06-08", "2020-01-24")
     names = ["twbs/bootstrap", "git/git", "other/repo"]
     # torvalds/linux 在总榜里改名过，按 aliases 对上；不在总榜的项目被丢弃
     meta, rows = sync.apply(
@@ -415,7 +440,9 @@ def test_sync_apply_borges_end_to_end():
 
 
 def test_sync_apply_landscape_keeps_parents_and_related():
-    collected = landscape.parse_landscape(LANDSCAPE, landscape.cncf_meta())
+    collected = dated(
+        landscape.parse_landscape(LANDSCAPE, landscape.cncf_meta()), "2020-01-02", "2026-01-04"
+    )
     meta, rows = sync.apply(collected, ["ansible/ansible"], {}, date(2026, 5, 1))
     (row,) = rows
     assert row["category"] == "provisioning.automation-configuration"
@@ -589,3 +616,110 @@ def test_collect_tolerates_a_few_failures_but_not_many():
 def test_collect_without_any_list():
     with pytest.raises(SourceError, match="没有找到 Awesome 清单"):
         awesome.collect(Fetcher(), [row("o/tool", 1)])
+
+
+# ---------- wikidata ----------
+
+WD_PAIRS = """repo,class
+https://github.com/yaml/pyyaml,http://www.wikidata.org/entity/Q29642950
+https://github.com/yaml/pyyaml,http://www.wikidata.org/entity/Q341
+https://github.com/torvalds/linux/,http://www.wikidata.org/entity/Q341
+https://github.com/a/b,http://www.wikidata.org/entity/Q999
+https://gitlab.com/x/y,http://www.wikidata.org/entity/Q341
+"""
+WD_LABELS = """class,classLabel
+http://www.wikidata.org/entity/Q29642950,Python package
+http://www.wikidata.org/entity/Q341,free software
+http://www.wikidata.org/entity/Q999,Q999
+"""
+
+
+def test_parse_wikidata():
+    collected = wikidata.parse_wikidata(WD_PAIRS, WD_LABELS)
+    assert [(n["id"], n["label"]) for n in collected.meta["nodes"]] == [
+        ("q341", "free software"),
+        ("q29642950", "Python package"),
+    ]
+    # 没有英文标签的类型（Q999）和不是 GitHub 的仓库被略过
+    assert collected.members == {
+        "yaml/pyyaml": ["q29642950", "q341"],
+        "torvalds/linux": ["q341"],
+    }
+    assert collected.meta["primary"] is False
+    assert collected.meta["source"]["license"] == "CC0-1.0"
+    assert_meta_valid(collected)
+
+
+def test_collect_wikidata_queries_and_dates():
+    seen = []
+
+    def handler(request):
+        seen.append((request.url.params["query"][:30], request.headers["accept"]))
+        query = request.url.params["query"]
+        if "MAX(" in query:
+            return httpx.Response(200, text="updated\n2026-11-09T12:00:00Z\n")
+        return httpx.Response(200, text=WD_LABELS if "classLabel" in query else WD_PAIRS)
+
+    fetcher = Fetcher(client=httpx.Client(transport=httpx.MockTransport(handler)), pause=0)
+    collected = wikidata.collect(fetcher)
+    assert (collected.meta["created"], collected.meta["updated"]) == ("2012-10-29", "2026-11-09")
+    assert len(seen) == 3 and {accept for _, accept in seen} == {"text/csv"}
+    assert_meta_valid(collected)
+
+
+def test_collect_wikidata_without_data():
+    fetcher = mock_fetcher({})
+    with pytest.raises(SourceError):
+        wikidata.collect(fetcher)
+
+
+# ---------- 创建与更新日期 ----------
+
+
+def test_github_dates():
+    fetcher = mock_fetcher(
+        {
+            "https://api.github.com/repos/o/r": {
+                "created_at": "2019-03-04T00:00:00Z",
+                "pushed_at": "2026-02-03T00:00:00Z",
+            },
+            "https://api.github.com/repos/o/r/commits?path=a/b.yml&per_page=1": [
+                {"commit": {"committer": {"date": "2025-12-31T23:59:59Z"}}}
+            ],
+        }
+    )
+    assert fetcher.github_dates("o/r") == ("2019-03-04", "2026-02-03")
+    assert fetcher.github_dates("o/r", "a/b.yml") == ("2019-03-04", "2025-12-31")
+
+
+def test_github_dates_with_unexpected_responses():
+    fetcher = mock_fetcher(
+        {
+            "https://api.github.com/repos/o/r": {"created_at": "2019-03-04T00:00:00Z"},
+            "https://api.github.com/repos/o/r/commits?path=x&per_page=1": [],
+        }
+    )
+    with pytest.raises(SourceError, match="创建与更新日期"):
+        fetcher.github_dates("o/r")
+    with pytest.raises(SourceError, match="创建与更新日期"):
+        fetcher.github_dates("o/r", "x")
+
+
+def test_awesome_scheme_dates_come_from_the_list_repos():
+    from datetime import UTC, datetime
+
+    readmes = {"me/awesome-demo": README}
+    lists = [
+        row(
+            "me/awesome-demo",
+            1,
+            created_at=datetime(2018, 5, 6, tzinfo=UTC),
+            pushed_at=datetime(2026, 10, 1, tzinfo=UTC),
+        )
+    ]
+    board = {"a/one", "b/two", "c/three", "d/four", "f/six"}
+    collected = awesome.build(lists, readmes, board)
+    assert (collected.meta["created"], collected.meta["updated"]) == ("2018-05-06", "2026-10-01")
+    guidance = collected.meta["nodes"][0]["guidance"]["includes"]
+    assert "创建于 2018-05-06" in guidance and "最近推送 2026-10-01" in guidance
+    assert_meta_valid(collected)

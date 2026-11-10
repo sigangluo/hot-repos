@@ -11,7 +11,7 @@ from typing import Any
 
 import yaml
 
-from . import Collected, Fetcher, SourceError
+from . import Collected, Fetcher, SourceError, dated
 from .explore import list_files, load_yaml, raw_url, repo_name, slugify, unique_label, unique_slug
 
 log = logging.getLogger(__name__)
@@ -81,7 +81,10 @@ def parse_ossinsight(files: dict[str, str]) -> Collected:
 def collect(fetcher: Fetcher) -> Collected:
     paths = list_files(fetcher, REPO, BRANCH, COLLECTION_PATH)
     texts = fetcher.texts([raw_url(REPO, BRANCH, p) for p in paths])
-    collected = parse_ossinsight(dict(zip(paths, texts, strict=True)))
+    collected = dated(
+        parse_ossinsight(dict(zip(paths, texts, strict=True))),
+        *fetcher.github_dates(REPO, "configs/collections"),
+    )
     if not collected.meta["nodes"]:
         raise SourceError("ossinsight 的合集里一个项目都没解析出来（文件格式可能变了）")
     log.info(

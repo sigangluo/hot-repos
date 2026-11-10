@@ -131,6 +131,14 @@ def check_scheme_meta(meta: dict, label: str) -> list[str]:
         problems.append(f"{label}: note 应为非空字符串（没有说明时省略该字段）")
     if meta.get("method") != "model" or "source" in meta:
         problems += _check_source(meta.get("source"), label)
+    days = {}
+    for key in ("created", "updated"):
+        try:
+            days[key] = date.fromisoformat(str(meta.get(key)))
+        except ValueError:
+            problems.append(f"{label}: {key} 应为日期 YYYY-MM-DD（体系的创建日期与最近更新日期）")
+    if len(days) == 2 and days["created"] > days["updated"]:
+        problems.append(f"{label}: created 不应晚于 updated")
     if "source" in meta:
         try:
             date.fromisoformat(str(meta.get("as_of")))

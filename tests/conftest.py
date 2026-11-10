@@ -131,6 +131,8 @@ def scheme_meta(**changes) -> dict:
         "summary": "用于测试的体系",
         "method": "model",
         "primary": True,
+        "created": "2026-01-01",
+        "updated": "2026-01-09",
         "note": "测试说明",
         "forms": {
             "app": {"label": "应用", "definition": "直接使用的应用"},

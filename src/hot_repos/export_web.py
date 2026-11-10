@@ -173,6 +173,8 @@ def _scheme_summary(scheme_id: str, meta: dict[str, Any], classified: int) -> di
         "summary": meta["summary"],
         "method": meta["method"],
         "source": meta.get("source"),
+        "created": meta["created"],
+        "updated": meta["updated"],
         "as_of": meta.get("as_of"),
         "note": meta.get("note"),
         "primary": meta["primary"],

@@ -27,6 +27,10 @@ export interface SchemeInfo {
   method: 'model' | 'manual' | 'curated';
   /** 外部来源的出处与许可；本站自己的分类为 null。 */
   source: SchemeSource | null;
+  /** 体系的创建日期（YYYY-MM-DD）：来源仓库创建或数据集发布的日期，本站分类是首次生成的日期。 */
+  created: string;
+  /** 体系内容最近一次变化的日期（YYYY-MM-DD）：来源最近一次相关提交或更新，本站分类是最近一次更新。 */
+  updated: string;
   /** 取得来源数据的日期；本站自己的分类为 null。 */
   as_of: string | null;
   /** 使用时需要注意的说明（如数据的年代、可信度），没有则为 null。 */

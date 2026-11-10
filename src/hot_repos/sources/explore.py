@@ -15,7 +15,7 @@ from urllib.parse import quote, urlparse
 
 import yaml
 
-from . import Collected, Fetcher, SourceError
+from . import Collected, Fetcher, SourceError, dated
 
 log = logging.getLogger(__name__)
 
@@ -182,7 +182,7 @@ def collect(fetcher: Fetcher) -> Collected:
     paths = list_files(fetcher, REPO, BRANCH, COLLECTION_PATH)
     texts = fetcher.texts([raw_url(REPO, BRANCH, p) for p in paths])
     files = {p.split("/")[1]: t for p, t in zip(paths, texts, strict=True)}
-    collected = parse_explore(files)
+    collected = dated(parse_explore(files), *fetcher.github_dates(REPO, "collections"))
     if not collected.meta["nodes"]:
         raise SourceError("github/explore 的合集里一个项目都没解析出来（文件格式可能变了）")
     log.info("explore：%d 个合集，%d 个项目", len(collected.meta["nodes"]), len(collected.members))
