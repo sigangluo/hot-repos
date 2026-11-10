@@ -2,7 +2,7 @@
 
 部署由 `.github/workflows/pages.yml` 完成：推送到 `main` 后，从已提交的 `data/` 现场导出页面数据、构建，并发布到 GitHub Pages。页面数据不入库。
 
-> 已发布：<https://sigangluo.github.io/hot-repos/>。`pages.yml` 与 `trending.yml` 都已在 GitHub 上手动运行成功，`trending.yml` 的定时触发也已确认；`schemes.yml` 尚未在 GitHub 上运行过。
+> 已发布：<https://sigangluo.github.io/hot-repos/>。`pages.yml`、`trending.yml`、`schemes.yml` 都已在 GitHub 上运行成功，`trending.yml` 的定时触发也已确认；`schemes.yml` 只手动触发过，定时触发（每月 1 日）尚待观察。
 
 ## 第一次发布
 
@@ -77,5 +77,5 @@ cd web && npm run typecheck && npm test && npm run build
 - [x] 手动触发一次 Trending 工作流，确认能抓取、校验并推送、触发部署
 - [x] 确认 Trending 的定时任务（每天 01:30 UTC）真的在自动运行：2026-11-10 首次定时运行成功，提交快照并触发部署。GitHub 的定时任务实际启动可能明显晚于设定时间（这次晚了约 7 小时），但快照按 UTC 日期命名，只要当天跑完就不影响数据
 - [ ] 推送后确认 CI 与页面部署都通过，线上页面能切换分类体系、打开详情里的分类卡片
-- [ ] 推送后手动触发一次 Schemes 工作流（`schemes.yml`），确认能同步外部分类体系、提交并触发部署；它在本地验证过，但还没在 GitHub 上运行过
+- [x] 推送后手动触发一次 Schemes 工作流（`schemes.yml`），确认能同步外部分类体系、提交并触发部署：2026-11-10 手动运行成功，同步、校验、提交、触发部署都正常；除 Wikidata（最近更新日期随条目编辑变化）外都与上次相同，没有产生提交
 - [ ] 确认外部分类来源的许可与署名满足要求（许可字段来自来源的许可文件，署名写在各体系的 `source.attribution`）
