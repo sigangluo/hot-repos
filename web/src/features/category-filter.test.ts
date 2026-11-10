@@ -110,3 +110,33 @@ describe('分类树', () => {
     expect(rows()).toEqual(['乙2', '甲1']);
   });
 });
+
+describe('分类树：没有主分类的体系，第二级也按项目数排', () => {
+  // 两个分组（甲、乙），甲下有清单 a（1 个项目）、b（2 个项目）；乙下有清单 c（1 个项目）。项目 0 属于 a、b，项目 1 属于 b，项目 2 属于 c。
+  const file: SchemeFile = {
+    nodes: [
+      ['g1', -1, '甲', null, null], ['g1.a', 0, '清单A', null, null], ['g1.b', 0, '清单B', null, null],
+      ['g1.b.s', 2, '章节', null, null], ['g2', -1, '乙', null, null], ['g2.c', 4, '清单C', null, null],
+    ],
+    forms: [], category: [null, null, null], related: [[1, 2], [3], [5]], form: [[], [], []],
+  };
+
+  function drawn() {
+    const info = schemeInfo({ primary: false });
+    const repos = makeRepos([{ full_name: 'a/x' }, { full_name: 'b/y' }, { full_name: 'c/z' }], file);
+    const store = new Store();
+    store.set({ filters: { ...store.state.filters, categoryScope: 'all' } });
+    const ctx: Ctx = { meta: { ...META, schemes: [info] }, repos, scheme: info, taxonomy: buildTaxonomy(file), now: NOW, store, weeks: null };
+    const root = renderFilters(ctx);
+    document.body.replaceChildren(root);
+    return { root, store };
+  }
+
+  it('一级分组和其下的清单都按项目数从多到少，更深的章节保持原文顺序', () => {
+    const { root } = drawn();
+    const rows = () => [...root.querySelectorAll('.tree-row .option')].map((r) => r.textContent);
+    expect(rows()).toEqual(['甲2', '乙1']);
+    root.querySelector<HTMLButtonElement>('.tree-toggle')?.click();
+    expect(rows()).toEqual(['甲2', '清单B2', '清单A1', '乙1']); // 清单B 项目更多，排在清单A 前面
+  });
+});

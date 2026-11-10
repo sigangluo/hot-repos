@@ -565,14 +565,77 @@ def test_build_keeps_lists_with_enough_board_members():
     }
     lists = [row("me/awesome-demo", 1), row("me/awesome-tiny", 2)]
     board = {"a/one", "b/two", "c/three", "d/four", "f/six"}
-    collected = awesome.build(lists, readmes, board)
+    groups = {"me/awesome-demo": "Programming Languages"}
+    collected = awesome.build(lists, readmes, board, groups)
     nodes = [n["id"] for n in collected.meta["nodes"]]
-    assert nodes == ["me-awesome-demo", "me-awesome-demo.web", "me-awesome-demo.data"]
-    assert collected.meta["nodes"][0]["label"] == "me/awesome-demo"
-    assert "CC0-1.0" in collected.meta["nodes"][0]["guidance"]["includes"]
-    assert collected.members["a/one"] == ["me-awesome-demo.web"]
-    assert collected.members["d/four"] == ["me-awesome-demo.data"]
+    assert nodes == [
+        "programming-languages",
+        "programming-languages.me-awesome-demo",
+        "programming-languages.me-awesome-demo.web",
+        "programming-languages.me-awesome-demo.data",
+    ]
+    group, listing = collected.meta["nodes"][:2]
+    assert group["label"] == "Programming Languages" and group["parent"] is None
+    assert listing["label"] == "me/awesome-demo" and listing["parent"] == "programming-languages"
+    assert "CC0-1.0" in listing["guidance"]["includes"]
+    assert collected.members["a/one"] == ["programming-languages.me-awesome-demo.web"]
+    assert collected.members["d/four"] == ["programming-languages.me-awesome-demo.data"]
     assert collected.meta["primary"] is False
+    assert_meta_valid(collected)
+
+
+def test_lists_missing_from_the_index_go_to_the_other_group():
+    readmes = {"me/awesome-demo": README}
+    board = {"a/one", "b/two", "c/three", "d/four", "f/six"}
+    collected = awesome.build(
+        [row("me/awesome-demo", 1)], readmes, board, {"x/other-list": "Security"}
+    )
+    group = collected.meta["nodes"][0]
+    assert (group["id"], group["label"]) == ("other", awesome.OTHER_LABEL)
+    assert collected.meta["nodes"][1]["id"] == "other.me-awesome-demo"
+    assert_meta_valid(collected)
+
+
+INDEX = """# Awesome [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+
+## Contents
+- [Platforms](#platforms)
+
+## Platforms
+
+### Node.js
+- [sindresorhus/awesome-nodejs](https://github.com/sindresorhus/awesome-nodejs) - Node
+- [Dup/List](https://github.com/Dup/List)
+
+## Security
+
+- [Dup/list](https://github.com/Dup/list)
+- [sbilly/awesome-security](https://github.com/sbilly/awesome-security)
+
+## Related
+
+- [x/related](https://github.com/x/related)
+"""
+
+
+def test_parse_groups_uses_the_top_level_sections_and_first_group_wins():
+    assert awesome.parse_groups(INDEX) == {
+        "sindresorhus/awesome-nodejs": "Platforms",
+        "dup/list": "Platforms",
+        "sbilly/awesome-security": "Security",
+    }
+
+
+def test_collect_needs_the_index_to_have_groups():
+    def handler(request):
+        return httpx.Response(
+            200, text="# Awesome\n" if "sindresorhus" in str(request.url) else README
+        )
+
+    fetcher = Fetcher(client=httpx.Client(transport=httpx.MockTransport(handler)), pause=0)
+    board = [row("me/awesome-demo", 1), row("a/one", 2), row("b/two", 3), row("c/three", 4)]
+    with pytest.raises(SourceError, match="领域分组"):
+        awesome.collect(fetcher, board)
 
 
 def test_collect_fetches_readmes_from_the_board_rows():
@@ -593,8 +656,12 @@ def test_collect_fetches_readmes_from_the_board_rows():
         row("d/four", 5),
     ]
     collected = awesome.collect(fetcher, board)
-    assert seen == ["https://raw.githubusercontent.com/me/awesome-demo/main/README.md"]
-    assert collected.members["a/one"] == ["me-awesome-demo.web"]
+    assert sorted(seen) == [
+        "https://raw.githubusercontent.com/me/awesome-demo/main/README.md",
+        awesome.INDEX_URL,
+    ]
+    # 这里总索引的内容也是 README：它的“Web”章节里提到了 me/awesome-demo，所以清单归入“Web”组
+    assert collected.members["a/one"] == ["web.me-awesome-demo.web"]
 
 
 def test_collect_tolerates_a_few_failures_but_not_many():
@@ -720,6 +787,7 @@ def test_awesome_scheme_dates_come_from_the_list_repos():
     board = {"a/one", "b/two", "c/three", "d/four", "f/six"}
     collected = awesome.build(lists, readmes, board)
     assert (collected.meta["created"], collected.meta["updated"]) == ("2018-05-06", "2026-10-01")
-    guidance = collected.meta["nodes"][0]["guidance"]["includes"]
+    listing = next(n for n in collected.meta["nodes"] if n["id"] == "other.me-awesome-demo")
+    guidance = listing["guidance"]["includes"]
     assert "创建于 2018-05-06" in guidance and "最近推送 2026-10-01" in guidance
     assert_meta_valid(collected)

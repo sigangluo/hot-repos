@@ -23,6 +23,7 @@ const SCOPES: readonly [CategoryScope, string][] = [
  */
 export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filters, open: Set<string>): HTMLElement {
   const { store } = ctx;
+  const primary = ctx.scheme?.primary ?? true;
   const expanded = expandedByStore.get(store) ?? expandedByStore.set(store, new Set()).get(store)!;
   const shownDefs = definitionsByStore.get(store) ?? definitionsByStore.set(store, new Set()).get(store)!;
   const counts = categoryCounts(ctx.repos, filters);
@@ -43,12 +44,16 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
     store.set({ filters: { ...store.state.filters, categories: next } });
   };
 
-  const item = (node: number): HTMLElement | null => {
+  const byCount = (a: number, b: number) =>
+    (counts.get(b) ?? 0) - (counts.get(a) ?? 0) || taxonomy.label(a).localeCompare(taxonomy.label(b));
+  const item = (node: number, depth = 0): HTMLElement | null => {
     const count = counts.get(node) ?? 0;
     const selected = categories.has(node);
     const below = hasSelectedBelow(node);
     if (count === 0 && !selected && !below) return null;
-    const children = taxonomy.children(node).map(item).filter((c): c is HTMLElement => c !== null);
+    // 没有主分类的体系（合集、清单），一级分类下的第二级也按项目数排（如清单分组下的各个清单）；再往下保持原文顺序。
+    const kids = !primary && depth === 0 ? [...taxonomy.children(node)].sort(byCount) : taxonomy.children(node);
+    const children = kids.map((c) => item(c, depth + 1)).filter((c): c is HTMLElement => c !== null);
     const isOpen = children.length > 0 && (expanded.has(node) || below);
     const name = taxonomy.label(node);
     const box = h('input', {
@@ -101,9 +106,8 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
   const setScope = (categoryScope: CategoryScope) =>
     store.set({ filters: { ...store.state.filters, categoryScope } });
 
-  const primary = ctx.scheme?.primary ?? true;
   const roots = taxonomy.flat || !primary
-    ? [...taxonomy.roots].sort((a, b) => (counts.get(b) ?? 0) - (counts.get(a) ?? 0) || taxonomy.label(a).localeCompare(taxonomy.label(b)))
+    ? [...taxonomy.roots].sort(byCount)
     : taxonomy.roots;
   const details = h('details', { class: 'group', open: open.has('category') || categories.size > 0 },
     h('summary', null, h('span', null, '分类'), categories.size ? h('span', { class: 'badge' }, `已选 ${categories.size}`) : null),
@@ -113,7 +117,7 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
           SCOPES.map(([scope, label]) =>
             h('button', { type: 'button', 'aria-pressed': String(filters.categoryScope === scope), onclick: () => setScope(scope) }, label)))
       : null,
-    h('ul', { class: 'tree root' }, roots.map(item)));
+    h('ul', { class: 'tree root' }, roots.map((r) => item(r))));
   details.addEventListener('toggle', () => {
     if (details.open) open.add('category');
     else open.delete('category');

@@ -24,6 +24,11 @@ from .explore import first_paragraph, raw_url, repo_name, slugify, unique_label,
 log = logging.getLogger(__name__)
 
 AWESOME_TOPICS = frozenset({"awesome", "awesome-list", "awesomelist", "awesome-lists"})
+INDEX_REPO = "sindresorhus/awesome"  # Awesome 总索引：按领域给清单分组
+INDEX_URL = "https://raw.githubusercontent.com/sindresorhus/awesome/main/readme.md"
+INDEX_LEVEL = 2  # 总索引里领域分组是二级标题
+OTHER_ID = "other"
+OTHER_LABEL = "其他（总索引未收录）"
 MIN_BOARD_MEMBERS = 3  # 清单在总榜里至少收录这么多个项目才保留
 MIN_LINKS = 5  # README 里至少有这么多个不同的仓库链接才算清单（排除只是名字带 awesome 的普通项目）
 MAX_FAILURES = 0.2  # README 取不到的清单超过这个比例时，认为来源出了问题
@@ -144,7 +149,7 @@ def _attribute(
     return sections
 
 
-def parse_awesome(text: str, own: str) -> dict[str | None, list[str]]:
+def parse_awesome(text: str, own: str, level: int | None = None) -> dict[str | None, list[str]]:
     """一个清单 README 的 {章节名: [收录的项目 owner/repo]}；没有分章节的清单，键是 None。
 
     标题层级的判断：只有一个 h1 且排在最前时它是清单标题，不算章节。其余标题里，对每一级试一遍
@@ -152,7 +157,7 @@ def parse_awesome(text: str, own: str) -> dict[str | None, list[str]]:
     （有的清单把全部内容放在一个“Projects”标题下、再按更深一级分类，直接取最浅一级会丢掉分类）。
     更深的标题并入所在章节；更浅的标题（目录、贡献说明、相关清单等）按名字过滤，被过滤的标题之下的
     内容一并跳过。章节之前的内容（简介、徽章）不算收录。章节与项目都按出现顺序，同一章节里同一项目
-    只记一次；清单自己（own）和 Awesome 徽章不算。
+    只记一次；清单自己（own）和 Awesome 徽章不算。`level` 给出时直接以这一级标题为章节，不做判断。
     """
     lines: list[tuple[int, str | None, str]] = []  # (标题级别, 标题文字, 正文行)；非标题行级别为 0
     in_code = False
@@ -169,6 +174,8 @@ def parse_awesome(text: str, own: str) -> dict[str | None, list[str]]:
             lines.append((0, None, raw))
     levels = [lv for lv, _, _ in lines if lv]
     skip_title = levels.count(1) == 1 and levels[:1] == [1]
+    if level is not None:
+        return _attribute(lines, level, own, skip_title)
     candidates = sorted(set(levels[1:] if skip_title else levels))
     if not candidates:
         return _attribute(lines, None, own, skip_title)
@@ -178,6 +185,16 @@ def parse_awesome(text: str, own: str) -> dict[str | None, list[str]]:
     if best == 0:  # 没有哪一级能分出像样的章节：当作没分章节
         return _attribute(lines, None, own, skip_title)
     return attributed[min(lv for lv in candidates if scores[lv] >= 0.6 * best)]
+
+
+def parse_groups(index_text: str) -> dict[str, str]:
+    """Awesome 总索引的 {清单仓库名（小写）: 领域分组}：清单出现在多个分组时取第一个。"""
+    groups: dict[str, str] = {}
+    for group, repos in parse_awesome(index_text, INDEX_REPO, INDEX_LEVEL).items():
+        for repo in repos:
+            if group is not None:
+                groups.setdefault(repo.lower(), group)
+    return groups
 
 
 def _fetch_readmes(fetcher: Fetcher, lists: Sequence[Mapping[str, Any]]) -> dict[str, str]:
@@ -200,12 +217,21 @@ def _fetch_readmes(fetcher: Fetcher, lists: Sequence[Mapping[str, Any]]) -> dict
 
 
 def build(
-    lists: Sequence[Mapping[str, Any]], readmes: Mapping[str, str], board: set[str]
+    lists: Sequence[Mapping[str, Any]],
+    readmes: Mapping[str, str],
+    board: set[str],
+    groups: Mapping[str, str] | None = None,
 ) -> Collected:
-    """lists：总榜里的清单行（按名次）；readmes：{仓库名: README 文本}；board：总榜项目名（忽略大小写的小写形式）。"""
+    """lists：总榜里的清单行（按名次）；readmes：{仓库名: README 文本}；board：总榜项目名（小写）；
+    groups：{清单仓库名（小写）: 领域分组}，来自 Awesome 总索引，没有的清单归入“其他”组。
+
+    三级：领域分组 › 清单 › 章节。
+    """
+    groups = groups or {}
     nodes: list[dict[str, Any]] = []
     members: dict[str, list[str]] = {}
-    used_ids: set[str] = set()
+    group_nodes: dict[str, str] = {}  # 分组名 -> 节点编号
+    list_ids: dict[str, set[str]] = {}  # 节点编号 -> 其下已用的清单编号片段
     created_days: list[str] = []
     updated_days: list[str] = []
     for row in lists:
@@ -219,7 +245,31 @@ def build(
             or len({m for m in distinct if m.lower() in board}) < MIN_BOARD_MEMBERS
         ):
             continue
-        list_id = unique_slug(slugify(name), used_ids)
+        group_label = groups.get(name.lower(), OTHER_LABEL)
+        if group_label not in group_nodes:
+            group_id = (
+                OTHER_ID
+                if group_label == OTHER_LABEL
+                else unique_slug(slugify(group_label), set(group_nodes.values()))
+            )
+            group_nodes[group_label] = group_id
+            list_ids[group_id] = set()
+            nodes.append(
+                {
+                    "id": group_id,
+                    "label": group_label,
+                    "parent": None,
+                    "guidance": {
+                        "includes": (
+                            f"Awesome 总索引（{INDEX_REPO}）里「{group_label}」章节收录的清单。"
+                            if group_label != OTHER_LABEL
+                            else f"总榜里的 Awesome 清单中，没有被 Awesome 总索引（{INDEX_REPO}）收录的，所以没有领域分组。"
+                        )
+                    },
+                }
+            )
+        group_id = group_nodes[group_label]
+        list_id = f"{group_id}.{unique_slug(slugify(name), list_ids[group_id])}"
         license_text = f"清单许可：{row['license']}" if row.get("license") else "清单没有声明许可"
         description = first_paragraph(row.get("description") or "", 200)
         created, pushed = _day(row.get("created_at")), _day(row.get("pushed_at"))
@@ -238,7 +288,7 @@ def build(
             {
                 "id": list_id,
                 "label": name,
-                "parent": None,
+                "parent": group_id,
                 "guidance": {"includes": f"{description}（{details}）" if description else details},
             }
         )
@@ -261,13 +311,14 @@ def build(
                 members.setdefault(repo, []).append(node_id)
     meta = {
         "name": "Awesome 清单",
-        "summary": "总榜里的 Awesome 类仓库（各领域的项目清单）自己的分类：每个清单是一个分类，清单里的章节是子分类，收录的项目属于对应章节。",
+        "summary": "总榜里的 Awesome 类仓库（各领域的项目清单）自己的分类：清单按 Awesome 总索引的领域分组，每个清单是一个分类，清单里的章节是子分类，收录的项目属于对应章节。",
         "method": "curated",
         "order": 15,
         "primary": False,
         "note": (
             "清单由各自的作者围绕一个主题挑选项目，收录有取舍，被收录不等于质量保证；一个项目可以被多个清单、多个章节收录。"
-            f"只保留在总榜里收录了至少 {MIN_BOARD_MEMBERS} 个项目的清单。章节名称沿用清单原文，由本站按标题层级自动解析，"
+            f"只保留在总榜里收录了至少 {MIN_BOARD_MEMBERS} 个项目的清单。清单的领域分组来自 Awesome 总索引（{INDEX_REPO}），"
+            "总索引没收录的清单（多是较新的）归在“其他”组，不是本站另外判断的。章节名称沿用清单原文，由本站按标题层级自动解析，"
             "个别清单结构特殊时可能不准；各清单的许可见它的分类说明。"
         ),
         "source": {
@@ -292,13 +343,16 @@ def collect(fetcher: Fetcher, board_rows: Sequence[Mapping[str, Any]]) -> Collec
         raise SourceError("总榜里没有找到 Awesome 清单（总榜数据可能不完整）")
     readmes = _fetch_readmes(fetcher, lists)
     board = {r["full_name"].lower() for r in board_rows}
-    collected = build(lists, readmes, board)
+    groups = parse_groups(fetcher.text(INDEX_URL))
+    if not groups:
+        raise SourceError("Awesome 总索引里没有解析出任何领域分组（README 格式可能变了）")
+    collected = build(lists, readmes, board, groups)
     if not collected.meta["nodes"]:
         raise SourceError("没有解析出任何 Awesome 清单（README 格式可能变了）")
     log.info(
         "awesome：%d 个候选清单，保留 %d 个，%d 个节点",
         len(lists),
-        sum(n.get("parent") is None for n in collected.meta["nodes"]),
+        sum(n["id"].count(".") == 1 for n in collected.meta["nodes"]),  # 编号只含一个点的是清单
         len(collected.meta["nodes"]),
     )
     return collected
