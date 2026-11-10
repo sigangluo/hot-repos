@@ -171,6 +171,24 @@ export function renderResults(ctx: Ctx): HTMLElement {
     drawChips(filters);
 
     const goto = (p: number) => store.set({ page: p });
+    // 页码输入框：回车或失焦后跳转；超出范围的取最近的有效页，不是整数或为空则回到当前页。
+    const jump = h('input', {
+      class: 'input page-input',
+      type: 'number',
+      min: 1,
+      max: view.pages,
+      step: 1,
+      inputmode: 'numeric',
+      value: String(view.page),
+      disabled: view.pages <= 1,
+      'aria-label': `跳转到第几页（共 ${view.pages} 页）`,
+    });
+    jump.addEventListener('change', () => {
+      const n = Math.round(Number(jump.value));
+      const target = jump.value.trim() === '' || !Number.isFinite(n) ? view.page : Math.min(Math.max(1, n), view.pages);
+      jump.value = String(target); // 页码没变时不会重绘，这里把输入框改回有效值
+      goto(target);
+    });
     const select = h('select', { 'aria-label': '每页条数' }, PAGE_SIZES.map((n) => h('option', { value: n }, `每页 ${n} 条`)));
     select.value = String(pageSize);
     select.addEventListener('change', () => store.set({ pageSize: Number(select.value) }));
@@ -179,7 +197,8 @@ export function renderResults(ctx: Ctx): HTMLElement {
       h('span', { class: 'pages' },
         h('button', { type: 'button', class: 'btn', disabled: view.page <= 1, onclick: () => goto(1) }, '首页'),
         h('button', { type: 'button', class: 'btn', disabled: view.page <= 1, onclick: () => goto(view.page - 1) }, '上一页'),
-        h('span', null, `${view.page} / ${view.pages}`),
+        jump,
+        h('span', null, `/ ${view.pages}`),
         h('button', { type: 'button', class: 'btn', disabled: view.page >= view.pages, onclick: () => goto(view.page + 1) }, '下一页'),
         h('button', { type: 'button', class: 'btn', disabled: view.page >= view.pages, onclick: () => goto(view.pages) }, '末页'),
       ),

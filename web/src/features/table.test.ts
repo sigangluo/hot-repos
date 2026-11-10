@@ -56,10 +56,42 @@ describe('结果表格', () => {
     const { store, names, root } = setup();
     store.set({ page: 3 });
     expect(names()).toEqual(['owner21/repo21', 'owner22/repo22', 'owner23/repo23', 'owner24/repo24', 'owner25/repo25']);
-    expect(root.querySelector('.pager')?.textContent).toContain('3 / 3');
+    expect(root.querySelector<HTMLInputElement>('.page-input')?.value).toBe('3');
+    expect(root.querySelector('.pager')?.textContent).toContain('/ 3');
     store.set({ pageSize: 50 });
     expect(names()).toHaveLength(25);
     expect(store.state.page).toBe(1);
+  });
+
+  it('页码输入框：输入页码跳转，超出范围取最近的页，无效输入回到当前页', () => {
+    const { store, names, root } = setup();
+    const input = () => root.querySelector<HTMLInputElement>('.page-input')!;
+    const jump = (value: string) => {
+      input().value = value;
+      input().dispatchEvent(new Event('change'));
+    };
+    expect(input().value).toBe('1');
+    jump('3');
+    expect(store.state.page).toBe(3);
+    expect(names()[0]).toBe('owner21/repo21');
+    expect(input().value).toBe('3');
+    jump('99');
+    expect(store.state.page).toBe(3); // 共 3 页：取最后一页，本来就在这一页
+    expect(input().value).toBe('3');
+    jump('0');
+    expect(store.state.page).toBe(1);
+    jump('');
+    expect(store.state.page).toBe(1);
+    expect(input().value).toBe('1');
+    jump('2.4');
+    expect(store.state.page).toBe(2);
+    expect(root.querySelector('.pager')?.textContent).toContain('/ 3');
+  });
+
+  it('只有一页时页码输入框不可用', () => {
+    const { store, root } = setup();
+    store.set({ pageSize: 50 });
+    expect(root.querySelector<HTMLInputElement>('.page-input')?.disabled).toBe(true);
   });
 
   it('点击表头排序，再点一次反向', () => {

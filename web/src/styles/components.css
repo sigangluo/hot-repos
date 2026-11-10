@@ -560,6 +560,12 @@ td.clip {
   align-items: center;
 }
 
+.pager .page-input {
+  width: 4.5rem;
+  padding: 2px var(--space-2);
+  text-align: center;
+}
+
 .pager select {
   border: 1px solid var(--border);
   background: var(--surface);
