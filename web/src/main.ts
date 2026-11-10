@@ -8,6 +8,7 @@ import { buildTaxonomy } from './data/taxonomy';
 import type { Ctx } from './features/context';
 import { renderDrawer } from './features/drawer';
 import { renderFilters } from './features/filters';
+import { renderGlossary } from './features/glossary';
 import { renderHeader } from './features/header';
 import { renderResults } from './features/table';
 import { renderTrendingPage } from './features/trending';
@@ -27,6 +28,7 @@ async function start(app: HTMLElement): Promise<void> {
   const board = h('div', { class: 'layout' }, renderFilters(ctx), renderResults(ctx));
   mount(app, h('main', { class: 'page' },
     renderHeader(ctx),
+    renderGlossary(ctx),
     board,
     meta.trending_date ? renderTrendingPage(ctx) : null),
     drawerHost);

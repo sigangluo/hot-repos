@@ -376,6 +376,102 @@ tbody tr:hover td {
   background: var(--surface-2);
 }
 
+/* 定义与说明：比正文淡一号，紧贴它所说明的对象。 */
+.def {
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.defs {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+}
+
+.defs summary {
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.defs dl,
+.glossary dl {
+  display: grid;
+  gap: var(--space-1) var(--space-3);
+  margin: var(--space-2) 0 0;
+}
+
+.defs dt,
+.glossary dt {
+  font-weight: 600;
+}
+
+.defs dd,
+.glossary dd {
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+}
+
+.glossary dd ul {
+  margin: var(--space-1) 0 0;
+  padding-left: var(--space-4);
+}
+
+.glossary {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  font-size: var(--text-sm);
+}
+
+.glossary > summary {
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.glossary-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4) var(--space-5);
+  margin-top: var(--space-3);
+}
+
+.glossary h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-md);
+}
+
+/* 分类树节点的“ⓘ”与展开的定义。 */
+.info {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.info[aria-expanded='true'] {
+  color: var(--accent);
+}
+
+.def-block {
+  margin: 0 0 var(--space-2) 1.75rem;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.def-block p {
+  margin: 0 0 var(--space-1);
+}
+
 /* 分类树：缩进表示层级，展开按钮占固定宽度，使各级复选框对齐。 */
 .tree {
   margin: 0;

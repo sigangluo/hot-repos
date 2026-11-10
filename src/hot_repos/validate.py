@@ -65,6 +65,27 @@ def validate_classification(data_dir: Path, repo_names: set[str] | None = None) 
     return problems
 
 
+def _is_guidance(value: object) -> bool:
+    if not isinstance(value, dict) or set(value) - {"includes", "excludes"}:
+        return False
+    includes = value.get("includes")
+    excludes = value.get("excludes", "ok")
+    return (
+        isinstance(includes, str)
+        and bool(includes.strip())
+        and isinstance(excludes, str)
+        and bool(excludes.strip())
+    )
+
+
+def _is_form(key: object, value: object) -> bool:
+    return (
+        isinstance(key, str)
+        and isinstance(value, dict)
+        and all(isinstance(value.get(f), str) and value[f].strip() for f in ("label", "definition"))
+    )
+
+
 def _check_taxonomy(taxonomy: dict) -> list[str]:
     label = config.TAXONOMY_FILE
     problems: list[str] = []
@@ -75,9 +96,11 @@ def _check_taxonomy(taxonomy: dict) -> list[str]:
     if (
         not isinstance(forms, dict)
         or not forms
-        or not all(isinstance(k, str) and isinstance(v, str) and v for k, v in forms.items())
+        or not all(_is_form(k, v) for k, v in forms.items())
     ):
-        problems.append(f"{label}: forms 应为 {{编号: 名称}} 且不为空")
+        problems.append(
+            f"{label}: forms 应为 {{编号: {{label, definition}}}} 且不为空，名称与定义都不能为空"
+        )
     nodes = taxonomy.get("nodes")
     if not isinstance(nodes, list) or not nodes:
         return [*problems, f"{label}: nodes 应为非空列表"]
@@ -97,6 +120,11 @@ def _check_taxonomy(taxonomy: dict) -> list[str]:
             problems.append(f"{label}: {nid} 的父节点 {parent} 不存在或排在它之后")
         elif not nid.startswith(f"{parent}."):
             problems.append(f"{label}: {nid} 的编号应以父节点编号 {parent}. 开头")
+        guidance = node.get("guidance")
+        if guidance is not None and not _is_guidance(guidance):
+            problems.append(
+                f"{label}: {nid} 的 guidance 应为 {{includes（必填）, excludes（可选）}}，文字不能为空"
+            )
         if (parent, name) in siblings:
             problems.append(f"{label}: 同一父节点下名称重复: {parent or '一级'} / {name}")
         siblings.add((parent, name))

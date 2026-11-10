@@ -93,7 +93,7 @@ export function renderResults(ctx: Ctx): HTMLElement {
         else chosen.delete(c.key);
         store.set({ columns: COLUMNS.map((x) => x.key).filter((k) => chosen.has(k) || PINNED.includes(k)) });
       });
-      panel.append(h('label', { class: 'option' }, box, h('span', null, c.label)));
+      panel.append(h('label', { class: 'option', title: c.title }, box, h('span', null, c.label)));
     }
     const button = h('button', { type: 'button', class: 'btn', 'aria-haspopup': 'true', 'aria-expanded': 'false' }, '列设置');
     button.addEventListener('click', (e) => {

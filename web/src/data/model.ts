@@ -13,6 +13,14 @@ const PERMISSIVE = new Set([
 ]);
 const COPYLEFT_PREFIX = ['GPL', 'AGPL', 'LGPL', 'MPL', 'EPL', 'EUPL', 'OSL', 'CC-BY-SA'];
 
+/** 许可证类别的含义，供筛选和“名词与口径说明”使用。 */
+export const LICENSE_DEFINITIONS: Record<LicenseClass, string> = {
+  宽松: 'MIT、Apache-2.0、BSD、ISC 等，对再分发的限制较少。',
+  Copyleft: 'GPL、AGPL、LGPL、MPL 等，再分发修改后的版本时通常要求沿用相同许可。',
+  其他: '已识别、但不属于以上两类，如 NOASSERTION（识别到许可证文件但无法确定类型）、CC-BY 等。',
+  [NO_LICENSE]: '没有识别出许可证；没有许可证时，他人使用和再分发的权利不明确。',
+};
+
 export function licenseClass(spdx: string | null): LicenseClass {
   if (!spdx) return NO_LICENSE;
   if (PERMISSIVE.has(spdx)) return '宽松';

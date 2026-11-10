@@ -1,6 +1,7 @@
 import { createStarChart, type ChartMode, type StarChart } from '../charts/star-chart';
 import type { Repo } from '../data/model';
 import { loadDetails, loadWeeks } from '../data/load';
+import { FACTS } from '../data/glossary';
 import type { DetailColumns } from '../data/types';
 import { h, mount } from '../lib/dom';
 import { ageText, compact, date, dateTime, int } from '../lib/format';
@@ -106,7 +107,14 @@ function open(ctx: Ctx, repo: Repo, host: HTMLElement): () => void {
 }
 
 function fact(label: string, value: string | Node | null) {
-  return h('div', null, h('dt', null, label), h('dd', null, value ?? '—'));
+  return h('div', null, h('dt', { title: FACTS[label] }, label), h('dd', null, value ?? '—'));
+}
+
+/** 折叠的“各项说明”：键值对列表，展开状态不需要保留（抽屉每次打开都是新建的）。 */
+function definitions(title: string, entries: readonly [string, string][]): Node {
+  return h('details', { class: 'defs' },
+    h('summary', null, title),
+    h('dl', null, entries.flatMap(([name, text]) => [h('dt', null, name), h('dd', null, text)])));
 }
 
 async function fillOverview(ctx: Ctx, el: HTMLElement, repo: Repo, onChart: (c: StarChart) => void): Promise<void> {
@@ -121,20 +129,20 @@ async function fillOverview(ctx: Ctx, el: HTMLElement, repo: Repo, onChart: (c: 
     fact('主要语言', repo.language), fact('许可证', repo.license ?? '未声明'),
     fact('所有者', repo.isOrg ? '组织' : '个人'),
     fact('状态', [repo.archived && '已归档', repo.fork && 'Fork', repo.template && '模板'].filter(Boolean).join('、') || '正常'),
-    fact('代码体积', repo.diskKb == null ? '—' : `${compact(repo.diskKb)} KB`),
+    fact('仓库体积', repo.diskKb == null ? '—' : `${compact(repo.diskKb)} KB`),
   );
   const chartHost = h('div', { class: 'loading' }, '正在加载周 Star 分布…');
   const langHost = h('div', { class: 'loading' }, '正在加载详情…');
   const linksHost = h('div', { class: 'chips' });
   const classification = classificationCard(ctx, repo);
   mount(el,
-    h('section', { class: 'card' }, h('h3', null, '基本信息'), facts),
+    h('section', { class: 'card' }, h('h3', null, '基本信息'), facts, definitions('各项说明', Object.entries(FACTS))),
     classification?.card ?? null,
     positionCard(ctx, repo),
     h('section', { class: 'card' }, h('h3', null, '官方周 Star 分布'), chartHost),
     h('section', { class: 'card' }, h('h3', null, '语言构成'), langHost),
     repo.topics.length
-      ? h('section', { class: 'card' }, h('h3', null, '话题'), h('div', { class: 'chips' }, repo.topics.map((t) => h('span', { class: 'chip plain' }, t))))
+      ? h('section', { class: 'card' }, h('h3', null, '话题'), h('div', { class: 'chips' }, repo.topics.map((t) => h('span', { class: 'chip plain' }, t))), h('p', { class: 'note' }, '话题是仓库作者自己填写的标签，不是统一的分类。'))
       : null,
     h('section', { class: 'card' }, h('h3', null, '链接'), linksHost));
 
@@ -171,6 +179,26 @@ function kv(label: string, value: Node | Node[]) {
   return h('div', null, h('dt', null, label), h('dd', null, value));
 }
 
+/** “分类与形态的含义”：主分类收什么、不收什么，以及该项目各形态的定义。 */
+function categoryDefinitions(ctx: Ctx, repo: Repo): Node | null {
+  const { taxonomy } = ctx;
+  if (!taxonomy) return null;
+  const entries: [string, string][] = [];
+  const primary = repo.categoryNodes[repo.categoryNodes.length - 1];
+  if (primary != null) {
+    const { includes, excludes } = taxonomy.definition(primary);
+    const name = taxonomy.label(primary);
+    if (includes) entries.push([`${name}：收`, includes]);
+    if (excludes) entries.push([`${name}：不收`, excludes]);
+  }
+  const byLabel = new Map(taxonomy.forms.map((f) => [f.label, f.definition]));
+  for (const form of repo.forms) {
+    const text = byLabel.get(form);
+    if (text) entries.push([form, text]);
+  }
+  return entries.length ? definitions('分类与形态的含义', entries) : null;
+}
+
 /** 分类卡片；简介和复核原因在详情数据到达后由 `fill` 补上。数据里没有任何分类时不显示。 */
 function classificationCard(ctx: Ctx, repo: Repo): { card: Node; fill: (summary: string | null, review: string | null) => void } | null {
   if (ctx.meta.classified === 0) return null;
@@ -190,6 +218,7 @@ function classificationCard(ctx: Ctx, repo: Repo): { card: Node; fill: (summary:
       repo.forms.length
         ? kv('项目形态', h('div', { class: 'chips' }, repo.forms.map((f) => h('span', { class: 'chip plain' }, f))))
         : null),
+    categoryDefinitions(ctx, repo),
     review,
     ctx.taxonomy?.note ? h('p', { class: 'note' }, ctx.taxonomy.note) : null);
   return {

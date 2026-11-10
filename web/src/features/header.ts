@@ -1,12 +1,10 @@
+import { DATA_TIMES, STALE_HOURS } from '../data/glossary';
 import { h, mount } from '../lib/dom';
 import { ago, dateTime, int } from '../lib/format';
 import { applyTheme } from '../lib/theme';
 import type { Theme } from '../state/prefs';
 import { viewHash, type View } from '../state/route';
 import type { Ctx } from './context';
-
-/** 数据超过这么久没更新，就在顶部提示。 */
-const STALE_HOURS = 48;
 
 const THEMES: [Theme, string][] = [
   ['auto', '跟随系统'],
@@ -39,7 +37,9 @@ export function renderHeader(ctx: Ctx): HTMLElement {
       : value[0] === value[1]
         ? dateTime(value[0] * 1000)
         : `${dateTime(value[0] * 1000)} ~ ${dateTime(value[1] * 1000)}`;
-  const item = (label: string, value: string) => h('span', null, `${label} `, h('b', null, value));
+  const definitions = new Map(DATA_TIMES);
+  const item = (label: string, value: string) =>
+    h('span', { title: definitions.get(label) }, `${label} `, h('b', null, value));
 
   const fresh = h(
     'div',

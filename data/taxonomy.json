@@ -1,23 +1,74 @@
 {
  "note": "分类由语言模型依据项目名称、描述、话题判断，尚未经人工验证，目前只覆盖创建不足一年的 361 个项目；主分类按项目服务的领域确定，形态单独标注。",
  "forms": {
-  "app": "应用",
-  "cli": "命令行工具",
-  "library": "库与 SDK",
-  "framework": "框架",
-  "service": "服务与平台",
-  "runtime": "运行时与引擎",
-  "agent": "智能体",
-  "skill": "智能体技能",
-  "plugin": "插件与扩展",
-  "model": "模型",
-  "dataset": "数据集",
-  "tutorial": "教程与课程",
-  "list": "资源清单",
-  "spec": "规范与文档",
-  "research": "研究实现",
-  "template": "配置与模板",
-  "hardware": "硬件与实物"
+  "app": {
+   "label": "应用",
+   "definition": "面向最终用户、直接安装或打开使用的桌面、移动或网页应用。"
+  },
+  "cli": {
+   "label": "命令行工具",
+   "definition": "在终端里运行、主要通过命令和参数使用的工具。"
+  },
+  "library": {
+   "label": "库与 SDK",
+   "definition": "供其他程序引用的代码库或开发包，本身不能独立运行。"
+  },
+  "framework": {
+   "label": "框架",
+   "definition": "规定程序结构、让开发者在其上搭建应用的代码框架。"
+  },
+  "service": {
+   "label": "服务与平台",
+   "definition": "需要部署运行的后端服务、网关或平台，通常通过网络接口或网页使用。"
+  },
+  "runtime": {
+   "label": "运行时与引擎",
+   "definition": "负责执行、推理、渲染等底层工作的运行环境或引擎。"
+  },
+  "agent": {
+   "label": "智能体",
+   "definition": "能自己规划并执行任务、可直接运行的 AI 智能体或助手。"
+  },
+  "skill": {
+   "label": "智能体技能",
+   "definition": "给智能体使用的技能、指令或提示词包，用来教它完成某类任务。"
+  },
+  "plugin": {
+   "label": "插件与扩展",
+   "definition": "挂在其他软件（编辑器、智能体、应用）上的插件、扩展或 MCP 服务。"
+  },
+  "model": {
+   "label": "模型",
+   "definition": "模型权重或模型系列本身。"
+  },
+  "dataset": {
+   "label": "数据集",
+   "definition": "可供下载使用的数据。"
+  },
+  "tutorial": {
+   "label": "教程与课程",
+   "definition": "以教学为目的的教程、课程、训练材料或书籍。"
+  },
+  "list": {
+   "label": "资源清单",
+   "definition": "收集链接、案例、提示词等的清单或合集，如 awesome 列表。"
+  },
+  "spec": {
+   "label": "规范与文档",
+   "definition": "标准、协议、格式规范或文档站点。"
+  },
+  "research": {
+   "label": "研究实现",
+   "definition": "论文代码、实验或研究原型。"
+  },
+  "template": {
+   "label": "配置与模板",
+   "definition": "可直接套用的配置、模板或脚手架。"
+  },
+  "hardware": {
+   "label": "硬件与实物",
+   "definition": "硬件设计、实物设备或其固件。"
+  }
  },
  "nodes": [
   {

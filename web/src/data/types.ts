@@ -102,10 +102,10 @@ export interface TrendingFile {
 export interface ClassificationFile {
   /** 目录附带的说明（如分类的来源与可信度），原样展示；没有则为 null。 */
   note: string | null;
-  /** [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称]，父节点排在子节点之前。 */
-  nodes: [string, number, string][];
-  /** [形态编号, 名称]。 */
-  forms: [string, string][];
+  /** [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称, 收录说明, 排除说明]，父节点排在子节点之前；说明没有则为 null。 */
+  nodes: [string, number, string, string | null, string | null][];
+  /** [形态编号, 名称, 定义]。 */
+  forms: [string, string, string][];
   category: (number | null)[];
   related: number[][];
   form: number[][];

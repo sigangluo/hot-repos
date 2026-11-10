@@ -1,4 +1,5 @@
-import type { Repo } from '../data/model';
+import { LICENSE_DEFINITIONS, type Repo } from '../data/model';
+import type { Taxonomy } from '../data/taxonomy';
 
 // ───────────────────────── 筛选 ─────────────────────────
 // 全部为纯函数：输入数据与条件，输出结果，不碰 DOM，便于测试。
@@ -14,15 +15,17 @@ export interface Group {
   allowAll?: boolean;
   /** 选项太多时只展示前若干个，其余通过搜索选择。 */
   limit?: number;
-  /** 分组标题下的补充说明。 */
-  note?: string;
   /** 该分组在当前数据中是否可用；缺省总是可用。不可用的分组不显示。 */
   available?: (repos: readonly Repo[]) => boolean;
+  /** 这一组筛选的是什么、怎么算的。每个分组都必须写，页面在分组标题下显示。 */
+  definition: string;
+  /** 各选项的含义，选项名为键；可以依赖分类目录。有则显示“各选项说明”。 */
+  optionDefinitions?: Record<string, string> | ((taxonomy: Taxonomy | null) => Record<string, string>);
 }
 
 const PUSH_BUCKETS = ['7 天内', '30 天内', '90 天内', '1 年内', '超过 1 年', '无推送记录'] as const;
 const AGE_BUCKETS = ['不足 1 年', '1–3 年', '3–5 年', '5–10 年', '10 年以上'] as const;
-const FEATURES = ['有主页', '有赞助链接', '有 README', '启用讨论区', '有发布版本'] as const;
+const FEATURES = ['有主页', '有赞助链接', '有 README', '有讨论帖', '有发布版本'] as const;
 const LICENSES = ['宽松', 'Copyleft', '其他', '未声明'] as const;
 
 export function pushBucket(days: number | null): (typeof PUSH_BUCKETS)[number] {
@@ -47,24 +50,83 @@ export function ageBucket(days: number): (typeof AGE_BUCKETS)[number] {
 export const hasClassification = (repos: readonly Repo[]) => repos.some((r) => r.category.length > 0);
 
 export const GROUPS: readonly Group[] = [
-  { id: 'form', label: '项目形态', values: (r) => r.forms, available: hasClassification },
-  { id: 'language', label: '主要语言', values: (r) => [r.language], limit: 15 },
-  { id: 'license', label: '许可证', values: (r) => [r.licenseClass], order: LICENSES },
-  { id: 'topic', label: '话题', values: (r) => r.topics, allowAll: true, limit: 20 },
-  { id: 'owner', label: '所有者', values: (r) => [r.isOrg ? '组织' : '个人'], order: ['组织', '个人'] },
-  { id: 'pushed', label: '最近推送', values: (r) => [pushBucket(r.pushedDaysAgo)], order: PUSH_BUCKETS },
-  { id: 'age', label: '创建时长', values: (r) => [ageBucket(r.ageDays)], order: AGE_BUCKETS },
-  { id: 'archived', label: '归档状态', values: (r) => [r.archived ? '已归档' : '未归档'], order: ['未归档', '已归档'] },
+  {
+    id: 'form',
+    label: '项目形态',
+    values: (r) => r.forms,
+    available: hasClassification,
+    definition: '项目是什么样的东西（应用、库、智能体技能……），与“分类”（它服务于什么领域）相互独立；一个项目可以有多个形态。',
+    optionDefinitions: (taxonomy) => Object.fromEntries((taxonomy?.forms ?? []).map((f) => [f.label, f.definition])),
+  },
+  {
+    id: 'language',
+    label: '主要语言',
+    values: (r) => [r.language],
+    limit: 15,
+    definition: 'GitHub 判定的主要语言，即代码字节数最多的语言。没有识别出语言的项目归入“未返回主语言”。',
+  },
+  {
+    id: 'license',
+    label: '许可证',
+    values: (r) => [r.licenseClass],
+    order: LICENSES,
+    definition: '按许可证类型粗分，依据 GitHub 识别出的许可证标识。仅供筛选参考，不构成法律意见；具体权利以许可证原文为准。',
+    optionDefinitions: LICENSE_DEFINITIONS,
+  },
+  {
+    id: 'topic',
+    label: '话题',
+    values: (r) => r.topics,
+    allowAll: true,
+    limit: 20,
+    definition: '仓库作者自己填写的话题标签，不是统一的分类，同一件事可能有不同写法。可选“满足任一”或“满足全部”。',
+  },
+  {
+    id: 'owner',
+    label: '所有者',
+    values: (r) => [r.isOrg ? '组织' : '个人'],
+    order: ['组织', '个人'],
+    definition: '仓库属于组织账号还是个人账号。',
+  },
+  {
+    id: 'pushed',
+    label: '最近推送',
+    values: (r) => [pushBucket(r.pushedDaysAgo)],
+    order: PUSH_BUCKETS,
+    definition: '距最近一次向仓库推送代码的时间，以数据获取时间为参照（不随你打开页面的时间变化）。“无推送记录”是 GitHub 没有返回推送时间。',
+  },
+  {
+    id: 'age',
+    label: '创建时长',
+    values: (r) => [ageBucket(r.ageDays)],
+    order: AGE_BUCKETS,
+    definition: '距仓库在 GitHub 上创建的时间，以数据获取时间为参照。仓库可能是后来才迁移或公开的，创建时间不等于项目的真实年龄。',
+  },
+  {
+    id: 'archived',
+    label: '归档状态',
+    values: (r) => [r.archived ? '已归档' : '未归档'],
+    order: ['未归档', '已归档'],
+    definition: '已归档的仓库被作者设为只读，通常不再维护。',
+  },
   {
     id: 'feature',
     label: '资料与功能',
+    definition: '仓库具备哪些资料或功能，可多选；多选时满足任一即可。',
+    optionDefinitions: {
+      有主页: '仓库填写了项目主页地址。',
+      有赞助链接: '仓库配置了赞助（Sponsor）入口。',
+      '有 README': '仓库根目录有 Markdown 格式的 README。',
+      有讨论帖: '讨论区里至少有一个讨论帖。',
+      有发布版本: 'GitHub 上至少有一次 Release。',
+    },
     order: FEATURES,
     values: (r) =>
       [
         r.hasHomepage && '有主页',
         r.hasFunding && '有赞助链接',
         r.hasReadme && '有 README',
-        r.discussions > 0 && '启用讨论区',
+        r.discussions > 0 && '有讨论帖',
         r.releases > 0 && '有发布版本',
       ].filter((x): x is string => typeof x === 'string'),
   },

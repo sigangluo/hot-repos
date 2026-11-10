@@ -14,8 +14,12 @@ export interface Taxonomy {
   pathNodes(node: number): number[];
   /** 从一级到该节点的名称。 */
   path(node: number): string[];
+  /** 节点的收录说明与排除说明；没有则为 null。 */
+  definition(node: number): { includes: string | null; excludes: string | null };
   /** 形态名称。 */
   formLabel(form: number): string;
+  /** 全部形态的名称与定义，按目录顺序。 */
+  forms: readonly { label: string; definition: string }[];
 }
 
 export function buildTaxonomy(file: ClassificationFile): Taxonomy {
@@ -35,7 +39,9 @@ export function buildTaxonomy(file: ClassificationFile): Taxonomy {
     label,
     pathNodes: (node) => nodes[node] ?? [],
     path: (node) => (nodes[node] ?? []).map(label),
+    definition: (node) => ({ includes: file.nodes[node]?.[3] ?? null, excludes: file.nodes[node]?.[4] ?? null }),
     formLabel: (form) => file.forms[form]?.[1] ?? '',
+    forms: file.forms.map(([, label, definition]) => ({ label, definition })),
   };
 }
 

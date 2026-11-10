@@ -10,7 +10,7 @@
 |---|---|---|
 | `meta.json` | 快照日期、各部分获取时间、数量、最新 Trending 快照日期（`trending_date`，为空则不显示“近期热点”） | 首屏 |
 | `repos.json` | 表格、筛选、搜索所需的精简列 | 首屏 |
-| `classification.json` | 分类目录和每个项目的主分类、关联分类、形态（与 `repos.json` 行对齐）；没有分类数据时不生成 | 首屏，在 `meta.json` 之后请求；失败时页面照常显示，只是没有分类 |
+| `classification.json` | 分类目录（含每个节点的收录/排除说明和形态定义）和每个项目的主分类、关联分类、形态（与 `repos.json` 行对齐）；没有分类数据时不生成 | 首屏，在 `meta.json` 之后请求；失败时页面照常显示，只是没有分类 |
 | `weeks.json` | 官方周 Star 分布 | 首屏渲染后，用于迷你图；打开详情时复用 |
 | `details.json` | 语言构成、赞助链接、README 文件名、分类的简介与复核原因等 | 首次打开详情时 |
 | `trending.json` | 最新一天的 Trending 快照；还没有快照时不生成，页面也不显示“近期热点” | 首次切到“近期热点”时，失败可重试 |
@@ -55,10 +55,23 @@ README 正文不在数据里，查看详情时从 `raw.githubusercontent.com/{�
 - 从近期热点打开详情，关闭后回到 `#/trending`；浏览器前进后退可用。
 - 头像直接引用 `github.com/<用户名>.png`，需要联网；加载失败只是不显示头像。
 
+## 定义与说明
+
+页面上每个需要解释才能读懂的词都应该有定义，并且只写一处：
+
+- **筛选分组**：`Group.definition`（必填）显示在分组标题下；有选项含义的再写 `optionDefinitions`，显示为“各选项说明”，选项悬停也有提示。项目形态的选项定义来自分类目录。范围筛选的定义在 `data/glossary.ts` 的 `RANGE_DEFINITIONS`。
+- **表格列**：`Column.title`（必填）是表头和列设置里的悬停提示。
+- **分类**：分类树每个有说明的节点右侧有 ⓘ，点开显示“收 / 不收”；详情的分类卡片有“分类与形态的含义”。
+- **详情指标**：`data/glossary.ts` 的 `FACTS`，悬停和卡片里的“各项说明”都用它。
+- **数据时点、近期热点的名词**：`data/glossary.ts` 的 `DATA_TIMES`、`TRENDING_TERMS`。
+- **名词与口径说明**（`features/glossary.ts`）：顶部的折叠面板，把以上全部集中列出，内容直接取自各处的声明，不另写一份，所以不会不一致。
+
+新增列或筛选分组时，类型上就要求写定义；新增详情指标要在 `FACTS` 里加一条，`tests` 会检查每个分组都有定义、选项定义与选项一一对应。
+
 ## 常见改动
 
-- **加一列**：在 `features/columns.ts` 的 `COLUMNS` 里加一项（键、标题、排序取值、显示文本）；需要新的取值时在 `data/model.ts` 的 `Repo` 里加字段。
-- **加一个筛选组**：在 `state/query.ts` 的 `GROUPS` 里加一项，声明 `values(repo)` 返回该项目在此组的取值；选项数量、已选条件标签和清除都自动生效。
+- **加一列**：在 `features/columns.ts` 的 `COLUMNS` 里加一项（键、标题、**定义**、排序取值、显示文本）；需要新的取值时在 `data/model.ts` 的 `Repo` 里加字段。
+- **加一个筛选组**：在 `state/query.ts` 的 `GROUPS` 里加一项，声明 `values(repo)` 返回该项目在此组的取值，并写 `definition`；选项数量、已选条件标签和清除都自动生效。
 - **改颜色、字号、间距**：只改 `styles/tokens.css`。组件样式里不写死数值；明暗两套值用 `light-dark()` 写在同一行。需要在 JS 里取令牌颜色（如图表）用 `lib/theme.ts` 的 `tokenColor()`。
 
 ## README 渲染与安全

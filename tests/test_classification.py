@@ -90,6 +90,20 @@ def test_taxonomy_problems(dataset):
     check([], "nodes 应为非空列表")
 
 
+def test_forms_and_guidance_need_text(dataset):
+    def check(change, message):
+        tax = taxonomy()
+        change(tax)
+        write_classification(dataset, tax=tax)
+        assert any(message in p for p in validate(dataset)), message
+
+    check(lambda t: t["forms"].update(app={"label": "应用"}), "forms 应为")
+    check(lambda t: t["forms"].update(app={"label": "应用", "definition": " "}), "forms 应为")
+    check(lambda t: t["nodes"][0].update(guidance={"excludes": "x"}), "guidance 应为")
+    check(lambda t: t["nodes"][0].update(guidance={"includes": ""}), "guidance 应为")
+    check(lambda t: t["nodes"][0].update(guidance={"includes": "x", "other": "y"}), "guidance 应为")
+
+
 def test_taxonomy_note_is_optional_but_not_blank(dataset):
     tax = taxonomy()
     del tax["note"]
@@ -141,13 +155,16 @@ def test_export_classification(dataset, tmp_path):
     export_web.export(dataset, out)
     cls = export_web.read(out / "classification.json")
     assert cls["nodes"] == [
-        ["dev", -1, "开发"],
-        ["dev.tools", 0, "工具"],
-        ["dev.tools.cli", 1, "命令行"],
-        ["ai", -1, "人工智能"],
+        ["dev", -1, "开发", "写代码的工具", None],
+        ["dev.tools", 0, "工具", "命令行与编辑器", "数据库归 data"],
+        ["dev.tools.cli", 1, "命令行", None, None],
+        ["ai", -1, "人工智能", None, None],
     ]
     assert cls["note"] == "测试说明"
-    assert cls["forms"] == [["app", "应用"], ["list", "资源清单"]]
+    assert cls["forms"] == [
+        ["app", "应用", "直接使用的应用"],
+        ["list", "资源清单", "收集链接的清单"],
+    ]
     # 列与 repos.json 对齐：a/one 未分类，b/two 已分类
     assert cls["category"] == [None, 2]
     assert cls["related"] == [[], [3]]

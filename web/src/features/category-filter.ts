@@ -1,3 +1,4 @@
+import { CATEGORY_DEFINITION } from '../data/glossary';
 import type { Taxonomy } from '../data/taxonomy';
 import { h } from '../lib/dom';
 import { int } from '../lib/format';
@@ -6,6 +7,9 @@ import type { Ctx } from './context';
 
 /** 记住展开的分支，重绘面板时不丢失；跟随页面的 Store，互不干扰。 */
 const expandedByStore = new WeakMap<object, Set<number>>();
+/** 展开了定义说明的节点，同样跟随 Store。 */
+const definitionsByStore = new WeakMap<object, Set<number>>();
+
 
 const SCOPES: readonly [CategoryScope, string][] = [
   ['primary', '仅主分类'],
@@ -19,6 +23,7 @@ const SCOPES: readonly [CategoryScope, string][] = [
 export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filters, open: Set<string>): HTMLElement {
   const { store } = ctx;
   const expanded = expandedByStore.get(store) ?? expandedByStore.set(store, new Set()).get(store)!;
+  const shownDefs = definitionsByStore.get(store) ?? definitionsByStore.set(store, new Set()).get(store)!;
   const counts = categoryCounts(ctx.repos, filters);
   const { categories } = filters;
 
@@ -65,9 +70,30 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
           },
         }, isOpen ? '▾' : '▸')
       : h('span', { class: 'tree-toggle' });
+    const { includes, excludes } = taxonomy.definition(node);
+    const defOpen = shownDefs.has(node);
+    const info =
+      includes || excludes
+        ? h('button', {
+            type: 'button',
+            class: 'info',
+            'aria-expanded': String(defOpen),
+            'aria-label': `${name}的说明`,
+            onclick: () => {
+              if (defOpen) shownDefs.delete(node);
+              else shownDefs.add(node);
+              store.set({ filters: { ...store.state.filters } }); // 只为触发重绘
+            },
+          }, 'ⓘ')
+        : null;
     return h('li', null,
       h('div', { class: 'tree-row' }, toggle,
-        h('label', { class: 'option' }, box, h('span', null, name), h('span', { class: 'count' }, int(count)))),
+        h('label', { class: 'option' }, box, h('span', null, name), h('span', { class: 'count' }, int(count))), info),
+      defOpen
+        ? h('div', { class: 'def-block' },
+            includes ? h('p', null, h('b', null, '收：'), includes) : null,
+            excludes ? h('p', null, h('b', null, '不收：'), excludes) : null)
+        : null,
       isOpen ? h('ul', { class: 'tree' }, children) : null);
   };
 
@@ -76,6 +102,7 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
 
   const details = h('details', { class: 'group', open: open.has('category') || categories.size > 0 },
     h('summary', null, h('span', null, '分类'), categories.size ? h('span', { class: 'badge' }, `已选 ${categories.size}`) : null),
+    h('p', { class: 'def' }, CATEGORY_DEFINITION),
     taxonomy.note ? h('p', { class: 'note' }, taxonomy.note) : null,
     h('span', { class: 'seg', role: 'group', 'aria-label': '分类范围' },
       SCOPES.map(([scope, label]) =>

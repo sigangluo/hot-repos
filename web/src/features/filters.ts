@@ -1,12 +1,14 @@
 import { h, mount } from '../lib/dom';
 import { int } from '../lib/format';
 import { GROUPS, activeCount, emptyFilters, facetCounts, hasClassification, type Filters, type Group, type Range } from '../state/query';
+import { RANGE_DEFINITIONS } from '../data/glossary';
 import { renderCategoryGroup } from './category-filter';
 import type { Ctx } from './context';
 
 /** 记住各分组的展开状态与“显示全部”，重绘面板时不丢失。 */
 const open = new Set<string>(['category', 'language', 'license']);
 const expanded = new Set<string>();
+const openDefs = new Set<string>();
 
 export function renderFilters(ctx: Ctx): HTMLElement {
   const { store, repos } = ctx;
@@ -21,7 +23,7 @@ export function renderFilters(ctx: Ctx): HTMLElement {
     store.set({ filters: { ...filters, selected: { ...filters.selected, [group.id]: next } } });
   };
 
-  const rangeField = (label: string, key: 'stars' | 'contributors') => {
+  const rangeField = (label: string, key: 'stars' | 'contributors', definition: string) => {
     const { filters } = store.state;
     const parse = (input: HTMLInputElement) => (input.value.trim() === '' ? null : Math.max(0, Number(input.value)));
     const make = (placeholder: string, value: number | null, side: keyof Range) => {
@@ -45,6 +47,7 @@ export function renderFilters(ctx: Ctx): HTMLElement {
       'div',
       null,
       h('div', { class: 'field-label' }, label),
+      h('p', { class: 'def' }, definition),
       h('div', { class: 'range' }, make('最小', filters[key].min, 'min'), '–', make('最大', filters[key].max, 'max')),
     );
   };
@@ -54,10 +57,11 @@ export function renderFilters(ctx: Ctx): HTMLElement {
     const all = facetCounts(repos, filters, group);
     const showAll = expanded.has(group.id);
     const visible = group.limit && !showAll ? all.filter(([v], i) => i < group.limit! || selected.has(v)) : all;
+    const optionDefs = definitionsOf(group);
     const options = visible.map(([value, count]) =>
       h(
         'label',
-        { class: count === 0 ? 'option empty' : 'option' },
+        { class: count === 0 ? 'option empty' : 'option', title: optionDefs[value] },
         h('input', {
           type: 'checkbox',
           checked: selected.has(value),
@@ -84,8 +88,9 @@ export function renderFilters(ctx: Ctx): HTMLElement {
             h('button', { type: 'button', 'aria-pressed': String(!!filters.matchAll[group.id]), onclick: () => setMatch(group, true) }, '满足全部'),
           )
         : null,
-      group.note ? h('p', { class: 'note' }, group.note) : null,
+      h('p', { class: 'def' }, group.definition),
       h('div', { class: 'options' }, options),
+      definitionList(group.id, optionDefs),
       group.limit && all.length > group.limit
         ? h(
             'button',
@@ -109,6 +114,25 @@ export function renderFilters(ctx: Ctx): HTMLElement {
     return details;
   };
 
+  const definitionsOf = (group: Group): Record<string, string> =>
+    typeof group.optionDefinitions === 'function'
+      ? group.optionDefinitions(ctx.taxonomy)
+      : (group.optionDefinitions ?? {});
+
+  /** “各选项说明”：该组每个选项的含义（分组有选项定义时才有）。展开状态跨重绘保留。 */
+  const definitionList = (id: string, defs: Record<string, string>) => {
+    const entries = Object.entries(defs);
+    if (entries.length === 0) return null;
+    const box = h('details', { class: 'defs', open: openDefs.has(id) },
+      h('summary', null, '各选项说明'),
+      h('dl', null, entries.flatMap(([name, text]) => [h('dt', null, name), h('dd', null, text)])));
+    box.addEventListener('toggle', () => {
+      if (box.open) openDefs.add(id);
+      else openDefs.delete(id);
+    });
+    return box;
+  };
+
   const setMatch = (group: Group, matchAll: boolean) => {
     const { filters } = store.state;
     store.set({ filters: { ...filters, matchAll: { ...filters.matchAll, [group.id]: matchAll } } });
@@ -124,8 +148,8 @@ export function renderFilters(ctx: Ctx): HTMLElement {
         h('h2', null, '筛选'),
         h('button', { type: 'button', class: 'btn', disabled: activeCount(filters) === 0, onclick: () => store.set({ filters: emptyFilters() }) }, '清除全部'),
       ),
-      rangeField('Star 数', 'stars'),
-      rangeField('贡献者数', 'contributors'),
+      rangeField('Star 数', 'stars', RANGE_DEFINITIONS.stars),
+      rangeField('贡献者数', 'contributors', RANGE_DEFINITIONS.contributors),
       ctx.taxonomy && hasClassification(repos) ? renderCategoryGroup(ctx, ctx.taxonomy, filters, open) : null,
       ...groups.map((g) => renderGroup(g, filters)),
     );

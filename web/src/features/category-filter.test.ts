@@ -75,4 +75,19 @@ describe('分类树', () => {
     expect(store.state.filters.categoryScope).toBe('all');
     expect(rows()).toEqual(['开发2', '人工智能1']);
   });
+
+  it('有说明的分类带 ⓘ，点开显示收录与排除；没有说明的不带', () => {
+    const { root, row } = setup();
+    const info = (name: string) => row(name).querySelector<HTMLButtonElement>('.info');
+    expect(info('开发')?.getAttribute('aria-expanded')).toBe('false');
+    expect(root.querySelector('.def-block')).toBeNull();
+    info('开发')?.click();
+    expect(info('开发')?.getAttribute('aria-expanded')).toBe('true');
+    expect(root.querySelector('.def-block')?.textContent).toContain('写代码的工具与方法');
+  });
+
+  it('分类树上方有分类的定义', () => {
+    const { root } = setup();
+    expect(root.querySelector('.group .def')?.textContent).toContain('按项目服务的领域归类');
+  });
 });

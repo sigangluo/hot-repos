@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildRepos, licenseClass, type Repo } from '../data/model';
+import { buildTaxonomy } from '../data/taxonomy';
 import { NOW, classification, columns, makeRepos } from '../test-utils';
 import {
   GROUPS,
@@ -209,5 +210,27 @@ describe('分类筛选', () => {
   it('没有分类数据时，项目形态分组不可用', () => {
     expect(group('form').available?.(makeRepos([{}]))).toBe(false);
     expect(group('form').available?.(data)).toBe(true);
+  });
+});
+
+describe('定义', () => {
+  it('每个筛选分组都有定义', () => {
+    for (const g of GROUPS) expect(g.definition.trim().length, g.id).toBeGreaterThan(10);
+  });
+
+  it('选项定义与选项一一对应：有固定选项顺序的分组，定义的键就是这些选项', () => {
+    for (const g of GROUPS) {
+      if (!g.order || typeof g.optionDefinitions !== 'object') continue;
+      expect(Object.keys(g.optionDefinitions).sort(), g.id).toEqual([...g.order].sort());
+    }
+  });
+
+  it('项目形态的选项定义来自分类目录', () => {
+    const form = GROUPS.find((g) => g.id === 'form')!;
+    const defs = (form.optionDefinitions as (t: ReturnType<typeof buildTaxonomy> | null) => Record<string, string>)(
+      buildTaxonomy(classification([])),
+    );
+    expect(defs).toEqual({ 应用: '直接使用的应用', 库: '供程序引用的代码库' });
+    expect((form.optionDefinitions as (t: null) => Record<string, string>)(null)).toEqual({});
   });
 });

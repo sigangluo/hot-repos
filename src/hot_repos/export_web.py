@@ -132,7 +132,8 @@ def _classification(
 ) -> tuple[dict[str, Any], dict[str, list]] | None:
     """返回（classification.json 的内容，details.json 的分类列）；没有分类数据时为 None。
 
-    目录节点导出为 [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称]；项目一列一列地引用节点和形态的
+    目录节点导出为 [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称, 收录说明, 排除说明]（说明没有则为 null）；
+    形态导出为 [编号, 名称, 定义]；项目一列一列地引用节点和形态的
     下标，与 repos 行对齐，未分类的项目为 null（关联分类和形态为空列表）。
     """
     taxonomy = classification.read_taxonomy(data_dir)
@@ -146,10 +147,18 @@ def _classification(
     file = {
         "note": taxonomy.get("note"),
         "nodes": [
-            [n["id"], node_index[n["parent"]] if "parent" in n else -1, n["label"]]
+            [
+                n["id"],
+                node_index[n["parent"]] if "parent" in n else -1,
+                n["label"],
+                n.get("guidance", {}).get("includes"),
+                n.get("guidance", {}).get("excludes"),
+            ]
             for n in taxonomy["nodes"]
         ],
-        "forms": [[f, taxonomy["forms"][f]] for f in form_ids],
+        "forms": [
+            [f, taxonomy["forms"][f]["label"], taxonomy["forms"][f]["definition"]] for f in form_ids
+        ],
         "category": [node_index[r["category"]] if r else None for r in rows],
         "related": [[node_index[c] for c in r["related"]] if r else [] for r in rows],
         "form": [[form_index[f] for f in r["forms"]] if r else [] for r in rows],

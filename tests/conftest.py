@@ -127,10 +127,18 @@ def write_trending(directory: Path, rows: list[dict], name: str = "2026-01-10.pa
 def taxonomy() -> dict:
     return {
         "note": "测试说明",
-        "forms": {"app": "应用", "list": "资源清单"},
+        "forms": {
+            "app": {"label": "应用", "definition": "直接使用的应用"},
+            "list": {"label": "资源清单", "definition": "收集链接的清单"},
+        },
         "nodes": [
-            {"id": "dev", "label": "开发"},
-            {"id": "dev.tools", "label": "工具", "parent": "dev"},
+            {"id": "dev", "label": "开发", "guidance": {"includes": "写代码的工具"}},
+            {
+                "id": "dev.tools",
+                "label": "工具",
+                "parent": "dev",
+                "guidance": {"includes": "命令行与编辑器", "excludes": "数据库归 data"},
+            },
             {"id": "dev.tools.cli", "label": "命令行", "parent": "dev.tools"},
             {"id": "ai", "label": "人工智能"},
         ],
