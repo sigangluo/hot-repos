@@ -101,9 +101,8 @@ TRENDING = pa.schema(
     ]
 )
 
-# 项目分类结果（data/classification.parquet），目录本身在 data/taxonomy.json。
-# 可选数据，不属于 TABLES：它不随总榜采集整体发布，采集时只按项目名对齐。
-# 某个分类体系对项目的标注。category 是主分类（体系没有主分类时为空，此时全部标注放在 related）；
+# 某个分类体系对项目的标注（data/schemes/<编号>/labels.parquet），体系定义在同目录的 scheme.json。
+# 可选数据，不属于 TABLES：它不随总榜采集整体发布，采集时只按项目名对齐。category 是主分类（体系没有主分类时为空，此时全部标注放在 related）；
 # forms、summary、review_reason 只有会判断这些的体系才有（如本站分类），其余体系留空。
 LABELS = pa.schema(
     [
