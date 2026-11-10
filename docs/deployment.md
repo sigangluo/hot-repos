@@ -71,4 +71,4 @@ cd web && npm run typecheck && npm test && npm run build
 - [x] LICENSE（MIT）已添加，`pyproject.toml` 与 `web/package.json` 的协议字段已填
 - [x] Pages 来源已设为 GitHub Actions
 - [x] 手动触发一次 Trending 工作流，确认能抓取、校验并推送、触发部署
-- [ ] 确认 Trending 的定时任务（每天 01:30 UTC）真的在自动运行
+- [x] 确认 Trending 的定时任务（每天 01:30 UTC）真的在自动运行：2026-11-10 首次定时运行成功，提交快照并触发部署。GitHub 的定时任务实际启动可能明显晚于设定时间（这次晚了约 7 小时），但快照按 UTC 日期命名，只要当天跑完就不影响数据
