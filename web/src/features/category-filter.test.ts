@@ -140,3 +140,26 @@ describe('分类树：没有主分类的体系，第二级也按项目数排', (
     expect(rows()).toEqual(['甲2', '清单B2', '清单A1', '乙1']); // 清单B 项目更多，排在清单A 前面
   });
 });
+
+describe('分类名是总榜里的项目时可以打开详情', () => {
+  // 一级分类 a/cli 的名字恰好是总榜里的项目（如 Awesome 清单），一级分类“开发”不是
+  const file: SchemeFile = {
+    nodes: [['dev', -1, '开发', null, null], ['dev.a-cli', 0, 'A/CLI', null, null]],
+    forms: [], category: [null, null], related: [[1], []], form: [[], []],
+  };
+
+  it('是项目的分类带“打开详情”链接，指向项目的详情地址；不是的没有', () => {
+    const info = schemeInfo({ primary: false });
+    const repos = makeRepos([{ full_name: 'a/cli' }, { full_name: 'b/editor' }], file);
+    const store = new Store();
+    store.set({ filters: { ...store.state.filters, categoryScope: 'all' } });
+    const ctx: Ctx = { meta: { ...META, schemes: [info] }, repos, scheme: info, taxonomy: buildTaxonomy(file), now: NOW, store, weeks: null };
+    const root = renderFilters(ctx);
+    document.body.replaceChildren(root);
+    root.querySelector<HTMLButtonElement>('.tree-toggle')?.click(); // 展开“开发”
+    const links = [...root.querySelectorAll<HTMLAnchorElement>('.tree a.repo-link')];
+    expect(links.map((a) => a.getAttribute('href'))).toEqual(['#/a/cli']); // 忽略大小写对上 a/cli，用总榜里的写法
+    expect(links[0]?.getAttribute('aria-label')).toBe('打开 A/CLI 的详情');
+    expect(root.querySelector('.tree-row .option span')?.textContent).toBe('开发');
+  });
+});

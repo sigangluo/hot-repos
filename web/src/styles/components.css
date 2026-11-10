@@ -456,6 +456,17 @@ tbody tr:hover td {
   cursor: pointer;
 }
 
+a.info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+a.info:hover {
+  color: var(--accent);
+}
+
 .info[aria-expanded='true'] {
   color: var(--accent);
 }
@@ -724,7 +735,7 @@ td.clip {
   font-style: normal;
 }
 
-.crumbs span:last-child {
+.crumbs > :last-child {
   font-weight: 600;
 }
 

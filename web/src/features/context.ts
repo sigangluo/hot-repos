@@ -22,3 +22,18 @@ export function weeksOf(ctx: Ctx, repo: Repo): { start: string; stars: number[] 
   const stars = ctx.weeks?.stars[repo.index];
   return start && stars ? { start, stars } : null;
 }
+
+const byName = new WeakMap<readonly Repo[], Map<string, Repo>>();
+
+/** 总榜里名为 `name`（忽略大小写）的项目。分类名恰好是项目名时（如 Awesome 清单本身也是总榜里的项目），用它打开该项目的详情。 */
+export function repoNamed(ctx: Ctx, name: string): Repo | undefined {
+  let index = byName.get(ctx.repos);
+  if (!index) byName.set(ctx.repos, (index = new Map(ctx.repos.map((r) => [r.fullName.toLowerCase(), r]))));
+  return index.get(name.toLowerCase());
+}
+
+/** 项目详情的地址；`name` 不是总榜里的项目时为 null。 */
+export function repoHref(ctx: Ctx, name: string): string | null {
+  const repo = repoNamed(ctx, name);
+  return repo ? `#/${repo.fullName}` : null;
+}

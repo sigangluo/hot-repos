@@ -13,7 +13,12 @@ const OTHER: SchemeFile = {
   nodes: [['a', -1, '甲', '甲类收什么', null]],
   forms: [], category: [null, null], related: [[0], []], form: [[], []],
 };
-const files = new Map([['site', SITE], ['other', OTHER]]);
+// 分类名恰好是总榜里项目名的体系：清单组 › B/None
+const LINKED: SchemeFile = {
+  nodes: [['g', -1, '清单组', null, null], ['g.l', 0, 'B/None', null, null]],
+  forms: [], category: [null, null], related: [[1], []], form: [[], []],
+};
+const files = new Map([['site', SITE], ['other', OTHER], ['linked', LINKED]]);
 vi.mock('../data/schemes', () => ({
   getScheme: (id: string) => {
     const file = files.get(id);
@@ -73,6 +78,18 @@ describe('详情里的分类卡片', () => {
     expect(other.textContent).toContain('甲：收甲类收什么'); // 分类的说明
     expect(other.querySelector('a')?.getAttribute('href')).toBe('https://example.com');
     expect(other.textContent).toContain('Apache-2.0');
+  });
+
+  it('路径里的一级恰好是总榜里的项目（如 Awesome 清单）时是链接，其余只是文字', async () => {
+    const repos = makeRepos([{ full_name: 'a/cli' }, { full_name: 'b/none' }], SITE);
+    const info = schemeInfo({ id: 'linked', primary: false });
+    const ctx: Ctx = { meta: { ...META, schemes: [info] }, repos, scheme: info, taxonomy: buildTaxonomy(LINKED), now: NOW, store: new Store(), weeks: null };
+    const host = schemeCards(ctx, repos[0]!, Promise.resolve(DETAILS));
+    document.body.replaceChildren(host); // 卡片在挂到页面上之后才会画出来
+    await settle();
+    const links = [...host.querySelectorAll<HTMLAnchorElement>('.crumbs a')];
+    expect(links.map((a) => [a.textContent, a.getAttribute('href')])).toEqual([['B/None', '#/b/none']]); // 忽略大小写，用总榜里的写法
+    expect(host.querySelector('.crumbs')?.textContent).toBe('清单组›B/None');
   });
 
   it('当前体系没收录这个项目时说明一声，其他体系也没收录就不显示', async () => {

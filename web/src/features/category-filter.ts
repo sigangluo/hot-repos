@@ -3,7 +3,7 @@ import type { Taxonomy } from '../data/taxonomy';
 import { h } from '../lib/dom';
 import { int } from '../lib/format';
 import { categoryCounts, type CategoryScope, type Filters } from '../state/query';
-import type { Ctx } from './context';
+import { repoHref, type Ctx } from './context';
 
 /** 记住展开的分支，重绘面板时不丢失；跟随页面的 Store，互不干扰。 */
 const expandedByStore = new WeakMap<object, Set<number>>();
@@ -92,9 +92,14 @@ export function renderCategoryGroup(ctx: Ctx, taxonomy: Taxonomy, filters: Filte
             },
           }, 'ⓘ')
         : null;
+    // 分类名恰好是总榜里的项目（如 Awesome 清单本身）时，可以直接打开它的详情。
+    const href = repoHref(ctx, name);
+    const open = href
+      ? h('a', { class: 'info repo-link', href, title: `打开 ${name} 的详情`, 'aria-label': `打开 ${name} 的详情` }, '↗')
+      : null;
     return h('li', null,
       h('div', { class: 'tree-row' }, toggle,
-        h('label', { class: 'option' }, box, h('span', null, name), h('span', { class: 'count' }, int(count))), info),
+        h('label', { class: 'option' }, box, h('span', null, name), h('span', { class: 'count' }, int(count))), open, info),
       defOpen
         ? h('div', { class: 'def-block' },
             includes ? h('p', null, h('b', null, '收：'), includes) : null,

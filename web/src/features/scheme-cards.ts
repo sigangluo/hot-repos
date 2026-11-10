@@ -5,7 +5,7 @@ import type { DetailColumns, SchemeInfo } from '../data/types';
 import { h, mount } from '../lib/dom';
 import { crumbs, definitions, kv } from '../lib/widgets';
 import { schemeAge } from './scheme-picker';
-import type { Ctx } from './context';
+import { repoHref, type Ctx } from './context';
 
 /** 一个体系对这个项目的分类：没有标注时为 null。 */
 interface Entry {
@@ -34,16 +34,18 @@ function meaning({ data, place }: Entry): Node | null {
   return entries.length ? definitions('分类与形态的含义', entries) : null;
 }
 
-function card(entry: Entry, now: number, text: { summary: string | null; review: string | null }): HTMLElement {
+function card(ctx: Ctx, entry: Entry, text: { summary: string | null; review: string | null }): HTMLElement {
   const { info, place } = entry;
+  const now = ctx.now;
+  const path = (p: string[]) => crumbs(p, (name) => repoHref(ctx, name));
   const [method] = METHODS[info.method];
   return h('section', { class: 'card' },
     h('h3', null, `分类 · ${info.name}`, ' ', h('span', { class: 'chip plain' }, method)),
     text.summary ? h('p', { class: 'class-summary' }, text.summary) : null,
     h('dl', { class: 'kv-list' },
-      place.category.length ? kv('主分类', crumbs(place.category)) : null,
+      place.category.length ? kv('主分类', path(place.category)) : null,
       place.relatedPaths.length
-        ? kv(info.primary ? '关联分类' : '分类', h('div', { class: 'paths' }, place.relatedPaths.map(crumbs)))
+        ? kv(info.primary ? '关联分类' : '分类', h('div', { class: 'paths' }, place.relatedPaths.map(path)))
         : null,
       place.forms.length
         ? kv('项目形态', h('div', { class: 'chips' }, place.forms.map((f) => h('span', { class: 'chip plain' }, f))))
@@ -79,7 +81,7 @@ export function schemeCards(ctx: Ctx, repo: Repo, details: Promise<DetailColumns
         return h('section', { class: 'card' }, h('h3', null, `分类 · ${entry.info.name}`), h('p', { class: 'muted' }, '这个体系没有收录该项目。'));
       }
       const text = d?.scheme_text[entry.info.id];
-      return card(entry, ctx.now, { summary: text?.summary[repo.index] ?? null, review: text?.review_reason[repo.index] ?? null });
+      return card(ctx, entry, { summary: text?.summary[repo.index] ?? null, review: text?.review_reason[repo.index] ?? null });
     }));
   });
   return host;
