@@ -17,7 +17,7 @@ const META: Meta = {
 };
 
 function render(withClassification: boolean, trending = false) {
-  const file = classification([[2, [], [0]]]);
+  const file = classification([[2, []]]);
   const repos = makeRepos([{}], withClassification ? file : null);
   const info = schemeInfo({ name: '甲体系', source: { name: '某来源', url: 'https://example.com', license: 'CC-BY-4.0' }, as_of: '2026-01-09' });
   const ctx: Ctx = {
@@ -45,7 +45,7 @@ describe('名词与口径说明', () => {
     for (const [label] of DATA_TIMES) expect(text).toContain(label);
     for (const label of Object.keys(FACTS)) expect(text).toContain(label);
     for (const c of COLUMNS.filter((c) => !('needsClassification' in c))) expect(text).toContain(c.label);
-    for (const g of GROUPS.filter((g) => g.id !== 'form')) expect(text).toContain(g.label);
+    for (const g of GROUPS) expect(text).toContain(g.label);
   });
 
   it('许可证各类别的定义也在其中', () => {
@@ -53,19 +53,17 @@ describe('名词与口径说明', () => {
     for (const name of ['宽松', 'Copyleft', '其他', '未声明']) expect(text).toContain(`${name}：`);
   });
 
-  it('没有分类数据时不出现分类、项目形态和一级分类', () => {
+  it('没有分类数据时不出现分类和一级分类', () => {
     const el = render(false);
     const headings = [...el.querySelectorAll('h3')].map((h) => h.textContent);
     expect(headings.some((t) => t?.startsWith('一级分类'))).toBe(false);
     expect(headings).not.toContain('分类体系');
-    expect(el.textContent).not.toContain('项目形态');
   });
 
-  it('有分类数据时列出一级分类的收录说明和形态定义', () => {
+  it('有分类数据时列出一级分类的收录说明', () => {
     const el = render(true);
     expect([...el.querySelectorAll('h3')].map((h) => h.textContent)).toContain('一级分类（甲体系）');
     expect(el.textContent).toContain('写代码的工具与方法');
-    expect(el.textContent).toContain('直接使用的应用');
   });
 
   it('列出每个分类体系的标注方式、覆盖范围、来源与许可', () => {

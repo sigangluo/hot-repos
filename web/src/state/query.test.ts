@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { buildRepos, licenseClass, type Repo } from '../data/model';
-import { buildTaxonomy } from '../data/taxonomy';
 import { NOW, classification, columns, makeRepos } from '../test-utils';
 import {
   GROUPS,
@@ -142,9 +141,8 @@ describe('分类筛选', () => {
   // a/cli：开发›工具›命令行（关联 人工智能›智能体）；b/editor：开发›编辑器；c/none：未分类
   const data = makeRepos(
     [{ full_name: 'a/cli' }, { full_name: 'b/editor' }, { full_name: 'c/none' }],
-    classification([[2, [5], [0]], [3, [], [0, 1]], [null, [], []]]),
+    classification([[2, [5]], [3, []], [null, []]]),
   );
-  const group = (id: string) => GROUPS.find((g) => g.id === id)!;
   const names = (filters: Filters) => applyFilters(data, filters).map((r) => r.fullName);
   const inCategories = (scope: 'primary' | 'all', ...nodes: number[]): Filters => ({
     ...emptyFilters(),
@@ -152,15 +150,14 @@ describe('分类筛选', () => {
     categories: new Set(nodes),
   });
 
-  it('项目带出主分类路径、关联路径、形态，以及路径上的全部节点', () => {
+  it('项目带出主分类路径、关联路径，以及路径上的全部节点', () => {
     expect(data[0]).toMatchObject({
       category: ['开发', '工具', '命令行'],
       relatedPaths: [['人工智能', '智能体']],
-      forms: ['应用'],
       categoryNodes: [0, 1, 2],
       relatedNodes: [4, 5],
     });
-    expect(data[2]).toMatchObject({ category: [], relatedPaths: [], categoryNodes: [], relatedNodes: [], forms: [] });
+    expect(data[2]).toMatchObject({ category: [], relatedPaths: [], categoryNodes: [], relatedNodes: [] });
   });
 
   it('选中某一级即包含其下全部子分类', () => {
@@ -198,18 +195,8 @@ describe('分类筛选', () => {
     expect(activeCount(inCategories('primary', 1, 3))).toBe(2);
   });
 
-  it('可按项目形态筛选，多值取任一', () => {
-    const filters = { ...emptyFilters(), selected: { form: new Set(['库']) } };
-    expect(names(filters)).toEqual(['b/editor']);
-  });
-
   it('搜索能命中分类名称', () => {
     expect(names({ ...emptyFilters(), text: '编辑器' })).toEqual(['b/editor']);
-  });
-
-  it('没有分类数据时，项目形态分组不可用', () => {
-    expect(group('form').available?.(makeRepos([{}]))).toBe(false);
-    expect(group('form').available?.(data)).toBe(true);
   });
 });
 
@@ -223,14 +210,5 @@ describe('定义', () => {
       if (!g.order || typeof g.optionDefinitions !== 'object') continue;
       expect(Object.keys(g.optionDefinitions).sort(), g.id).toEqual([...g.order].sort());
     }
-  });
-
-  it('项目形态的选项定义来自分类目录', () => {
-    const form = GROUPS.find((g) => g.id === 'form')!;
-    const defs = (form.optionDefinitions as (t: ReturnType<typeof buildTaxonomy> | null) => Record<string, string>)(
-      buildTaxonomy(classification([])),
-    );
-    expect(defs).toEqual({ 应用: '直接使用的应用', 库: '供程序引用的代码库' });
-    expect((form.optionDefinitions as (t: null) => Record<string, string>)(null)).toEqual({});
   });
 });

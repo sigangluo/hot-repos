@@ -55,7 +55,7 @@ def build_parser() -> argparse.ArgumentParser:
         "sync", help="从公开来源取分类，把总榜里的项目对上去，写入 data/schemes/"
     )
     sync_cmd.add_argument(
-        "ids", nargs="*", help="要同步的来源编号（默认全部），如 borges cncf；见 docs/taxonomy.md"
+        "ids", nargs="*", help="要同步的来源编号（默认全部），如 borges cncf；见 docs/schemes.md"
     )
     sync_cmd.add_argument("--data-dir", type=Path, default=config.DATA_DIR)
 

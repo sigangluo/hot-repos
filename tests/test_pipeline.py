@@ -158,20 +158,20 @@ def test_pipeline_carries_schemes_over(tmp_path, fake):
     data = tmp_path / "data"
     names = [r["full_name"] for r in store.read_rows(data, "repos")]
     write_scheme(data, [label_row(names[0]), label_row("gone/repo")])
-    write_scheme(data, [label_row(names[0], category=None, forms=[])], external_meta(), "ext")
+    write_scheme(data, [label_row(names[0], category=None)], external_meta(), "ext")
     assert validate(data) != []  # gone/repo 不在总榜
     run_pipeline(tmp_path, fake, n=3)
     assert validate(data) == []
-    assert [r["full_name"] for r in schemes.read_rows(data, "site")] == [names[0]]
-    assert schemes.read_meta(data, "site") == scheme_meta()
+    assert [r["full_name"] for r in schemes.read_rows(data, "main")] == [names[0]]
+    assert schemes.read_meta(data, "main") == scheme_meta()
     assert schemes.read_meta(data, "ext") == external_meta()
 
 
 def test_pipeline_keeps_a_scheme_without_labels(tmp_path, fake):
     run_pipeline(tmp_path, fake, n=3)
     data = tmp_path / "data"
-    schemes.write_meta(data, "site", scheme_meta())
+    schemes.write_meta(data, "main", scheme_meta())
     run_pipeline(tmp_path, fake, n=3)
     assert validate(data) == []
-    assert schemes.read_meta(data, "site") == scheme_meta()
-    assert not (schemes.scheme_dir(data, "site") / config.SCHEME_LABELS_FILE).exists()
+    assert schemes.read_meta(data, "main") == scheme_meta()
+    assert not (schemes.scheme_dir(data, "main") / config.SCHEME_LABELS_FILE).exists()

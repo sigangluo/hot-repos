@@ -14,7 +14,7 @@ const META: Meta = {
 };
 
 // 开发›工具›命令行（a/cli，关联 人工智能›智能体）、开发›编辑器（b/editor）、未分类（c/none）
-const FILE = classification([[2, [5], [0]], [3, [], [0, 1]], [null, [], []]]);
+const FILE = classification([[2, [5]], [3, []], [null, []]]);
 
 function setup(file = FILE, info = schemeInfo()) {
   const repos = makeRepos([{ full_name: 'a/cli' }, { full_name: 'b/editor' }, { full_name: 'c/none' }], file);
@@ -103,7 +103,7 @@ describe('分类树', () => {
   it('没有层级的体系按项目数从多到少排列', () => {
     const flatFile = {
       nodes: [['a', -1, '甲', null, null], ['b', -1, '乙', null, null], ['c', -1, '丙', null, null]] as SchemeFile['nodes'],
-      forms: [], category: [null, null, null], related: [[0], [1], [1]], form: [[], [], []],
+      category: [null, null, null], related: [[0], [1], [1]],
     };
     const { store, rows } = setup(flatFile, schemeInfo({ primary: false }));
     store.set({ filters: { ...store.state.filters, categoryScope: 'all' } });
@@ -118,7 +118,7 @@ describe('分类树：没有主分类的体系，第二级也按项目数排', (
       ['g1', -1, '甲', null, null], ['g1.a', 0, '清单A', null, null], ['g1.b', 0, '清单B', null, null],
       ['g1.b.s', 2, '章节', null, null], ['g2', -1, '乙', null, null], ['g2.c', 4, '清单C', null, null],
     ],
-    forms: [], category: [null, null, null], related: [[1, 2], [3], [5]], form: [[], [], []],
+    category: [null, null, null], related: [[1, 2], [3], [5]],
   };
 
   function drawn() {
@@ -145,7 +145,7 @@ describe('分类名是总榜里的项目时可以打开详情', () => {
   // 一级分类 a/cli 的名字恰好是总榜里的项目（如 Awesome 清单），一级分类“开发”不是
   const file: SchemeFile = {
     nodes: [['dev', -1, '开发', null, null], ['dev.a-cli', 0, 'A/CLI', null, null]],
-    forms: [], category: [null, null], related: [[1], []], form: [[], []],
+    category: [null, null], related: [[1], []],
   };
 
   it('是项目的分类带“打开详情”链接，指向项目的详情地址；不是的没有', () => {

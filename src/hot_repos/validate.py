@@ -88,14 +88,6 @@ def _is_guidance(value: object) -> bool:
     )
 
 
-def _is_form(key: object, value: object) -> bool:
-    return (
-        isinstance(key, str)
-        and isinstance(value, dict)
-        and all(isinstance(value.get(f), str) and value[f].strip() for f in ("label", "definition"))
-    )
-
-
 def _text(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
@@ -146,16 +138,6 @@ def check_scheme_meta(meta: dict, label: str) -> list[str]:
             problems.append(f"{label}: 有来源的体系需要 as_of（取得来源数据的日期，YYYY-MM-DD）")
     elif "as_of" in meta:
         problems.append(f"{label}: 没有 source 的体系不应有 as_of")
-    forms = meta.get("forms")
-    if forms is not None and (
-        not isinstance(forms, dict)
-        or not forms
-        or not all(_is_form(k, v) for k, v in forms.items())
-    ):
-        problems.append(
-            f"{label}: forms 应为 {{编号: {{label, definition}}}} 且不为空，名称与定义都不能为空"
-            "（没有形态时省略该字段）"
-        )
     nodes = meta.get("nodes")
     if not isinstance(nodes, list) or not nodes:
         return [*problems, f"{label}: nodes 应为非空列表"]
@@ -193,7 +175,6 @@ def check_scheme_rows(
     """检查标注行，返回问题列表。同步外部来源时写入前也用它。"""
     problems: list[str] = []
     ids = {n["id"] for n in meta["nodes"]}
-    forms = set(meta.get("forms") or {})
     primary = meta["primary"]
     for d in _duplicates(r["full_name"].casefold() for r in rows):
         problems.append(f"{label}: full_name 重复（忽略大小写）: {d}")
@@ -216,12 +197,6 @@ def check_scheme_rows(
             problems.append(f"{label}: {name} 的 related 有重复，或包含主分类 category")
         if not primary and not r["related"]:
             problems.append(f"{label}: {name} 没有任何分类")
-        if len(set(r["forms"])) != len(r["forms"]) or not set(r["forms"]) <= forms:
-            problems.append(f"{label}: {name} 的 forms 有重复或不在体系的 forms 中: {r['forms']}")
-        if r["summary"] is not None and not r["summary"].strip():
-            problems.append(f"{label}: {name} 的 summary 为空字符串（没有简介应为 NULL）")
-        if r["review_reason"] is not None and not r["review_reason"].strip():
-            problems.append(f"{label}: {name} 的 review_reason 为空字符串（无需复核应为 NULL）")
     return problems
 
 

@@ -14,11 +14,9 @@ describe('buildTaxonomy', () => {
   it('越界的下标不抛错', () => {
     expect(taxonomy.path(99)).toEqual([]);
     expect(taxonomy.label(99)).toBe('');
-    expect(taxonomy.formLabel(99)).toBe('');
   });
 
-  it('形态与节点名称', () => {
-    expect(taxonomy.formLabel(1)).toBe('库');
+  it('节点名称', () => {
     expect(taxonomy.label(3)).toBe('编辑器');
   });
 });

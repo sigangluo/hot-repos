@@ -1,5 +1,4 @@
 import { LICENSE_DEFINITIONS, type Repo } from '../data/model';
-import type { Taxonomy } from '../data/taxonomy';
 
 // ───────────────────────── 筛选 ─────────────────────────
 // 全部为纯函数：输入数据与条件，输出结果，不碰 DOM，便于测试。
@@ -20,7 +19,7 @@ export interface Group {
   /** 这一组筛选的是什么、怎么算的。每个分组都必须写，页面在分组标题下显示。 */
   definition: string;
   /** 各选项的含义，选项名为键；可以依赖分类目录。有则显示“各选项说明”。 */
-  optionDefinitions?: Record<string, string> | ((taxonomy: Taxonomy | null) => Record<string, string>);
+  optionDefinitions?: Record<string, string>;
 }
 
 const PUSH_BUCKETS = ['7 天内', '30 天内', '90 天内', '1 年内', '超过 1 年', '无推送记录'] as const;
@@ -46,18 +45,7 @@ export function ageBucket(days: number): (typeof AGE_BUCKETS)[number] {
   return '10 年以上';
 }
 
-/** 当前分类体系里有项目带形态（没有分类，或体系没有形态时没有）。 */
-export const hasForms = (repos: readonly Repo[]) => repos.some((r) => r.forms.length > 0);
-
 export const GROUPS: readonly Group[] = [
-  {
-    id: 'form',
-    label: '项目形态',
-    values: (r) => r.forms,
-    available: hasForms,
-    definition: '项目是什么样的东西（应用、库、智能体技能……），与“分类”（它服务于什么领域）相互独立；一个项目可以有多个形态。',
-    optionDefinitions: (taxonomy) => Object.fromEntries((taxonomy?.forms ?? []).map((f) => [f.label, f.definition])),
-  },
   {
     id: 'language',
     label: '主要语言',

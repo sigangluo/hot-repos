@@ -12,16 +12,16 @@ vi.mock('./schemes', () => ({ switchScheme: (...args: unknown[]) => switchScheme
 
 const SOURCE = { name: 'Borges 等', url: 'https://example.com/data', license: 'CC-BY-4.0', attribution: '某某著，2017' };
 const BORGES = schemeInfo({ id: 'borges', name: 'Borges 人工分类', method: 'manual', source: SOURCE, as_of: '2026-01-09', note: '2017 年的数据', primary: true, classified: 987 });
-const SITE = schemeInfo({ classified: 361 });
+const MAIN = schemeInfo({ classified: 361 });
 
 const META: Meta = {
   schema_version: 1, snapshot_date: '2026-01-10', board_size: 5000, repos: 5000, missing: 0,
   rank_captured_at: NOW / 1000, repos_fetched_at: null, star_weeks_fetched_at: null,
-  star_weeks_per_page: 30, trending_date: null, schemes: [SITE, BORGES],
+  star_weeks_per_page: 30, trending_date: null, schemes: [MAIN, BORGES],
 };
 
-function ctxOf(current: typeof SITE | null, schemes = META.schemes): Ctx {
-  const file = classification([[2, [], []]]);
+function ctxOf(current: typeof MAIN | null, schemes = META.schemes): Ctx {
+  const file = classification([[2, []]]);
   return { meta: { ...META, schemes }, repos: makeRepos([{}], file), scheme: current, taxonomy: current ? buildTaxonomy(file) : null, now: NOW, store: new Store(), weeks: null };
 }
 
@@ -47,8 +47,8 @@ describe('体系的新旧', () => {
 describe('schemeFacts', () => {
   const NOW_MS = NOW;
 
-  it('本站自己的体系：标注方式、时间和覆盖范围，没有来源', () => {
-    const facts = schemeFacts(SITE, 5000, NOW_MS);
+  it('没有来源的体系：标注方式、时间和覆盖范围', () => {
+    const facts = schemeFacts(MAIN, 5000, NOW_MS);
     expect(facts.map(([label]) => label)).toEqual(['标注方式', '创建', '最近更新', '覆盖范围']);
     expect(facts[3]?.[1]).toContain('361 / 5,000');
     expect(String(facts[2]?.[1])).toContain('2026-01-09');
@@ -72,21 +72,21 @@ describe('分类体系选择', () => {
   });
 
   it('下拉框列出每个体系和覆盖数，当前体系被选中，并显示简介', () => {
-    const root = renderSchemePicker(ctxOf(SITE))!;
+    const root = renderSchemePicker(ctxOf(MAIN))!;
     const options = [...root.querySelectorAll('option')].map((o) => o.textContent);
     expect(options).toEqual(['测试体系（361 个项目）', 'Borges 人工分类（987 个项目）']);
-    expect(root.querySelector('select')?.value).toBe('site');
+    expect(root.querySelector('select')?.value).toBe('main');
     expect(root.querySelector('.def')?.textContent).toBe('用于测试的体系');
   });
 
   it('下拉框下面一行显示创建与最近更新', () => {
-    const root = renderSchemePicker(ctxOf(SITE))!;
+    const root = renderSchemePicker(ctxOf(MAIN))!;
     expect(root.querySelector('.scheme-age')?.textContent).toContain('创建 2026-01-01');
     expect(root.querySelector('.scheme-age')?.textContent).toContain('最近更新 2026-01-09');
   });
 
   it('选另一个体系时切换', () => {
-    const ctx = ctxOf(SITE);
+    const ctx = ctxOf(MAIN);
     const root = renderSchemePicker(ctx)!;
     const select = root.querySelector('select')!;
     select.value = 'borges';

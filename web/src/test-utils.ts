@@ -37,14 +37,14 @@ export function makeRepos(rows: RowOverrides[], file: SchemeFile | null = null):
 /** 一个分类体系的简介。 */
 export function schemeInfo(changes: Partial<SchemeInfo> = {}): SchemeInfo {
   return {
-    id: 'site', name: '测试体系', summary: '用于测试的体系', method: 'model', source: null,
+    id: 'main', name: '测试体系', summary: '用于测试的体系', method: 'model', source: null,
     created: '2026-01-01', updated: '2026-01-09', as_of: null,
     note: null, primary: true, classified: 2, ...changes,
   };
 }
 
-/** 一份小的分类数据：开发 › 工具 › 命令行、开发 › 编辑器、人工智能 › 智能体；参数是各行的（主分类, 关联, 形态）下标。 */
-export function classification(rows: [number | null, number[], number[]][]): SchemeFile {
+/** 一份小的分类数据：开发 › 工具 › 命令行、开发 › 编辑器、人工智能 › 智能体；参数是各行的（主分类, 关联）下标。 */
+export function classification(rows: [number | null, number[]][]): SchemeFile {
   return {
     nodes: [
       ['dev', -1, '开发', '写代码的工具与方法', null],
@@ -54,9 +54,7 @@ export function classification(rows: [number | null, number[], number[]][]): Sch
       ['ai', -1, '人工智能', null, null],
       ['ai.agent', 4, '智能体', null, null],
     ],
-    forms: [['app', '应用', '直接使用的应用'], ['library', '库', '供程序引用的代码库']],
     category: rows.map(([c]) => c),
     related: rows.map(([, r]) => r),
-    form: rows.map(([, , f]) => f),
   };
 }

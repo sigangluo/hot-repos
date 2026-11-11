@@ -114,10 +114,7 @@ export function renderFilters(ctx: Ctx): HTMLElement {
     return details;
   };
 
-  const definitionsOf = (group: Group): Record<string, string> =>
-    typeof group.optionDefinitions === 'function'
-      ? group.optionDefinitions(ctx.taxonomy)
-      : (group.optionDefinitions ?? {});
+  const definitionsOf = (group: Group): Record<string, string> => group.optionDefinitions ?? {};
 
   /** “各选项说明”：该组每个选项的含义（分组有选项定义时才有）。展开状态跨重绘保留。 */
   const definitionList = (id: string, defs: Record<string, string>) => {

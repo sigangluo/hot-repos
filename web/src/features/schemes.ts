@@ -9,7 +9,7 @@ export function initialScheme(schemes: readonly SchemeInfo[], saved: string | nu
 }
 
 /**
- * 切换分类体系：加载体系文件，把分类应用到全部项目，并清掉依赖旧体系的筛选条件（分类节点、项目形态）。
+ * 切换分类体系：加载体系文件，把分类应用到全部项目，并清掉依赖旧体系的筛选条件（分类节点）。
  * 体系文件加载失败时页面不带分类（与没有分类数据时一样），其余功能不受影响。
  */
 export async function switchScheme(ctx: Ctx, id: string | null): Promise<void> {
@@ -19,7 +19,6 @@ export async function switchScheme(ctx: Ctx, id: string | null): Promise<void> {
   ctx.scheme = data ? info : null;
   ctx.taxonomy = data?.taxonomy ?? null;
   const { filters } = ctx.store.state;
-  const { form: _form, ...selected } = filters.selected;
   ctx.store.set({
     scheme: ctx.scheme?.id ?? null,
     filters: {
@@ -27,7 +26,6 @@ export async function switchScheme(ctx: Ctx, id: string | null): Promise<void> {
       categories: new Set(),
       // 没有主分类的体系，一个项目的全部分类都算“关联分类”，只有“含关联分类”这一种范围。
       categoryScope: ctx.scheme?.primary === false ? 'all' : 'primary',
-      selected,
     },
   });
 }

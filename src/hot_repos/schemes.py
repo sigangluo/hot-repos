@@ -1,8 +1,8 @@
 """分类体系：`data/schemes/<编号>/` 下的体系定义（scheme.json）与各项目的标注（labels.parquet）。
 
-一个体系回答“这些项目分别属于什么类”。体系可以由本站的语言模型判断得出（`site`），也可以直接来自
-别人已经做好的分类（Borges 等的人工标注、CNCF Landscape 等，见 `sources/`）：后者只保存
-“哪个项目属于来源里的哪个类”这个事实，并注明出处与许可，不重新标注。
+一个体系回答“这些项目分别属于什么类”。体系直接来自别人已经做好的分类（Borges 等的人工标注、
+CNCF Landscape 等，见 `sources/`），只保存“哪个项目属于来源里的哪个类”这个事实，并注明出处与许可，
+不重新标注。
 
 两个文件都是可选数据，体系定义可以先于标注存在。采集总榜（`fetch`）不生成它们，只负责让标注里的
 项目名和总榜保持一致（见 `reconcile`、`carry`）。结构见 docs/data-model.md。
@@ -89,9 +89,6 @@ def build_rows(members: dict[str, list[str]], primary: bool) -> list[dict[str, A
                 "full_name": name,
                 "category": ids[0] if primary else None,
                 "related": ids[1:] if primary else ids,
-                "forms": [],
-                "summary": None,
-                "review_reason": None,
             }
         )
     return rows

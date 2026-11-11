@@ -41,7 +41,7 @@ uv run hot-repos trending
 
 ## 分类体系
 
-分类体系是可选数据，每个体系一个目录 `data/schemes/<编号>/`（`scheme.json` 定义，`labels.parquet` 标注），字段与口径见 [data-model.md](data-model.md)，各体系的来源、许可和接入办法见 [schemes.md](schemes.md)，本站分类目录的设计见 [taxonomy.md](taxonomy.md)。
+分类体系是可选数据，每个体系一个目录 `data/schemes/<编号>/`（`scheme.json` 定义，`labels.parquet` 标注），字段与口径见 [data-model.md](data-model.md)，各体系的来源、许可和接入办法见 [schemes.md](schemes.md)。
 
 ```bash
 uv run hot-repos schemes sync            # 同步全部外部体系
@@ -50,7 +50,6 @@ uv run hot-repos schemes sync borges cncf  # 只同步指定的（编号见 sche
 
 `schemes sync` 从各公开来源取别人已经做好的分类，把今天总榜里的项目对上去，写入 `data/schemes/<编号>/`；只保存“哪个项目属于来源里的哪个类”，不重新标注。某个来源取不到或格式变了，只有它失败（该体系已有数据保持原样），命令以非零状态退出。GitHub 接口用 `GITHUB_TOKEN` / `gh auth token`（没有也能跑，但额度只有每小时 60 次）。**总榜更新（`fetch`）后建议同步一次**：新进总榜的项目才会出现在外部体系里。
 
-- **本站分类（`site`）**：由语言模型判断，目前覆盖总榜中创建不足一年的 361 个项目，未经人工验证。仓库里没有生成它的命令，更新 `labels.parquet` 用 `hot_repos.schemes` 的 `write_meta` / `write_rows`（按 schema 校验、行按项目名排序），之后运行 `validate`。节点编号必须稳定，新增分类先改 `scheme.json`。
 - **`fetch` 会维护对齐**：对每个体系，改名的项目换成当前名称，已不在总榜里的项目其标注被丢弃，日志里列出改名数；这些标注和总榜一起先写入暂存目录、校验通过后才发布。
 - **移除某个体系**：删除它的目录即可，导出时会一并清除旧的 `scheme-<编号>.json`。
 

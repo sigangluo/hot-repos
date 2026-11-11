@@ -74,8 +74,6 @@ export interface Repo {
   categoryNodes: number[];
   /** 关联分类路径上的全部节点（去重）。 */
   relatedNodes: number[];
-  /** 项目形态（应用、库、教程……），可多个；体系没有形态时为空。 */
-  forms: string[];
   /** 搜索文本里与分类无关的部分（名称、描述、话题、语言），切换分类体系时据此重算 haystack。 */
   searchBase: string;
   /** 小写的搜索文本：名称、描述、话题、语言、分类。 */
@@ -140,7 +138,6 @@ export function buildRepos(c: RepoColumns, now: number): Repo[] {
       relatedPaths: [],
       categoryNodes: [],
       relatedNodes: [],
-      forms: [],
       searchBase,
       haystack: searchBase,
     };
@@ -153,7 +150,6 @@ export interface Placement {
   relatedPaths: string[][];
   categoryNodes: number[];
   relatedNodes: number[];
-  forms: string[];
   /** 项目直接挂在哪些节点上（主分类在前，不含父节点），用来查这些分类的说明。 */
   leaves: number[];
 }
@@ -167,7 +163,6 @@ export function placement(file: SchemeFile, taxonomy: Taxonomy, i: number): Plac
     relatedPaths: related.map((n) => taxonomy.path(n)),
     categoryNodes: primary != null ? taxonomy.pathNodes(primary) : [],
     relatedNodes: unique(related.flatMap((n) => taxonomy.pathNodes(n))),
-    forms: (file.form[i] ?? []).map((f) => taxonomy.formLabel(f)),
     leaves: [...(primary != null ? [primary] : []), ...related],
   };
 }
@@ -177,9 +172,9 @@ export function applyScheme(repos: readonly Repo[], scheme: { file: SchemeFile; 
   for (const repo of repos) {
     const { leaves: _leaves, ...p } = scheme
       ? placement(scheme.file, scheme.taxonomy, repo.index)
-      : { category: [], relatedPaths: [], categoryNodes: [], relatedNodes: [], forms: [], leaves: [] };
+      : { category: [], relatedPaths: [], categoryNodes: [], relatedNodes: [], leaves: [] };
     Object.assign(repo, p);
     const paths = [...(p.category.length ? [p.category] : []), ...p.relatedPaths];
-    repo.haystack = [repo.searchBase, ...paths.flat(), ...p.forms].join('\n').toLowerCase();
+    repo.haystack = [repo.searchBase, ...paths.flat()].join('\n').toLowerCase();
   }
 }

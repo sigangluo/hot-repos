@@ -45,7 +45,7 @@ describe('结果表格', () => {
     const headers = (root: HTMLElement) => [...root.querySelectorAll('thead th')].map((th) => th.textContent?.replace(/[↑↓ ]/g, ''));
     expect(headers(setup().root)).not.toContain('分类');
 
-    const file = classification([[2, [], []]]);
+    const file = classification([[2, []]]);
     const repos = makeRepos([{ full_name: 'a/b' }], file);
     const root = renderResults({ meta: META, repos, scheme: schemeInfo(), taxonomy: buildTaxonomy(file), now: NOW, store: new Store(), weeks: null });
     expect(headers(root)).toContain('分类');

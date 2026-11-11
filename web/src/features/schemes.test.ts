@@ -7,14 +7,14 @@ import { NOW, classification, makeRepos, schemeInfo } from '../test-utils';
 import type { Ctx } from './context';
 import { initialScheme, switchScheme } from './schemes';
 
-const SITE = classification([[2, [5], [0]], [3, [], [0, 1]], [null, [], []]]);
+const MAIN = classification([[2, [5]], [3, []], [null, []]]);
 // 另一个没有主分类的体系：a/cli 属于“甲”和“乙”，其余都没收录
 const OTHER: SchemeFile = {
   nodes: [['a', -1, '甲', null, null], ['b', -1, '乙', null, null]],
-  forms: [], category: [null, null, null], related: [[0, 1], [], []], form: [[], [], []],
+  category: [null, null, null], related: [[0, 1], [], []],
 };
 
-const files = new Map<string, SchemeFile>([['site', SITE], ['other', OTHER]]);
+const files = new Map<string, SchemeFile>([['main', MAIN], ['other', OTHER]]);
 vi.mock('../data/schemes', () => ({
   getScheme: (id: string) => {
     const file = files.get(id);
@@ -39,46 +39,44 @@ beforeEach(() => localStorage.clear());
 describe('initialScheme', () => {
   it('用上次选过且仍存在的体系，否则用第一个', () => {
     expect(initialScheme(INFOS, 'other')).toBe('other');
-    expect(initialScheme(INFOS, 'removed')).toBe('site');
-    expect(initialScheme(INFOS, null)).toBe('site');
+    expect(initialScheme(INFOS, 'removed')).toBe('main');
+    expect(initialScheme(INFOS, null)).toBe('main');
   });
 
   it('没有体系时为 null', () => {
-    expect(initialScheme([], 'site')).toBeNull();
+    expect(initialScheme([], 'main')).toBeNull();
   });
 });
 
 describe('switchScheme', () => {
   it('把体系应用到全部项目，并记下选择', async () => {
     const ctx = setup();
-    await switchScheme(ctx, 'site');
-    expect(ctx.scheme?.id).toBe('site');
-    expect(ctx.store.state.scheme).toBe('site');
+    await switchScheme(ctx, 'main');
+    expect(ctx.scheme?.id).toBe('main');
+    expect(ctx.store.state.scheme).toBe('main');
     expect(ctx.repos[0]?.category).toEqual(['开发', '工具', '命令行']);
     expect(ctx.repos[2]?.category).toEqual([]);
-    expect(localStorage.getItem('hot-repos:scheme')).toBe('"site"');
+    expect(localStorage.getItem('hot-repos:scheme')).toBe('"main"');
   });
 
-  it('切到另一个体系：旧分类被换掉，分类节点和形态条件被清掉，其余条件保留', async () => {
+  it('切到另一个体系：旧分类被换掉，分类节点条件被清掉，其余条件保留', async () => {
     const ctx = setup();
-    await switchScheme(ctx, 'site');
+    await switchScheme(ctx, 'main');
     const { store } = ctx;
-    store.set({ filters: { ...store.state.filters, text: 'cli', categories: new Set([1]), selected: { form: new Set(['应用']), language: new Set(['Python']) } } });
+    store.set({ filters: { ...store.state.filters, text: 'cli', categories: new Set([1]), selected: { language: new Set(['Python']) } } });
     await switchScheme(ctx, 'other');
     expect(ctx.repos[0]?.category).toEqual([]);
     expect(ctx.repos[0]?.relatedPaths).toEqual([['甲'], ['乙']]);
-    expect(ctx.repos[0]?.forms).toEqual([]);
     expect(ctx.repos[1]?.relatedPaths).toEqual([]);
     const { filters } = store.state;
     expect([...filters.categories]).toEqual([]);
-    expect(filters.selected.form).toBeUndefined();
     expect([...(filters.selected.language ?? [])]).toEqual(['Python']);
     expect(filters.text).toBe('cli');
   });
 
   it('搜索文本跟着体系变：能搜到当前体系的分类名，搜不到旧体系的', async () => {
     const ctx = setup();
-    await switchScheme(ctx, 'site');
+    await switchScheme(ctx, 'main');
     expect(ctx.repos[0]?.haystack).toContain('命令行');
     await switchScheme(ctx, 'other');
     expect(ctx.repos[0]?.haystack).not.toContain('命令行');
@@ -89,13 +87,13 @@ describe('switchScheme', () => {
     const ctx = setup();
     await switchScheme(ctx, 'other');
     expect(ctx.store.state.filters.categoryScope).toBe('all');
-    await switchScheme(ctx, 'site');
+    await switchScheme(ctx, 'main');
     expect(ctx.store.state.filters.categoryScope).toBe('primary');
   });
 
   it('体系文件加载失败时页面不带分类，其余照常', async () => {
     const ctx = setup();
-    await switchScheme(ctx, 'site');
+    await switchScheme(ctx, 'main');
     await switchScheme(ctx, 'gone');
     expect(ctx.scheme).toBeNull();
     expect(ctx.taxonomy).toBeNull();
@@ -108,7 +106,7 @@ describe('switchScheme', () => {
     const seen: string[] = [];
     ctx.store.subscribe((state, changed) => changed.has('scheme') && seen.push(String(state.scheme)));
     await switchScheme(ctx, 'other');
-    await switchScheme(ctx, 'site');
-    expect(seen).toEqual(['other', 'site']);
+    await switchScheme(ctx, 'main');
+    expect(seen).toEqual(['other', 'main']);
   });
 });

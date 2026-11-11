@@ -125,7 +125,7 @@ def write_trending(directory: Path, rows: list[dict], name: str = "2026-01-10.pa
 
 
 def scheme_meta(**changes) -> dict:
-    """一个最小的合法体系定义（有主分类、有形态的本站分类）。"""
+    """一个最小的合法体系定义（有主分类、没有来源）。"""
     return {
         "name": "测试体系",
         "summary": "用于测试的体系",
@@ -134,10 +134,6 @@ def scheme_meta(**changes) -> dict:
         "created": "2026-01-01",
         "updated": "2026-01-09",
         "note": "测试说明",
-        "forms": {
-            "app": {"label": "应用", "definition": "直接使用的应用"},
-            "list": {"label": "资源清单", "definition": "收集链接的清单"},
-        },
         "nodes": [
             {"id": "dev", "label": "开发", "guidance": {"includes": "写代码的工具"}},
             {
@@ -161,7 +157,7 @@ def external_meta(**changes) -> dict:
         source={"name": "某来源", "url": "https://example.com/x", "license": "CC-BY-4.0"},
         as_of="2026-01-09",
     )
-    del meta["forms"], meta["note"]
+    del meta["note"]
     return meta | changes
 
 
@@ -170,9 +166,6 @@ def label_row(name: str, **changes) -> dict:
         "full_name": name,
         "category": "dev.tools.cli",
         "related": ["ai"],
-        "forms": ["app"],
-        "summary": "一个工具",
-        "review_reason": None,
     } | changes
 
 
@@ -180,7 +173,7 @@ def write_scheme(
     path: Path,
     rows: list[dict] | None = None,
     meta: dict | None = None,
-    scheme_id: str = "site",
+    scheme_id: str = "main",
 ) -> None:
     """在 path 下写入一个体系的定义与标注（默认给 a/one 一行）。"""
     from hot_repos import schemes

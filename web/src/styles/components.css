@@ -719,11 +719,6 @@ td.clip {
   margin: 0;
 }
 
-.class-summary {
-  margin: 0 0 var(--space-3);
-  font-weight: 600;
-}
-
 .paths {
   display: grid;
   gap: var(--space-1);

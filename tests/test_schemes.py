@@ -1,7 +1,5 @@
 """分类体系：校验、与总榜对齐、导出。"""
 
-import json
-
 import pytest
 from conftest import external_meta, label_row, scheme_meta, write_dataset, write_scheme
 
@@ -22,15 +20,15 @@ def test_valid_scheme(dataset):
 
 def test_labels_need_a_definition(dataset):
     write_scheme(dataset)
-    (schemes.scheme_dir(dataset, "site") / config.SCHEME_META_FILE).unlink()
+    (schemes.scheme_dir(dataset, "main") / config.SCHEME_META_FILE).unlink()
     assert any(config.SCHEME_META_FILE in p and "必须有体系定义" in p for p in validate(dataset))
 
 
 def test_a_definition_can_exist_before_any_labels(dataset):
     write_scheme(dataset)
-    (schemes.scheme_dir(dataset, "site") / config.SCHEME_LABELS_FILE).unlink()
+    (schemes.scheme_dir(dataset, "main") / config.SCHEME_LABELS_FILE).unlink()
     assert validate(dataset) == []
-    schemes.write_meta(dataset, "site", scheme_meta(nodes=[]))
+    schemes.write_meta(dataset, "main", scheme_meta(nodes=[]))
     assert any("nodes 应为非空列表" in p for p in validate(dataset))
 
 
@@ -47,10 +45,6 @@ def test_scheme_ids_are_slugs(dataset):
         ({"related": ["nope"]}, "related 不在体系中"),
         ({"related": ["ai", "ai"]}, "related 有重复"),
         ({"related": ["dev.tools.cli"]}, "包含主分类"),
-        ({"forms": ["app", "app"]}, "forms 有重复"),
-        ({"forms": ["nope"]}, "forms"),
-        ({"summary": " "}, "summary 为空字符串"),
-        ({"review_reason": ""}, "review_reason 为空字符串"),
     ],
 )
 def test_row_problems(dataset, change, message):
@@ -60,7 +54,7 @@ def test_row_problems(dataset, change, message):
 
 def test_rows_without_a_primary_category(dataset):
     meta = external_meta()
-    ok = label_row("a/one", category=None, related=["ai"], forms=[], summary=None)
+    ok = label_row("a/one", category=None, related=["ai"])
     write_scheme(dataset, [ok], meta, "ext")
     assert validate(dataset) == []
     write_scheme(dataset, [ok | {"category": "ai", "related": []}], meta, "ext")
@@ -106,15 +100,13 @@ def test_node_problems(dataset):
     check([], "nodes 应为非空列表")
 
 
-def test_forms_and_guidance_need_text(dataset):
+def test_guidance_needs_text(dataset):
     def check(change, message):
         meta = scheme_meta()
         change(meta)
         write_scheme(dataset, meta=meta)
         assert any(message in p for p in validate(dataset)), message
 
-    check(lambda t: t["forms"].update(app={"label": "应用"}), "forms 应为")
-    check(lambda t: t["forms"].update(app={"label": "应用", "definition": " "}), "forms 应为")
     check(lambda t: t["nodes"][0].update(guidance={"excludes": "x"}), "guidance 应为")
     check(lambda t: t["nodes"][0].update(guidance={"includes": ""}), "guidance 应为")
     check(lambda t: t["nodes"][0].update(guidance={"includes": "x", "other": "y"}), "guidance 应为")
@@ -137,10 +129,10 @@ def test_meta_fields(dataset):
     check(scheme_meta(created="2026-02-01"), "created 不应晚于 updated")
 
 
-def test_note_and_forms_are_optional(dataset):
+def test_note_is_optional(dataset):
     meta = scheme_meta()
-    del meta["note"], meta["forms"]
-    write_scheme(dataset, [label_row("a/one", forms=[])], meta)
+    del meta["note"]
+    write_scheme(dataset, [label_row("a/one")], meta)
     assert validate(dataset) == []
 
 
@@ -148,7 +140,7 @@ def test_external_schemes_need_a_source_and_date(dataset):
     def check(change, message):
         meta = external_meta()
         change(meta)
-        write_scheme(dataset, [label_row("a/one", category=None, forms=[])], meta, "ext")
+        write_scheme(dataset, [label_row("a/one", category=None)], meta, "ext")
         assert any(message in p for p in validate(dataset)), message
 
     check(lambda m: m.pop("source"), "source 应为")
@@ -185,9 +177,6 @@ def test_build_rows_and_prune_nodes():
         "full_name": "a/one",
         "category": "x.b",
         "related": ["y"],
-        "forms": [],
-        "summary": None,
-        "review_reason": None,
     }
     flat = schemes.build_rows(members, False)
     assert (flat[0]["category"], flat[0]["related"]) == (None, ["x.b", "y"])
@@ -204,8 +193,8 @@ def test_build_rows_and_prune_nodes():
 def test_scheme_ids_follow_order_then_id(dataset):
     write_scheme(dataset, meta=scheme_meta(order=5), scheme_id="zeta")
     write_scheme(dataset, meta=scheme_meta(), scheme_id="alpha")
-    write_scheme(dataset, meta=scheme_meta(order=0), scheme_id="site")
-    assert schemes.scheme_ids(dataset) == ["site", "zeta", "alpha"]
+    write_scheme(dataset, meta=scheme_meta(order=0), scheme_id="main")
+    assert schemes.scheme_ids(dataset) == ["main", "zeta", "alpha"]
 
 
 def test_publish_copies_scheme_files(tmp_path):
@@ -213,7 +202,7 @@ def test_publish_copies_scheme_files(tmp_path):
     write_scheme(staging)
     target = tmp_path / "target"
     store.publish(staging, target)
-    folder = schemes.scheme_dir(target, "site")
+    folder = schemes.scheme_dir(target, "main")
     assert (folder / config.SCHEME_LABELS_FILE).exists()
     assert (folder / config.SCHEME_META_FILE).exists()
 
@@ -222,29 +211,22 @@ def test_publish_copies_scheme_files(tmp_path):
 
 
 def test_export_scheme(dataset, tmp_path):
-    write_scheme(dataset, [label_row("b/two", review_reason="边界不清")])
+    write_scheme(dataset, [label_row("b/two")])
     out = tmp_path / "web"
     export_web.export(dataset, out)
-    scheme = export_web.read(out / "scheme-site.json")
+    scheme = export_web.read(out / "scheme-main.json")
     assert scheme["nodes"] == [
         ["dev", -1, "开发", "写代码的工具", None],
         ["dev.tools", 0, "工具", "命令行与编辑器", "数据库归 data"],
         ["dev.tools.cli", 1, "命令行", None, None],
         ["ai", -1, "人工智能", None, None],
     ]
-    assert scheme["forms"] == [
-        ["app", "应用", "直接使用的应用"],
-        ["list", "资源清单", "收集链接的清单"],
-    ]
     # 列与 repos.json 对齐：a/one 没有标注，b/two 已标注
     assert scheme["category"] == [None, 2]
     assert scheme["related"] == [[], [3]]
-    assert scheme["form"] == [[], [0]]
-    text = export_web.read(out / "details.json")["scheme_text"]
-    assert text == {"site": {"summary": [None, "一个工具"], "review_reason": [None, "边界不清"]}}
     [info] = export_web.read(out / "meta.json")["schemes"]
     assert info == {
-        "id": "site",
+        "id": "main",
         "name": "测试体系",
         "summary": "用于测试的体系",
         "method": "model",
@@ -259,23 +241,19 @@ def test_export_scheme(dataset, tmp_path):
 
 
 def test_export_scheme_without_primary(dataset, tmp_path):
-    rows = [
-        label_row("a/one", category=None, related=["dev.tools.cli", "ai"], forms=[], summary=None)
-    ]
+    rows = [label_row("a/one", category=None, related=["dev.tools.cli", "ai"])]
     write_scheme(dataset, rows, external_meta(), "ext")
     out = tmp_path / "web"
     export_web.export(dataset, out)
     scheme = export_web.read(out / "scheme-ext.json")
     assert scheme["category"] == [None, None]
     assert scheme["related"] == [[2, 3], []]
-    assert scheme["forms"] == []
     [info] = export_web.read(out / "meta.json")["schemes"]
     assert (info["primary"], info["classified"], info["source"]["license"]) == (
         False,
         1,
         "CC-BY-4.0",
     )
-    assert export_web.read(out / "details.json")["scheme_text"] == {}  # 没有简介，不列出
 
 
 def test_export_lists_schemes_in_order_and_skips_ones_without_labels(dataset, tmp_path):
@@ -292,10 +270,8 @@ def test_export_without_schemes_removes_stale_files(dataset, tmp_path):
     out = tmp_path / "web"
     write_scheme(dataset)
     export_web.export(dataset, out)
-    assert (out / "scheme-site.json").exists()
-    (schemes.scheme_dir(dataset, "site") / config.SCHEME_LABELS_FILE).unlink()
+    assert (out / "scheme-main.json").exists()
+    (schemes.scheme_dir(dataset, "main") / config.SCHEME_LABELS_FILE).unlink()
     export_web.export(dataset, out)
-    assert not (out / "scheme-site.json").exists()
+    assert not (out / "scheme-main.json").exists()
     assert export_web.read(out / "meta.json")["schemes"] == []
-    details = json.loads((out / "details.json").read_text(encoding="utf-8"))
-    assert details["scheme_text"] == {}

@@ -31,7 +31,7 @@ export function renderGlossary(ctx: Ctx): HTMLElement {
       ['Star 数', RANGE_DEFINITIONS.stars],
       ['贡献者数', RANGE_DEFINITIONS.contributors],
       ...GROUPS.filter((g) => g.available?.(ctx.repos) ?? true).map((g): [string, string | Node] => {
-        const defs = typeof g.optionDefinitions === 'function' ? g.optionDefinitions(taxonomy) : (g.optionDefinitions ?? {});
+        const defs = g.optionDefinitions ?? {};
         return [g.label, h('div', null, g.definition, Object.keys(defs).length ? optionList(defs) : null)];
       }),
     ];

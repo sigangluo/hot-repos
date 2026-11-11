@@ -16,10 +16,6 @@ export interface Taxonomy {
   definition(node: number): { includes: string | null; excludes: string | null };
   /** 全部节点都是一级（没有层级）。 */
   flat: boolean;
-  /** 形态名称。 */
-  formLabel(form: number): string;
-  /** 全部形态的名称与定义，按目录顺序。 */
-  forms: readonly { label: string; definition: string }[];
 }
 
 export function buildTaxonomy(file: SchemeFile): Taxonomy {
@@ -40,8 +36,6 @@ export function buildTaxonomy(file: SchemeFile): Taxonomy {
     pathNodes: (node) => nodes[node] ?? [],
     path: (node) => (nodes[node] ?? []).map(label),
     definition: (node) => ({ includes: file.nodes[node]?.[3] ?? null, excludes: file.nodes[node]?.[4] ?? null }),
-    formLabel: (form) => file.forms[form]?.[1] ?? '',
-    forms: file.forms.map(([, label, definition]) => ({ label, definition })),
   };
 }
 

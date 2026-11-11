@@ -25,13 +25,13 @@ export interface SchemeInfo {
   summary: string;
   /** 标注方式：model 语言模型判断，manual 研究者人工标注，curated 来源方人工策展。 */
   method: 'model' | 'manual' | 'curated';
-  /** 外部来源的出处与许可；本站自己的分类为 null。 */
+  /** 外部来源的出处与许可。 */
   source: SchemeSource | null;
-  /** 体系的创建日期（YYYY-MM-DD）：来源仓库创建或数据集发布的日期，本站分类是首次生成的日期。 */
+  /** 体系的创建日期（YYYY-MM-DD）：来源仓库创建或数据集发布的日期。 */
   created: string;
-  /** 体系内容最近一次变化的日期（YYYY-MM-DD）：来源最近一次相关提交或更新，本站分类是最近一次更新。 */
+  /** 体系内容最近一次变化的日期（YYYY-MM-DD）：来源最近一次相关提交或更新。 */
   updated: string;
-  /** 取得来源数据的日期；本站自己的分类为 null。 */
+  /** 取得来源数据的日期。 */
   as_of: string | null;
   /** 使用时需要注意的说明（如数据的年代、可信度），没有则为 null。 */
   note: string | null;
@@ -91,15 +91,6 @@ export interface DetailColumns {
   star_weeks_fetched_at: (number | null)[];
   star_weeks_pages_fetched: (number | null)[];
   star_weeks_pages_total: (number | null)[];
-  /** 各分类体系为项目写的文字，键是体系编号；没有这类文字的体系不出现。 */
-  scheme_text: Record<string, SchemeText>;
-}
-
-export interface SchemeText {
-  /** 一句话简介；没有为 null。 */
-  summary: (string | null)[];
-  /** 需要复核的原因；无需复核为 null。 */
-  review_reason: (string | null)[];
 }
 
 export interface WeeksColumns {
@@ -130,17 +121,14 @@ export interface TrendingFile {
 }
 
 /**
- * scheme-<编号>.json：一个分类体系的节点、形态，及每个项目的分类。
- * `category` / `related` / `form` 与 repos.json 的行对齐，值是 `nodes` / `forms` 的下标；
- * 没有标注的项目 `category` 为 null，`related` 与 `form` 为空数组；
+ * scheme-<编号>.json：一个分类体系的节点，及每个项目的分类。
+ * `category` / `related` 与 repos.json 的行对齐，值是 `nodes` 的下标；
+ * 没有标注的项目 `category` 为 null，`related` 为空数组；
  * 没有主分类的体系，`category` 全为 null，项目的全部分类都在 `related` 里。
  */
 export interface SchemeFile {
   /** [编号, 父节点在 nodes 中的下标（一级为 -1）, 名称, 收录说明, 排除说明]，父节点排在子节点之前；说明没有则为 null。 */
   nodes: [string, number, string, string | null, string | null][];
-  /** [形态编号, 名称, 定义]；体系没有形态时为空数组。 */
-  forms: [string, string, string][];
   category: (number | null)[];
   related: number[][];
-  form: number[][];
 }

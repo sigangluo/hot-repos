@@ -129,10 +129,9 @@ async function fillOverview(ctx: Ctx, el: HTMLElement, repo: Repo, onChart: (c: 
   const chartHost = h('div', { class: 'loading' }, '正在加载周 Star 分布…');
   const langHost = h('div', { class: 'loading' }, '正在加载详情…');
   const linksHost = h('div', { class: 'chips' });
-  const detailsLoaded = loadDetails().catch(() => null);
   mount(el,
     h('section', { class: 'card' }, h('h3', null, '基本信息'), facts, definitions('各项说明', Object.entries(FACTS))),
-    schemeCards(ctx, repo, detailsLoaded),
+    schemeCards(ctx, repo),
     positionCard(ctx, repo),
     h('section', { class: 'card' }, h('h3', null, '官方周 Star 分布'), chartHost),
     h('section', { class: 'card' }, h('h3', null, '语言构成'), langHost),
